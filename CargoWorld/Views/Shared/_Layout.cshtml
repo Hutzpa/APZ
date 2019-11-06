@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CargoWorld</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/mainpage.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <nav id="mainNav" class="navbar navbar-dark navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Cargo world</a>
+            <input type="search" class="" placeholder="Введіть назву компанії чи тип вантажу"/>
+            <ul class="list-inline">
+                <li class="list-inline-item ">
+                    <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false">
+                        Головна
+                    </button>
+                </li>
+                <li class="list-inline-item ">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Машини
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item">
+                                <a href="">Машини</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="~/icon.png">Групи</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="list-inline-item ">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Вантажі
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item">
+                                <a href="~/icon.png">Створити вантаж</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="~/icon.png">Подивитись мої вантажі</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="~/icon.png">Історія вантажів</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            <p class="float-left"> Зроблено Безуглим Іллєю як проект з АПЗ</p>
+            <p class="float-right">(c) 2019 Всі права захищені</p>
+        </div>
+    </footer>
+
+</body>
+</html>

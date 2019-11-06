@@ -1,0 +1,21 @@
+﻿#mainNav {
+    background-color: #212529;
+}
+
+button{
+    color: #0e0101;
+    background-color: transparent;
+    font: inherit;
+}
+
+input {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    background-color: #b1b0b0;
+    background: url('http://3.bp.blogspot.com/-4w14hQHr5yQ/Tgm6u7KwUkI/AAAAAAAACAI/Hu2poBOPx3g/s25/search.png') no-repeat scroll 0 50%;
+    padding: 5px 2px 5px 25px;
+
+   
+}
