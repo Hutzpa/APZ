@@ -1,4 +1,5 @@
-﻿using CargoWorld.Data.Repositories;
+﻿using CargoWorld.Data;
+using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,9 +12,9 @@ namespace CargoWorld.Controllers
 {
     public class CargoController : Controller
     {
-        private CargoRepository _cargoRepository;
+        private IRepository<Cargo> _cargoRepository;
 
-        public CargoController(CargoRepository cargoRepository)
+        public CargoController(IRepository<Cargo> cargoRepository)
         {
             _cargoRepository = cargoRepository;
         }

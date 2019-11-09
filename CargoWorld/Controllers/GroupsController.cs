@@ -1,4 +1,5 @@
-﻿using CargoWorld.Data.Repositories;
+﻿using CargoWorld.Data;
+using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,9 +13,9 @@ namespace CargoWorld.Controllers
 {
     public class GroupsController : Controller
     {
-        private GroupRepository _groupsRepository;
+        private IRepository<Group> _groupsRepository;
 
-        public GroupsController(GroupRepository groupsRepository)
+        public GroupsController(IRepository<Group> groupsRepository)
         {
             _groupsRepository = groupsRepository;
         }
@@ -23,6 +24,13 @@ namespace CargoWorld.Controllers
         public IActionResult AGroup()
         {
             return View(new Group());
+        }
+        
+        
+        [HttpGet]
+        public IActionResult GroupList()
+        {
+            return View(_groupsRepository.GetAll());
         }
 
 

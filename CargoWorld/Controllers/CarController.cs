@@ -1,4 +1,5 @@
-﻿using CargoWorld.Data.Repositories;
+﻿using CargoWorld.Data;
+using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,9 +12,9 @@ namespace CargoWorld.Controllers
 {
     public class CarController : Controller
     {
-        private CarRepository _carRepository;
+        private IRepository<Car> _carRepository;
 
-        public CarController(CarRepository carRepository )
+        public CarController(IRepository<Car> carRepository )
         {
             _carRepository = carRepository;
         }
@@ -59,8 +60,8 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public IActionResult ImDriving(int id)
         {
-            var res = _carRepository.IAmDriving(id);
-            return View(res);
+            //var res = _carRepository.IAmDriving(id);
+            return View(/*res*/);
         }
 
         [HttpGet]
