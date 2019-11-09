@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Car>
+
+@{
+    ViewBag.Title = "Ващі машини";
+}
+
+@if (Model == null)
+{
+    <h3>У вас ще не мае машин</h3>
+    <a asp-controller="CarController" asp-action="CreateCar">Додайте</a>
+}
+else
+{
+    <ul>
+        @foreach(var cr in Model)
+        {
+            <li>
+               Одна з ваших машин - @cr.CarModel
+            </li>
+        }
+
+    </ul>
+}

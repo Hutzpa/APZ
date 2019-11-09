@@ -13,58 +13,61 @@
 </head>
 
 <body>
-    <nav id="mainNav" class="navbar navbar-dark navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">Cargo world</a>
-            <input type="search" class="" placeholder="Введіть назву компанії чи тип вантажу" />
-            <ul class="list-inline">
-                <li class="list-inline-item ">
-                    <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false">
-                        Головна
-                    </button>
-                </li>
-                <a asp-controller="Auth" asp-action="Login"> Log in</a>
 
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li class="list-inline-item ">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-danger dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Машини
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-item">
-                                    <a href="">Машини</a>
-                                </li>
-                                <li class="dropdown-item">
-                                    <a href="~/icon.png">Групи</a>
-                                </li>
-                            </ul>
-                        </div>
+    <ul class="list-inline">
+        <li class="list-inline-item ">
+            <button asp-controller="Home" asp-action="Index">
+                Головна
+            </button>
+        </li>
+
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li class="list-inline-item ">
+
+                <ul class="dropdown">
+                    <li class="dropdown-item">
+                        <a asp-controller="Car" asp-action="CreateCar">Створити машину</a>
                     </li>
-                    <li class="list-inline-item ">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-danger dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Вантажі
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-item">
-                                    <a href="~/icon.png">Створити вантаж</a>
-                                </li>
-                                <li class="dropdown-item">
-                                    <a href="~/icon.png">Подивитись мої вантажі</a>
-                                </li>
-                                <li class="dropdown-item">
-                                    <a href="~/icon.png">Історія вантажів</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <li class="dropdown-item">
+                        <a asp-controller="CarController" asp-action="ImDriving">Я керую</a>
                     </li>
-                    <a asp-controller="Auth" asp-action="Logout"> Log out</a>
-                }
-            </ul>
-        </div>
-    </nav>
+                    <li class="dropdown-item">
+                        <a asp-controller="Car" asp-action="MyCars">Мої машини</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <ul class="dropdown">
+                    <li class="dropdown-item">
+                        <a asp-controller="Group" asp-action="CreateGroup">Створити групу</a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a asp-controller="Group" asp-action="GroupList">My groups</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="list-inline-item ">
+
+                <ul class="dropdown">
+                    <li class="dropdown-item">
+                        <a asp-controller="Cargo" asp-action="CreateCago">Створити вантаж</a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a asp-controller="Cargo" asp-action="CargoList">Список вантажів</a>
+                    </li>
+                </ul>
+            </li>
+            <a asp-controller="Auth" asp-action="Logout"> Log out</a>
+        }
+        else
+        {
+            <a asp-controller="Auth" asp-action="Login"> Log in</a>
+        }
+    </ul>
+
 
 
 

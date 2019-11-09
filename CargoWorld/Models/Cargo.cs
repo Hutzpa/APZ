@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CargoWorld.Models
 {
-    public class Cargo
+    public class Cargo 
     {
         [Key]
         public int Id_Cargo { get; set; }

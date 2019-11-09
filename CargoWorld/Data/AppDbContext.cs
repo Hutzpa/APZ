@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace CargoWorld.Data
 {
-    public class AppDbContext : IdentityDbContext  
+    public class AppDbContext : IdentityDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+                Database.EnsureCreated();
         }
+       
 
         public DbSet<Car> Cars { get; set; }
         public DbSet<Cargo> Cargos { get; set; }

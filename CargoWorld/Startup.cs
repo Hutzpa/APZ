@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using CargoWorld.Data.Repositories;
+using CargoWorld.Models;
 
 namespace CargoWorld
 {
@@ -27,14 +29,21 @@ namespace CargoWorld
         {
             services.AddControllersWithViews();
 
+            
 
             services.AddDbContext<AppDbContext>(opt =>
                  opt.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DbCargo;Trusted_Connection=true;MultipleActiveResultSets=true"));
 
-
+            
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
+
+            services.AddTransient<IRepository<Car>, CarRepository>();
+            services.AddTransient<IRepository<Cargo>, CargoRepository>();
+            services.AddTransient<IRepository<Group>, GroupRepository>();
+            services.AddTransient<IRepository<CargoInCar>, CargoInCarRepository>();
+            services.AddTransient<IRepository<User>, UserRepository>();
 
         }
 
