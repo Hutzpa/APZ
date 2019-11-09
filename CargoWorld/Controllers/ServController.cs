@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CargoWorld.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using CargoWorld.Data;
+using CargoWorld.Models;
+using CargoWorld.Data.Repositories;
+using Newtonsoft.Json;
 
 namespace CargoWorld.Controllers
 {
@@ -12,47 +16,84 @@ namespace CargoWorld.Controllers
     [ApiController]
     public class ServController : ControllerBase
     {
+        private readonly AppDbContext _context;
+       // private readonly UserRepository _users;
+
+        public ServController(AppDbContext context)
+        {
+            _context = context;
+
+        }
+
         // GET: api/Serv
         [HttpGet]
-        public string Get()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            var usr = new User
-            {
-                IdUser = 1,
-                Age = 20,
-                Sex = "Male",
-
-            };
-            return usr.ToString(); 
+            return await _context._Users.ToListAsync();
         }
+
+        
 
         // GET: api/Serv/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetUser(int id)
         {
-            return "";
-        }
+            Models.User user = new User
+            {
+                IdUser = 1,
+                Age = 50,
+                Sex = "Male",
+                Name = "Name",
+                Surname = "Surname"
 
-        // POST: api/Serv
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-            //BRUH
-
-            //return "TEST TEST TEST";
+            };
+            return user;
         }
 
         // PUT: api/Serv/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
+        [HttpPut]
+        public async Task<IActionResult> PutUser(string user)
         {
-           
+
+            _context._Users.Add(JsonConvert.DeserializeObject<User>(user));
+            _context.SaveChanges();
+
+            return NoContent();
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // POST: api/Serv
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see https://aka.ms/RazorPagesCRUD.
+        [HttpPost]
+        public async Task<ActionResult<User>> PostUser(User user)
         {
+            _context._Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUser", new { id = user.IdUser }, user);
+        }
+
+        // DELETE: api/Serv/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<User>> DeleteUser(int id)
+        {
+            var user = await _context._Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context._Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+        private bool UserExists(int id)
+        {
+            return _context._Users.Any(e => e.IdUser == id);
         }
     }
 }

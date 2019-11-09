@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CargoWorld.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -13,7 +16,35 @@ namespace CargoWorld
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            var scope = host.Services.CreateScope();
+
+            var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            context.Database.EnsureCreated();
+
+            var adminRole = new IdentityRole("Admin");
+            if (!context.Roles.Any())
+            {
+                roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
+            }
+
+            if (!context.Users.Any(u => u.UserName == "admin"))
+            {
+                var adminUser = new IdentityUser
+                {
+                    UserName = "admin",
+                    Email = "admin@mail"
+                };
+                var result = userMgr.CreateAsync(adminUser,"Password1_").GetAwaiter().GetResult();
+
+                userMgr.AddToRoleAsync(adminUser,adminRole.Name).GetAwaiter().GetResult();
+            }
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

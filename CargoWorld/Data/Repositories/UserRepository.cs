@@ -16,11 +16,11 @@ namespace CargoWorld.Data.Repositories
             _ctx = ctx;
         }
 
-        public void Create(User data) => _ctx.Users.Add(data);
+        public void Create(User data) => _ctx._Users.Add(data);
 
-        public User Get(int id) => _ctx.Users.FirstOrDefault(o => o.IdUser == id);
+        public User Get(int id) => _ctx._Users.FirstOrDefault(o => o.IdUser == id);
 
-        public IEnumerable<User> GetAll() => _ctx.Users.ToList();
+        public IEnumerable<User> GetAll() => _ctx._Users.ToList();
 
         public IEnumerable<User> GetAll(int id)
         {
@@ -29,7 +29,7 @@ namespace CargoWorld.Data.Repositories
 
         public void Remove(int id) => _ctx.Remove(Get(id));
 
-        public void Update(User update) => _ctx.Users.Update(update);
+        public void Update(User update) => _ctx._Users.Update(update);
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
