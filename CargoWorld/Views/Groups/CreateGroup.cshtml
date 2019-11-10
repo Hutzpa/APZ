@@ -1,4 +1,4 @@
-﻿@model Group
+﻿@model GroupViewModel
 
 @{
     ViewBag.Title = "Нова group";
@@ -6,6 +6,21 @@
 
 <div>
     <form asp-controller="Groups" asp-action="CreateGroup" method="post">
-        <h1>Desctibe the best car you can imagine</h1>
+        <div>
+            <label>
+                Enter group name
+            </label>
+            <input asp-for="GroupName"/>
+            <h3>Додайте до неї машини(можна буде редагувати)</h3>
+
+            <ul>
+                @foreach(var cr in Model.Cars)
+                {
+                    <li>
+                        @cr.CarModel
+                    </li>
+                }
+            </ul>
+        </div>
     </form>
 </div>

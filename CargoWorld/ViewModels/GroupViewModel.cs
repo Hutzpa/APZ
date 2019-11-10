@@ -1,4 +1,6 @@
-﻿using CargoWorld.Models;
+﻿using CargoWorld.Data;
+using CargoWorld.Data.Repositories;
+using CargoWorld.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +15,11 @@ namespace CargoWorld.ViewModels
 
         public List<User> IdOwner { get; set; }
 
+        public string GroupName { get; set; }
 
-        private IEnumerable<Car> carsInGroup;
 
-        public IEnumerable<Car> CarsInGroup{
-            get
-            {
-               return 
-            }
+        public IEnumerable<Car> Cars { get; set; }
+
     }
+       
 }

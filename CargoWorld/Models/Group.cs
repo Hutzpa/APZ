@@ -13,5 +13,8 @@ namespace CargoWorld.Models
         public int IdGroup { get; set; }
 
         public List<User> IdOwner { get; set; }
+
+
+        public string GroupName { get; set; }
     }
 }

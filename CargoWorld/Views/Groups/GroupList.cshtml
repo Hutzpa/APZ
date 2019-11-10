@@ -15,7 +15,7 @@ else
         @foreach (var cr in Model)
         {
             <li>
-                Одна з ваших груп - @cr.IdGroup
+                Одна з ваших груп -<a asp-controller="Groups" asp-action="AGroup" asp-route-group="@cr"> @cr.IdGroup </a>
             </li>
         }
 

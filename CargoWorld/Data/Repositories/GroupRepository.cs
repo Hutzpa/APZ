@@ -31,5 +31,15 @@ namespace CargoWorld.Data.Repositories
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
         public void Update(Group update) => _ctx.Update(update);
+
+        public IEnumerable<Car> GetCarsWithoutGroup()
+        {
+            var cars = from t in _ctx.Cars
+                       where t.IdDriver == 0
+                       select t;
+
+            return cars;
+        }
+        
     }
 }

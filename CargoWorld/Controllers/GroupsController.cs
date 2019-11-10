@@ -1,6 +1,7 @@
 ﻿using CargoWorld.Data;
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
+using CargoWorld.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,17 @@ namespace CargoWorld.Controllers
 {
     public class GroupsController : Controller
     {
-        private IRepository<Group> _groupsRepository;
+        private GroupRepository _groupsRepository;
 
         public GroupsController(IRepository<Group> groupsRepository)
         {
-            _groupsRepository = groupsRepository;
+            _groupsRepository = (GroupRepository)groupsRepository;
         }
 
         [HttpGet]
-        public IActionResult AGroup()
+        public IActionResult AGroup(Group group)
         {
-            return View(new Group());
+            return View(group);
         }
         
         
@@ -37,15 +38,20 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public IActionResult CreateGroup(int? id)
         {
+
             if (id == null)
-                return View(new Group());
+                return View(new GroupViewModel {
+                    Cars = _groupsRepository.GetCarsWithoutGroup()
+                }) ;
             else
             {
                 var group = _groupsRepository.Get((int)id);
-                return View(new Group
+                return View(new GroupViewModel
                 {
                     IdGroup = group.IdGroup,
-                    IdOwner = group.IdOwner
+                    IdOwner = group.IdOwner,
+                    GroupName = group.GroupName,
+                    Cars = _groupsRepository.GetCarsWithoutGroup()
                 });
             }
         }
