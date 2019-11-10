@@ -13,61 +13,63 @@
 </head>
 
 <body>
-
-    <ul class="list-inline">
-        <li class="list-inline-item ">
-            <button asp-controller="Home" asp-action="Index">
-                Головна
-            </button>
-        </li>
+    <div class="navbar">
 
 
-        @if (User.Identity.IsAuthenticated)
-        {
-            <li class="list-inline-item ">
-
-                <ul class="dropdown">
-                    <li class="dropdown-item">
-                        <a asp-controller="Car" asp-action="CreateCar">Створити машину</a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a asp-controller="Car" asp-action="ImDriving">Я керую</a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a asp-controller="Car" asp-action="MyCars">Мої машини</a>
-                    </li>
-                </ul>
+        <ul class=" list-inline">
+            <li class="nav-item list-inline-item ">
+                <button class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    Головна
+                </button>
             </li>
-            <li>
-                <ul class="dropdown">
-                    <li class="dropdown-item">
-                        <a asp-controller="Group" asp-action="CreateGroup">Створити групу</a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a asp-controller="Group" asp-action="GroupList">My groups</a>
-                    </li>
 
-                </ul>
-            </li>
-            <li class="list-inline-item ">
 
-                <ul class="dropdown">
-                    <li class="dropdown-item">
-                        <a asp-controller="Cargo" asp-action="CreateCago">Створити вантаж</a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a asp-controller="Cargo" asp-action="CargoList">Список вантажів</a>
-                    </li>
-                </ul>
-            </li>
-            <a asp-controller="Auth" asp-action="Logout"> Log out</a>
-        }
-        else
-        {
-            <a asp-controller="Auth" asp-action="Login"> Log in</a>
-        }
-    </ul>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item list-inline-item ">
+                    <ul class="dropdown">
+                        <li class="dropdown-item">
+                            <a asp-controller="Car" asp-action="CreateCar">Створити машину</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a asp-controller="Car" asp-action="ImDriving">Я керую</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a asp-controller="Car" asp-action="MyCars">Мої машини</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item list-inline-item ">
+                    
+                    <ul class="dropdown">
+                        <li class="dropdown-item">
+                            <a asp-controller="Groups" asp-action="CreateGroup">Створити групу</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a asp-controller="Groups" asp-action="GroupList">My groups</a>
+                        </li>
 
+                    </ul>
+                </li>
+                <li class="nav-item list-inline-item ">
+                    
+                    <ul class="dropdown">
+                        <li class="dropdown-item">
+                            <a asp-controller="Cargo" asp-action="CreateCargo">Створити вантаж</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a asp-controller="Cargo" asp-action="CargoList">Список вантажів</a>
+                        </li>
+                    </ul>
+                </li>
+                <a asp-controller="Auth" asp-action="Logout"> Log out</a>
+            }
+            else
+            {
+                <a asp-controller="Auth" asp-action="Login"> Log in</a>
+            }
+        </ul>
+    </div>
 
 
 

@@ -19,7 +19,7 @@ namespace CargoWorld.Data.Repositories
 
         public Group Get(int id) => _ctx.Groups.FirstOrDefault(o => o.IdGroup == id);
 
-        public IEnumerable<Group> GetAll() => throw new NotImplementedException();
+        public IEnumerable<Group> GetAll() => _ctx.Groups.ToList();
 
         public IEnumerable<Group> GetAll(int id)
         {

@@ -1,6 +1,7 @@
 ﻿using CargoWorld.Data;
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
+using CargoWorld.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,11 @@ namespace CargoWorld.Controllers
         public IActionResult CreateCar(int? id)
         {
             if (id == null)
-                return View(new Car());
+                return View(new CarViewModel());
             else
             {
                 var car = _carRepository.Get((int)id);
-                return View(new Car
+                return View(new CarViewModel
                 {
                     IdCar = car.IdCar,
                     IdDriver = car.IdDriver,
@@ -49,11 +50,45 @@ namespace CargoWorld.Controllers
             }
         }
 
-        [Obsolete("Передавать машину")]
-        [HttpGet]
-        public IActionResult ACar()
+        [HttpPost]
+        public async Task<IActionResult> CreateCar(CarViewModel cvm)
         {
-            return View(new Car());
+            var car = new Car
+            {
+                IdCar = cvm.IdCar,
+                IdDriver = cvm.IdDriver,
+                IdGroup = cvm.IdGroup,
+                CarModel = cvm.CarModel,
+                CarcassNumber = cvm.CarcassNumber,
+                RegistrationNumber = cvm.RegistrationNumber,
+                Photo = cvm.Photo,
+                Color = cvm.Color,
+                CargoType = cvm.CargoType,
+                CarType = cvm.CarType,
+                CarryingCapacity = cvm.CarryingCapacity,
+                CarryingCapacitySqM = cvm.CarryingCapacitySqM,
+                HeightCargoCompartment = cvm.HeightCargoCompartment,
+                WidthCargoCompartment = cvm.WidthCargoCompartment,
+                LengthCargoCompartment = cvm.LengthCargoCompartment,
+                CostPerKm = cvm.CostPerKm
+            };
+
+
+            if (cvm.IdCar > 0)
+                _carRepository.Update(car);
+            else
+                _carRepository.Create(car);
+
+            if (await _carRepository.SaveChangesAsync())
+                return RedirectToAction("Index", "Home");
+            else
+                return View(car);
+        }
+
+        [Obsolete("Передавать машину")]
+        public IActionResult ACar(CarViewModel cvm)
+        {
+            return View(cvm);
         }
 
 
@@ -70,6 +105,12 @@ namespace CargoWorld.Controllers
             return View( _carRepository.GetAll());
         }
 
-
+        [HttpGet]
+        public async Task<IActionResult> Remove(int id)
+        {
+            _carRepository.Remove(id);
+            await _carRepository.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
