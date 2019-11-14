@@ -63,6 +63,11 @@
                     </ul>
                 </li>
                 <a asp-controller="Auth" asp-action="Logout"> Log out</a>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    //Админ панель со списком всего говна
+                }
             }
             else
             {

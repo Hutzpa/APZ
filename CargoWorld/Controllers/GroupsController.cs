@@ -26,8 +26,8 @@ namespace CargoWorld.Controllers
         {
             return View(group);
         }
-        
-        
+
+
         [HttpGet]
         public IActionResult GroupList()
         {
@@ -40,9 +40,10 @@ namespace CargoWorld.Controllers
         {
 
             if (id == null)
-                return View(new GroupViewModel {
+                return View(new GroupViewModel
+                {
                     Cars = _groupsRepository.GetCarsWithoutGroup()
-                }) ;
+                });
             else
             {
                 var group = _groupsRepository.Get((int)id);
@@ -54,6 +55,24 @@ namespace CargoWorld.Controllers
                     Cars = _groupsRepository.GetCarsWithoutGroup()
                 });
             }
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateGroupAsync(GroupViewModel gvm)
+        {
+            var group = new Group
+            {
+                IdGroup = gvm.IdGroup,
+                IdOwner = gvm.IdOwner,
+                GroupName = gvm.GroupName,
+            };
+            bool f = await _groupsRepository.SaveChangesAsync();
+             if (f)
+                return RedirectToAction("Index", "Home");
+            else
+                return View(group);
         }
 
     }

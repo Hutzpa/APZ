@@ -29,15 +29,21 @@ namespace CargoWorld
         {
             services.AddControllersWithViews();
 
-            
+
 
             services.AddDbContext<AppDbContext>(opt =>
                  opt.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DbCargo;Trusted_Connection=true;MultipleActiveResultSets=true"));
 
-            
+
+
+            //services.AddIdentity<ApplicationUser, ApplicationRole>()
+            //    .AddEntityFrameworkStores<AppDbContext>()
+            //    .AddRoles<IdentityRole>();
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
+
 
             services.AddTransient<IRepository<Car>, CarRepository>();
             services.AddTransient<IRepository<Cargo>, CargoRepository>();
