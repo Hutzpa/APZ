@@ -11,7 +11,7 @@ namespace CargoWorld.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        //public string blabla { get; set; }
+        public string blabla { get; set; }
 
         
     }

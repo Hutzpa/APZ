@@ -1,4 +1,5 @@
-﻿using CargoWorld.ViewModels;
+﻿using CargoWorld.Models;
+using CargoWorld.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,11 +12,21 @@ namespace CargoWorld.Controllers
 {
     public class AuthController : Controller
     {
-        private UserManager<IdentityUser> _userManager;
-        private SignInManager<IdentityUser> _signInManager;
+        //private UserManager<IdentityUser> _userManager;
+        //private SignInManager<IdentityUser> _signInManager;
 
-        public AuthController(SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager)
+        //public AuthController(SignInManager<IdentityUser> signInManager,
+        //    UserManager<IdentityUser> userManager)
+        //{
+        //    _userManager = userManager;
+        //    _signInManager = signInManager;
+        //}
+
+        private UserManager<ApplicationUser> _userManager;
+        private SignInManager<ApplicationUser> _signInManager;
+
+        public AuthController(SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -59,7 +70,12 @@ namespace CargoWorld.Controllers
                 return View(vm);
             }
 
-            var User = new IdentityUser
+            //var User = new IdentityUser
+            //{
+            //    UserName = vm.Email,
+            //    Email = vm.Email
+            //};
+            var User = new ApplicationUser
             {
                 UserName = vm.Email,
                 Email = vm.Email

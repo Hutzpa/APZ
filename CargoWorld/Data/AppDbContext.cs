@@ -26,8 +26,8 @@ namespace CargoWorld.Data
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
-        //    //var i = Users.Last();
-        //    //i.
+        //    var i = Users.Last();
+            
         //    optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DbCargo;Trusted_Connection=true;MultipleActiveResultSets=true");
         //}
     }

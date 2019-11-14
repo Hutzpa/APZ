@@ -40,9 +40,12 @@ namespace CargoWorld
             //    .AddEntityFrameworkStores<AppDbContext>()
             //    .AddRoles<IdentityRole>();
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddRoles<IdentityRole>()
+            //    .AddEntityFrameworkStores<AppDbContext>();
 
 
             services.AddTransient<IRepository<Car>, CarRepository>();

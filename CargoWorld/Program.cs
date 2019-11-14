@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CargoWorld.Data;
+using CargoWorld.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +22,8 @@ namespace CargoWorld
             var scope = host.Services.CreateScope();
 
             var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            //var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             context.Database.EnsureCreated();
@@ -34,7 +36,13 @@ namespace CargoWorld
 
             if (!context.Users.Any(u => u.UserName == "admin"))
             {
-                var adminUser = new IdentityUser
+                //var adminUser = new IdentityUser
+                //{
+                //    UserName = "admin",
+                //    Email = "admin@mail"
+                //};
+
+                var adminUser = new ApplicationUser
                 {
                     UserName = "admin",
                     Email = "admin@mail"
