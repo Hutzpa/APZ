@@ -2,6 +2,9 @@
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
 using CargoWorld.ViewModels;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,13 +14,16 @@ using System.Threading.Tasks;
 
 namespace CargoWorld.Controllers
 {
+    [Authorize]
     public class CargoController : Controller
     {
         private IRepository<Cargo> _cargoRepository;
+        private UserManager<ApplicationUser> _userManager;
 
-        public CargoController(IRepository<Cargo> cargoRepository)
+        public CargoController(IRepository<Cargo> cargoRepository, UserManager<ApplicationUser> userManager)
         {
             _cargoRepository = cargoRepository;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -55,10 +61,13 @@ namespace CargoWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCargo(CargoViewModel cvm)
         {
+            List<ApplicationUser> apps = new List<ApplicationUser>{
+               await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User))
+            };
             var cargo = new Cargo
             {
                 Id_Cargo = cvm.Id_Cargo,
-                Id_Owner = cvm.Id_Owner,
+                Id_Owner = apps,
                 IsDelivered = cvm.IsDelivered,
                 CargoName = cvm.CargoName,
                 DeparturePoint = cvm.DeparturePoint,
@@ -93,8 +102,8 @@ namespace CargoWorld.Controllers
 
         public IActionResult CargoList()
         {
-            var lst = _cargoRepository.GetAll();
-            return View(lst);
+            var cargos = _cargoRepository.GetAll(_userManager.GetUserId(HttpContext.User));
+            return View(cargos);
         }
     }
 }

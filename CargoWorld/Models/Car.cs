@@ -16,6 +16,7 @@ namespace CargoWorld.Models
         public int IdDriver { get; set; }
 
         public List<Group> IdGroup { get; set; }
+        public ApplicationUser IdOwner { get; set; }
 
         public string CarModel { get; set; }
         public string CarcassNumber { get; set; }

@@ -40,6 +40,8 @@ namespace CargoWorld.Data.Repositories
 
             return cars;
         }
-        
+
+        public IEnumerable<Group> GetAll(string id) => _ctx.Groups.Where(o => o.IdOwner.Where(o => o.Id == id).First().Id == id);
+        public IEnumerable<Car> GetAll(string id, string costyl = "none") => _ctx.Cars.Where(o => o.IdOwner.Id == id);
     }
 }

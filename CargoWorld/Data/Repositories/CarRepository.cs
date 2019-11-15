@@ -22,7 +22,7 @@ namespace CargoWorld.Data.Repositories
         public Car Get(int id) => _ctx.Cars.FirstOrDefault(o => o.IdCar == id);
 
 
-        public IEnumerable<Car> GetAll() => _ctx.Cars.ToList();
+        public IEnumerable<Car> GetAll(string id) => _ctx.Cars.Where(o => o.IdOwner.Id == id) ;
 
 
         [Obsolete]

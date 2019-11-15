@@ -15,6 +15,8 @@ namespace CargoWorld.Data
             : base(options)
         {
                // Database.EnsureCreated();
+
+            
         }
        
 
@@ -22,7 +24,8 @@ namespace CargoWorld.Data
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<CargoInCar> CargoInCars { get; set; }
         public DbSet<Group> Groups { get; set; }
-        public DbSet<User> _Users { get; set; }
+
+        //public DbSet<ApplicationUser> Users { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

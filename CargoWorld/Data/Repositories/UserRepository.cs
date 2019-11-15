@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CargoWorld.Data.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IRepository<ApplicationUser>
     {
         private AppDbContext _ctx;
 
@@ -16,22 +16,26 @@ namespace CargoWorld.Data.Repositories
             _ctx = ctx;
         }
 
-        public void Create(User data) => _ctx._Users.Add(data);
+        public void Create(ApplicationUser data) => _ctx.Users.Add(data);
 
-        public User Get(int id) => _ctx._Users.FirstOrDefault(o => o.IdUser == id);
+        public ApplicationUser Get(int id) => _ctx.Users.FirstOrDefault(o => o.Id == id.ToString());
 
-        public IEnumerable<User> GetAll() => _ctx._Users.ToList();
+        public IEnumerable<ApplicationUser> GetAll() => _ctx.Users.ToList();
 
-        public IEnumerable<User> GetAll(int id)
+        public IEnumerable<ApplicationUser> GetAll(int id)
         {
             throw new NotImplementedException();
         }
 
         public void Remove(int id) => _ctx.Remove(Get(id));
 
-        public void Update(User update) => _ctx._Users.Update(update);
+        public void Update(ApplicationUser update) => _ctx.Users.Update(update);
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
+        public IEnumerable<ApplicationUser> GetAll(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

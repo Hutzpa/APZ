@@ -47,12 +47,16 @@ namespace CargoWorld
             //    .AddRoles<IdentityRole>()
             //    .AddEntityFrameworkStores<AppDbContext>();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Auth/Login/";
+            });
 
             services.AddTransient<IRepository<Car>, CarRepository>();
             services.AddTransient<IRepository<Cargo>, CargoRepository>();
             services.AddTransient<IRepository<Group>, GroupRepository>();
             services.AddTransient<IRepository<CargoInCar>, CargoInCarRepository>();
-            services.AddTransient<IRepository<User>, UserRepository>();
+            services.AddTransient<IRepository<ApplicationUser>, UserRepository>();
 
         }
 

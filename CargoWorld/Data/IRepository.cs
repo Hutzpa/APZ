@@ -9,7 +9,7 @@ namespace CargoWorld.Data
     public interface IRepository<T> 
     {
         T Get(int id);
-        IEnumerable<T> GetAll();  
+        IEnumerable<T> GetAll(string id);  
         IEnumerable<T> GetAll(int id);
 
         void Create(T data);

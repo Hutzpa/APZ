@@ -4,14 +4,16 @@ using CargoWorld.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CargoWorld.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191115141749_Clear5")]
+    partial class Clear5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,9 +154,6 @@ namespace CargoWorld.Migrations
                     b.Property<int>("IdDriver")
                         .HasColumnType("int");
 
-                    b.Property<string>("IdOwnerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<double>("LengthCargoCompartment")
                         .HasColumnType("float");
 
@@ -168,8 +167,6 @@ namespace CargoWorld.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("IdCar");
-
-                    b.HasIndex("IdOwnerId");
 
                     b.ToTable("Cars");
                 });
@@ -405,13 +402,6 @@ namespace CargoWorld.Migrations
                     b.HasOne("CargoWorld.Models.Group", null)
                         .WithMany("IdOwner")
                         .HasForeignKey("GroupIdGroup");
-                });
-
-            modelBuilder.Entity("CargoWorld.Models.Car", b =>
-                {
-                    b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")
-                        .WithMany()
-                        .HasForeignKey("IdOwnerId");
                 });
 
             modelBuilder.Entity("CargoWorld.Models.CargoInCar", b =>

@@ -23,6 +23,7 @@ namespace CargoWorld.Data.Repositories
 
         public IEnumerable<Cargo> GetAll(int id) => throw new NotImplementedException();
 
+        public IEnumerable<Cargo> GetAll(string id) => _ctx.Cargos.Where(o => o.Id_Owner.Where(o => o.Id == id).First().Id == id);
         public void Remove(int id) => _ctx.Cargos.Remove(Get(id));
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
         public void Update(Cargo update) => _ctx.Cargos.Update(update);

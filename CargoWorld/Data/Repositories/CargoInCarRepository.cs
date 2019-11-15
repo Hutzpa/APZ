@@ -26,6 +26,11 @@ namespace CargoWorld.Data.Repositories
             throw new NotImplementedException();
         }
 
+        public IEnumerable<CargoInCar> GetAll(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Remove(int id) => _ctx.CargoInCars.Remove(Get(id));
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;

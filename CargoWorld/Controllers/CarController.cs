@@ -2,6 +2,8 @@
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
 using CargoWorld.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,17 +13,20 @@ using System.Threading.Tasks;
 
 namespace CargoWorld.Controllers
 {
+    [Authorize]
     public class CarController : Controller
     {
         private IRepository<Car> _carRepository;
+        private UserManager<ApplicationUser> _userManager;
 
-        public CarController(IRepository<Car> carRepository )
+        public CarController(IRepository<Car> carRepository, UserManager<ApplicationUser> userManager)
         {
             _carRepository = carRepository;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public IActionResult CreateCar(int? id)
+        public async Task<IActionResult> CreateCarAsync(int? id)
         {
             if (id == null)
                 return View(new CarViewModel());
@@ -30,6 +35,7 @@ namespace CargoWorld.Controllers
                 var car = _carRepository.Get((int)id);
                 return View(new CarViewModel
                 {
+                    IdOwner = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User)),
                     IdCar = car.IdCar,
                     IdDriver = car.IdDriver,
                     IdGroup = car.IdGroup,
@@ -46,7 +52,7 @@ namespace CargoWorld.Controllers
                     WidthCargoCompartment = car.WidthCargoCompartment,
                     LengthCargoCompartment = car.LengthCargoCompartment,
                     CostPerKm = car.CostPerKm
-                }) ;
+                });
             }
         }
 
@@ -55,6 +61,7 @@ namespace CargoWorld.Controllers
         {
             var car = new Car
             {
+                IdOwner = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User)),
                 IdCar = cvm.IdCar,
                 IdDriver = cvm.IdDriver,
                 IdGroup = cvm.IdGroup,
@@ -102,7 +109,23 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public IActionResult MyCars()
         {
-            return View( _carRepository.GetAll());
+            //      var i = _carRepository.GetAll().Where(o => o.IdOwner.Id == _userManager.GetUserId(HttpContext.User));
+
+            //var j = _carRepository.GetAll();
+            // var kl = HttpContext.User;
+            // var k = (_userManager.GetUserAsync(HttpContext.User)).Id;
+
+            // var o = User.Identity.GetUserId();
+            // m
+            // var ac = from t in j
+            //          where t.IdOwner.Id == k.ToString()
+            //          select t;
+
+            // j.Select(o => o.IdOwner.Id == User.Identity.GetUserId());
+
+            var cars = _carRepository.GetAll(_userManager.GetUserId(HttpContext.User));
+
+            return View(cars);
         }
 
         [HttpGet]

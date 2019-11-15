@@ -2,6 +2,8 @@
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
 using CargoWorld.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,13 +14,16 @@ using System.Threading.Tasks;
 
 namespace CargoWorld.Controllers
 {
+    [Authorize]
     public class GroupsController : Controller
     {
         private GroupRepository _groupsRepository;
+        private UserManager<ApplicationUser> _userManager;
 
-        public GroupsController(IRepository<Group> groupsRepository)
+        public GroupsController(IRepository<Group> groupsRepository, UserManager<ApplicationUser> userManager)
         {
             _groupsRepository = (GroupRepository)groupsRepository;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -31,7 +36,8 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public IActionResult GroupList()
         {
-            return View(_groupsRepository.GetAll());
+            var grps = _groupsRepository.GetAll(_userManager.GetUserId(HttpContext.User));
+            return View(grps);
         }
 
 
@@ -47,12 +53,14 @@ namespace CargoWorld.Controllers
             else
             {
                 var group = _groupsRepository.Get((int)id);
+                var cars = _groupsRepository.GetAll(_userManager.GetUserId(HttpContext.User),"I'm ashamed tbh");
                 return View(new GroupViewModel
                 {
                     IdGroup = group.IdGroup,
                     IdOwner = group.IdOwner,
                     GroupName = group.GroupName,
-                    Cars = _groupsRepository.GetCarsWithoutGroup()
+                    Cars = cars,
+                   
                 });
             }
         }
@@ -62,13 +70,18 @@ namespace CargoWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGroupAsync(GroupViewModel gvm)
         {
+            List<ApplicationUser> ownr = new List<ApplicationUser>{
+               await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User))
+            };
             var group = new Group
             {
                 IdGroup = gvm.IdGroup,
-                IdOwner = gvm.IdOwner,
-                GroupName = gvm.GroupName,
+                IdOwner = ownr,
+                GroupName = gvm.GroupName
+                
             };
-            bool f = await _groupsRepository.SaveChangesAsync();
+            //какого-то фига не сохраняет
+            bool f = _groupsRepository.SaveChangesAsync().GetAwaiter().GetResult();
              if (f)
                 return RedirectToAction("Index", "Home");
             else
