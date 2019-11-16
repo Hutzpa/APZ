@@ -10,17 +10,22 @@
             <label>
                 Enter group name
             </label>
-            <input asp-for="GroupName"/>
-            <h3>Додайте до неї машини(можна буде редагувати)</h3>
+            <input asp-for="GroupName" />
 
-            <ul>
-                @foreach(var cr in Model.Cars)
-                {
-                    <li>
-                        @cr.CarModel
-                    </li>
-                }
-            </ul>
+            @if (Model.IdGroup != 0)
+            {
+
+                <h3>Додайте до групи машини</h3>
+
+                <ul>
+                    @foreach (var cr in Model.Cars)
+                    {
+                        <li>
+                            @cr.CarModel
+                        </li>
+                    }
+                </ul>
+            }
         </div>
 
         <input type="submit" />

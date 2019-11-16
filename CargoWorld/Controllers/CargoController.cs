@@ -61,13 +61,11 @@ namespace CargoWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCargo(CargoViewModel cvm)
         {
-            List<ApplicationUser> apps = new List<ApplicationUser>{
-               await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User))
-            };
+
             var cargo = new Cargo
             {
                 Id_Cargo = cvm.Id_Cargo,
-                Id_Owner = apps,
+                Id_Owner = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User)),
                 IsDelivered = cvm.IsDelivered,
                 CargoName = cvm.CargoName,
                 DeparturePoint = cvm.DeparturePoint,

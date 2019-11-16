@@ -37,14 +37,15 @@ namespace CargoWorld.Data.Repositories
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
-        [Obsolete("Почитай про ")]
-        public IEnumerable<Car> IAmDriving(int MyId)
-        {
-            var res = from t in _ctx.Cars
-                      where t.IdDriver == MyId
-                      select t;
-            return res;
-        }
+
+        public IEnumerable<Car> IAmDriving(int id) => _ctx.Cars.Where(o => o.IdDriver == id);
+        /// <summary>
+        /// Cars in some special group
+        /// </summary>
+        /// <param name="idRep"></param>
+        /// <returns></returns>
+        public IEnumerable<Car> CarsInRep(int idGrp) => _ctx.Cars.Where(o => o.IdGroup.IdGroup == idGrp);
+
 
 
 

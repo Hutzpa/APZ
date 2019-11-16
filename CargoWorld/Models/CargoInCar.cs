@@ -12,7 +12,7 @@ namespace CargoWorld.Models
         [Key]
         public int Id_Delivery { get; set; }
         public Car Id_Car { get; set; }
-        public Cargo Id_Cargo { get; set; }
+        public List<Cargo> Id_Cargo { get; set; }
         public int AmountOfCarog { get; set; }
     }
 }

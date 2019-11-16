@@ -19,17 +19,28 @@ namespace CargoWorld.Controllers
     {
         private GroupRepository _groupsRepository;
         private UserManager<ApplicationUser> _userManager;
+        private CarRepository _carManager;
 
-        public GroupsController(IRepository<Group> groupsRepository, UserManager<ApplicationUser> userManager)
+        public GroupsController(IRepository<Group> groupsRepository, 
+            UserManager<ApplicationUser> userManager,
+            IRepository<Car> carManager)
         {
             _groupsRepository = (GroupRepository)groupsRepository;
             _userManager = userManager;
+            _carManager = (CarRepository)carManager;
         }
 
         [HttpGet]
         public IActionResult AGroup(Group group)
         {
-            return View(group);
+            GroupViewModel gvm = new GroupViewModel
+            {
+                IdGroup = group.IdGroup,
+                IdOwner = group.IdOwner,
+                GroupName = group.GroupName,
+                Cars = _carManager.CarsInRep(group.IdGroup)
+            };
+            return View(gvm);
         }
 
 
@@ -48,19 +59,19 @@ namespace CargoWorld.Controllers
             if (id == null)
                 return View(new GroupViewModel
                 {
-                    Cars = _groupsRepository.GetCarsWithoutGroup()
+                    Cars = _groupsRepository.GetCarsWithoutGroup(id.ToString())
                 });
             else
             {
                 var group = _groupsRepository.Get((int)id);
-                var cars = _groupsRepository.GetAll(_userManager.GetUserId(HttpContext.User),"I'm ashamed tbh");
+                var cars = _groupsRepository.GetCarsWithoutGroup(_userManager.GetUserId(HttpContext.User));
                 return View(new GroupViewModel
                 {
                     IdGroup = group.IdGroup,
                     IdOwner = group.IdOwner,
                     GroupName = group.GroupName,
                     Cars = cars,
-                   
+
                 });
             }
         }
@@ -70,19 +81,21 @@ namespace CargoWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGroupAsync(GroupViewModel gvm)
         {
-            List<ApplicationUser> ownr = new List<ApplicationUser>{
-               await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User))
-            };
             var group = new Group
             {
                 IdGroup = gvm.IdGroup,
-                IdOwner = ownr,
-                GroupName = gvm.GroupName
-                
+                GroupName = gvm.GroupName,
+                IdOwner = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User))
             };
-            //какого-то фига не сохраняет
-            bool f = _groupsRepository.SaveChangesAsync().GetAwaiter().GetResult();
-             if (f)
+
+           
+
+            if (gvm.IdGroup > 0)
+                _groupsRepository.Update(group);
+            else
+                _groupsRepository.Create(group);
+
+            if (await _groupsRepository.SaveChangesAsync())
                 return RedirectToAction("Index", "Home");
             else
                 return View(group);

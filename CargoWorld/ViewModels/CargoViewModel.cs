@@ -11,7 +11,8 @@ namespace CargoWorld.ViewModels
     public class CargoViewModel
     {
         public int Id_Cargo { get; set; }
-        public List<ApplicationUser> Id_Owner { get; set; }
+        public ApplicationUser Id_Owner { get; set; }
+        public CargoInCar Transfer { get; set; }
         public bool IsDelivered { get; set; }
 
         public string CargoName { get; set; }

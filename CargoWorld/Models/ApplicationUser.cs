@@ -21,5 +21,9 @@ namespace CargoWorld.Models
         /// </summary>
         public string Sex { get; set; }
         public string Geoposition { get; set; }
+
+        public List<Group> Groups { get; set; }
+        public List<Car> Cars { get; set; }
+        public List<Cargo> Cargos { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CargoWorld.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,12 @@ namespace CargoWorld.Data.Repositories
 
         public IEnumerable<Group> GetAll() => _ctx.Groups.ToList();
 
-        public IEnumerable<Group> GetAll(int id)
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Список машин в групе
+        /// </summary>
+        /// <param name="id">номер групы</param>
+        /// <returns></returns>
+        public IEnumerable<Group> GetAll(int id) => throw new NotImplementedException();
 
         public void Remove(int id) => _ctx.Groups.Remove(Get(id));
 
@@ -32,16 +35,15 @@ namespace CargoWorld.Data.Repositories
 
         public void Update(Group update) => _ctx.Update(update);
 
-        public IEnumerable<Car> GetCarsWithoutGroup()
-        {
-            var cars = from t in _ctx.Cars
-                       where t.IdDriver == 0
-                       select t;
+        /// <summary>
+        /// Получение всех машин пользователя что не состоят в групе
+        /// </summary>
+        public IEnumerable<Car> GetCarsWithoutGroup(string id) => _ctx.Cars.Where(o => o.IdOwner.Id == id && o.IdGroup == null);
+        /// <summary>
+        /// Выводит все групы конкретного пользователя
+        /// </summary>
+        public IEnumerable<Group> GetAll(string id) => _ctx.Groups.Where(o => o.IdOwner.Id == id);
 
-            return cars;
-        }
 
-        public IEnumerable<Group> GetAll(string id) => _ctx.Groups.Where(o => o.IdOwner.Where(o => o.Id == id).First().Id == id);
-        public IEnumerable<Car> GetAll(string id, string costyl = "none") => _ctx.Cars.Where(o => o.IdOwner.Id == id);
     }
 }
