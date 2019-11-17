@@ -1,4 +1,5 @@
 ﻿using CargoWorld.Data;
+using CargoWorld.Data.FileManager;
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
 using CargoWorld.ViewModels;
@@ -18,11 +19,15 @@ namespace CargoWorld.Controllers
     {
         private IRepository<Car> _carRepository;
         private UserManager<ApplicationUser> _userManager;
+        private IFileManager _fileManager;
 
-        public CarController(IRepository<Car> carRepository, UserManager<ApplicationUser> userManager)
+        public CarController(IRepository<Car> carRepository, 
+            UserManager<ApplicationUser> userManager,
+            IFileManager fileManager)
         {
             _carRepository = carRepository;
             _userManager = userManager;
+            _fileManager = fileManager;
         }
 
         [HttpGet]
@@ -68,7 +73,7 @@ namespace CargoWorld.Controllers
                 CarModel = cvm.CarModel,
                 CarcassNumber = cvm.CarcassNumber,
                 RegistrationNumber = cvm.RegistrationNumber,
-                Photo = cvm.Photo,
+                Photo = await _fileManager.SaveImage(cvm.Image),
                 Color = cvm.Color,
                 CargoType = cvm.CargoType,
                 CarType = cvm.CarType,
@@ -130,23 +135,7 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public IActionResult MyCars()
         {
-            //      var i = _carRepository.GetAll().Where(o => o.IdOwner.Id == _userManager.GetUserId(HttpContext.User));
-
-            //var j = _carRepository.GetAll();
-            // var kl = HttpContext.User;
-            // var k = (_userManager.GetUserAsync(HttpContext.User)).Id;
-
-            // var o = User.Identity.GetUserId();
-            // m
-            // var ac = from t in j
-            //          where t.IdOwner.Id == k.ToString()
-            //          select t;
-
-            // j.Select(o => o.IdOwner.Id == User.Identity.GetUserId());
-
-            var cars = _carRepository.GetAll(_userManager.GetUserId(HttpContext.User));
-
-            return View(cars);
+            return View(_carRepository.GetAll(_userManager.GetUserId(HttpContext.User)));
         }
 
         [HttpGet]
@@ -155,6 +144,13 @@ namespace CargoWorld.Controllers
             _carRepository.Remove(id);
             await _carRepository.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet("/Image/{image}")]
+        public IActionResult Image(string image)
+        {
+            var type = image.Substring(image.LastIndexOf('.')+1);
+            return new FileStreamResult(_fileManager.ImageStream(image), $"image/{type}");
         }
     }
 }

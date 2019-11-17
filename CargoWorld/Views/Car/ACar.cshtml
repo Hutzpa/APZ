@@ -4,6 +4,12 @@
     ViewBag.Title = Model.CarModel;
 }
 
-<div>
-    Nice, here is your @Model.CarModel
-</div>
+    <div>
+        Nice, here is your @Model.CarModel
+
+        @if (!String.IsNullOrEmpty(Model.Photo))
+        {
+            var imagePath = $"/content/webs/{Model.Photo}";
+            <img src="@imagePath" />
+        }
+    </div>

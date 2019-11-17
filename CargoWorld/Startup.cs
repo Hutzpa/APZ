@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
+using CargoWorld.Data.FileManager;
 
 namespace CargoWorld
 {
@@ -35,17 +36,10 @@ namespace CargoWorld
                  opt.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DbCargo;Trusted_Connection=true;MultipleActiveResultSets=true"));
 
 
-
-            //services.AddIdentity<ApplicationUser, ApplicationRole>()
-            //    .AddEntityFrameworkStores<AppDbContext>()
-            //    .AddRoles<IdentityRole>();
-
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
-            //services.AddDefaultIdentity<IdentityUser>()
-            //    .AddRoles<IdentityRole>()
-            //    .AddEntityFrameworkStores<AppDbContext>();
+           
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -57,6 +51,7 @@ namespace CargoWorld
             services.AddTransient<IRepository<Group>, GroupRepository>();
             services.AddTransient<IRepository<CargoInCar>, CargoInCarRepository>();
             services.AddTransient<IRepository<ApplicationUser>, UserRepository>();
+            services.AddTransient<IFileManager,FIleManager>();
 
         }
 

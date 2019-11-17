@@ -15,6 +15,7 @@
         {
             <hr />
             <span>@freecar.CarModel</span>
+            <a asp-controller="Groups" asp-action="AddCarToGroup" asp-route-idCar="@freecar.IdCar" asp-route-idGroup="@Model.IdGroup" >Додати до групи</a>
             <hr />
         }
 

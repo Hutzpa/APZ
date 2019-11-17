@@ -1,9 +1,15 @@
-﻿@model CargoViewModel 
+﻿@model CargoViewModel
 
-@{ 
+@{
     ViewBag.Title = Model.CargoName;
 }
 
 
 
 <h3>@Model.CargoName </h3>
+
+@if (!String.IsNullOrEmpty(Model.Photo))
+{
+    var imagePath = $"/content/webs/{Model.Photo}";
+    <img src="@imagePath" />
+}

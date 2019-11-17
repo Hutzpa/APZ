@@ -28,6 +28,7 @@ namespace CargoWorld.Data.Repositories
         /// <returns></returns>
         public IEnumerable<Car> GetAll(string id)
         {
+       
             ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
 
             return _ctx.Cars.Where(o => o.IdOwner.Id == user.Id).ToList();
@@ -42,7 +43,11 @@ namespace CargoWorld.Data.Repositories
 
         public void Remove(int id) => _ctx.Cars.Remove(Get(id));
 
-        public void Update(Car update) => _ctx.Cars.Update(update);
+        public void Update(Car update)
+        {
+            _ctx.Cars.Update(update);
+        }
+
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 

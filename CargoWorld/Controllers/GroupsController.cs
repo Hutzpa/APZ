@@ -76,8 +76,6 @@ namespace CargoWorld.Controllers
             }
         }
 
-
-
         [HttpPost]
         public async Task<IActionResult> CreateGroupAsync(GroupViewModel gvm)
         {
@@ -99,6 +97,47 @@ namespace CargoWorld.Controllers
                 return RedirectToAction("Index", "Home");
             else
                 return View(group);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteGroup(int id)
+        {
+            _groupsRepository.Remove(id);
+            await _groupsRepository.SaveChangesAsync();
+            return RedirectToAction("GroupList", "Groups");
+        }
+
+        [HttpGet]
+        [Obsolete("Работает, но низя изменять уже занятую запись")]
+        public async Task<IActionResult> AddCarToGroupAsync(int idCar, int idGroup)
+        {
+            var cvm = _carManager.Get(idCar);
+            var group = _groupsRepository.Get(idGroup);
+            Car carWithGroup = new Car
+            {
+                IdOwner = cvm.IdOwner,
+                IdCar = cvm.IdCar,
+                IdDriver = cvm.IdDriver,
+                IdGroup = group,
+                CarModel = cvm.CarModel,
+                CarcassNumber = cvm.CarcassNumber,
+                RegistrationNumber = cvm.RegistrationNumber,
+                Photo = cvm.Photo,
+                Color = cvm.Color,
+                CargoType = cvm.CargoType,
+                CarType = cvm.CarType,
+                CarryingCapacity = cvm.CarryingCapacity,
+                CarryingCapacitySqM = cvm.CarryingCapacitySqM,
+                HeightCargoCompartment = cvm.HeightCargoCompartment,
+                WidthCargoCompartment = cvm.WidthCargoCompartment,
+                LengthCargoCompartment = cvm.LengthCargoCompartment,
+                CostPerKm = cvm.CostPerKm
+            };
+            
+            _carManager.Update(carWithGroup);
+            await _carManager.SaveChangesAsync();
+            return RedirectToAction("AGroup", idGroup.ToString());
         }
 
     }

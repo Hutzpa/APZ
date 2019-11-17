@@ -1,4 +1,5 @@
 ﻿using CargoWorld.Data;
+using CargoWorld.Data.FileManager;
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
 using CargoWorld.ViewModels;
@@ -19,11 +20,15 @@ namespace CargoWorld.Controllers
     {
         private IRepository<Cargo> _cargoRepository;
         private UserManager<ApplicationUser> _userManager;
+        private IFileManager _fileManager;
 
-        public CargoController(IRepository<Cargo> cargoRepository, UserManager<ApplicationUser> userManager)
+        public CargoController(IRepository<Cargo> cargoRepository, 
+            UserManager<ApplicationUser> userManager,
+            IFileManager fileManager)
         {
             _cargoRepository = cargoRepository;
             _userManager = userManager;
+            _fileManager = fileManager;
         }
 
         [HttpGet]
@@ -87,7 +92,7 @@ namespace CargoWorld.Controllers
                 CargoName = cvm.CargoName,
                 DeparturePoint = cvm.DeparturePoint,
                 DestinationPoint = cvm.DestinationPoint,
-                Photo = cvm.Photo,
+                Photo = await _fileManager.SaveImage(cvm.Image),
                 Weight = cvm.Weight,
                 CargoType = cvm.CargoType,
                 Height = cvm.Height,
@@ -119,6 +124,13 @@ namespace CargoWorld.Controllers
         {
             var cargos = _cargoRepository.GetAll(_userManager.GetUserId(HttpContext.User));
             return View(cargos);
+        }
+
+        [HttpGet("/Image/{image}")]
+        public IActionResult Image(string image)
+        {
+            var type = image.Substring(image.LastIndexOf('.') + 1);
+            return new FileStreamResult(_fileManager.ImageStream(image), $"image/{type}");
         }
     }
 }

@@ -19,7 +19,6 @@ namespace CargoWorld.Data
             
         }
        
-
         public DbSet<Car> Cars { get; set; }
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<CargoInCar> CargoInCars { get; set; }
