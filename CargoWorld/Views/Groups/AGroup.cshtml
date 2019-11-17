@@ -5,12 +5,36 @@
 }
 
 
-<h3>GRUUUUPPPAAAA</h3>
 <div>
-    <h3>@Model.GroupName</h3>
+    <span>Назва вашої групи - @Model.GroupName</span>
 
-    @foreach (var cr in Model.Cars)
-    {
 
-    }
+        <span>Список машин доступних для додавання у цю групу:</span>
+
+        @foreach (var freecar in ViewBag.FreeCars)
+        {
+            <hr />
+            <span>@freecar.CarModel</span>
+            <hr />
+        }
+
+ 
+        <span>Список машин у групі:</span>
+        @if (Model.Cars.Count() == 0)
+        {
+            <span>Ви ще не маєте машин у цій групі</span>
+        }
+        else
+        {
+            <span>Список машин</span>
+            @foreach (var cr in Model.Cars)
+            {
+                <span>@cr.CarModel</span>
+                <span>@cr.RegistrationNumber</span>
+                <hr />
+            }
+
+        }
+
+    
 </div>

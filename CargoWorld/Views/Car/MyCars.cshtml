@@ -15,7 +15,7 @@ else
         @foreach (var cr in Model)
         {
             <li>
-               <a asp-controller="Car" asp-action="ACar" asp-route-cvm="@cr.IdCar">@cr.CarModel</a>
+               <a asp-controller="Car" asp-action="ACar" asp-route-id="@cr.IdCar">@cr.CarModel</a>
             </li>
 
             <a asp-controller="Car" asp-action="CreateCar" asp-route-id="@cr.IdCar">

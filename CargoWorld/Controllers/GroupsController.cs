@@ -30,10 +30,11 @@ namespace CargoWorld.Controllers
             _carManager = (CarRepository)carManager;
         }
 
-        [HttpGet]
-        public IActionResult AGroup(Group group)
+        public IActionResult AGroup(string idOfGroup)
         {
-            GroupViewModel gvm = new GroupViewModel
+            var group = _groupsRepository.Get(Convert.ToInt32(idOfGroup));
+            ViewBag.FreeCars = _groupsRepository.GetCarsWithoutGroup(_userManager.GetUserId(HttpContext.User));
+           GroupViewModel gvm = new GroupViewModel
             {
                 IdGroup = group.IdGroup,
                 IdOwner = group.IdOwner,
@@ -47,8 +48,7 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public IActionResult GroupList()
         {
-            var grps = _groupsRepository.GetAll(_userManager.GetUserId(HttpContext.User));
-            return View(grps);
+            return View(_groupsRepository.GetAll(_userManager.GetUserId(HttpContext.User)));
         }
 
 

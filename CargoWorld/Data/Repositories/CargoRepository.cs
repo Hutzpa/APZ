@@ -23,8 +23,17 @@ namespace CargoWorld.Data.Repositories
 
         public IEnumerable<Cargo> GetAll(int id) => throw new NotImplementedException();
 
-        [Obsolete("Выводит лишь один груз")]
-        public IEnumerable<Cargo> GetAll(string id) => _ctx.Cargos.Where(o => o.Id_Owner.Id == id);
+        /// <summary>
+        /// Выводит все грузы конкретного пользователя
+        /// </summary>
+        /// <param name="id">номер пользователя</param>
+        /// <returns></returns>
+        public IEnumerable<Cargo> GetAll(string id)
+        {
+            ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
+            return _ctx.Cargos.Where(o => o.Id_Owner.Id == user.Id).ToList();
+        }
+
         public void Remove(int id) => _ctx.Cargos.Remove(Get(id));
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
         public void Update(Cargo update) => _ctx.Cargos.Update(update);

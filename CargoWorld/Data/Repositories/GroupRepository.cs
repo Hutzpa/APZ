@@ -42,7 +42,13 @@ namespace CargoWorld.Data.Repositories
         /// <summary>
         /// Выводит все групы конкретного пользователя
         /// </summary>
-        public IEnumerable<Group> GetAll(string id) => _ctx.Groups.Where(o => o.IdOwner.Id == id);
+        public IEnumerable<Group> GetAll(string id)
+        {
+            ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
+            return _ctx.Groups.Where(o => o.IdOwner.Id == user.Id).ToList();
+        }
+
+
 
 
     }

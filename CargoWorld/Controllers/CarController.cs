@@ -92,10 +92,31 @@ namespace CargoWorld.Controllers
                 return View(car);
         }
 
-        [Obsolete("Передавать машину")]
-        public IActionResult ACar(CarViewModel cvm)
+
+        public IActionResult ACar(int id)
         {
-            return View(cvm);
+            var cvm = _carRepository.Get(id);
+            CarViewModel car = new CarViewModel
+            {
+                IdOwner = cvm.IdOwner,
+                IdCar = cvm.IdCar,
+                IdDriver = cvm.IdDriver,
+                IdGroup = cvm.IdGroup,
+                CarModel = cvm.CarModel,
+                CarcassNumber = cvm.CarcassNumber,
+                RegistrationNumber = cvm.RegistrationNumber,
+                Photo = cvm.Photo,
+                Color = cvm.Color,
+                CargoType = cvm.CargoType,
+                CarType = cvm.CarType,
+                CarryingCapacity = cvm.CarryingCapacity,
+                CarryingCapacitySqM = cvm.CarryingCapacitySqM,
+                HeightCargoCompartment = cvm.HeightCargoCompartment,
+                WidthCargoCompartment = cvm.WidthCargoCompartment,
+                LengthCargoCompartment = cvm.LengthCargoCompartment,
+                CostPerKm = cvm.CostPerKm
+            };
+            return View(car);
         }
 
 

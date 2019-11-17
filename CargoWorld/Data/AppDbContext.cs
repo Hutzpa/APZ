@@ -24,14 +24,6 @@ namespace CargoWorld.Data
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<CargoInCar> CargoInCars { get; set; }
         public DbSet<Group> Groups { get; set; }
-
-        //public DbSet<ApplicationUser> Users { get; set; }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    var i = Users.Last();
-            
-        //    optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DbCargo;Trusted_Connection=true;MultipleActiveResultSets=true");
-        //}
+        override public DbSet<ApplicationUser> Users { get; set; }
     }
 }

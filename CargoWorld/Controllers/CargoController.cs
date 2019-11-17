@@ -27,8 +27,25 @@ namespace CargoWorld.Controllers
         }
 
         [HttpGet]
-        public IActionResult ACargo(CargoViewModel cvm)
+        public IActionResult ACargo(int id)
         {
+            var cargo = _cargoRepository.Get(id);
+
+            CargoViewModel cvm = new CargoViewModel
+            {
+                Id_Cargo = cargo.Id_Cargo,
+                Id_Owner = cargo.Id_Owner,
+                IsDelivered = cargo.IsDelivered,
+                CargoName = cargo.CargoName,
+                DeparturePoint = cargo.DeparturePoint,
+                DestinationPoint = cargo.DestinationPoint,
+                Photo = cargo.Photo,
+                Weight = cargo.Weight,
+                CargoType = cargo.CargoType,
+                Height = cargo.Height,
+                Width = cargo.Width,
+                Length = cargo.Length
+            };
             return View(cvm);
         }
 

@@ -21,9 +21,18 @@ namespace CargoWorld.Data.Repositories
 
         public Car Get(int id) => _ctx.Cars.FirstOrDefault(o => o.IdCar == id);
 
+        /// <summary>
+        /// Все машины конкретного пользователя
+        /// </summary>
+        /// <param name="id">Номер пользователя</param>
+        /// <returns></returns>
+        public IEnumerable<Car> GetAll(string id)
+        {
+            ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
 
-        public IEnumerable<Car> GetAll(string id) => _ctx.Cars.Where(o => o.IdOwner.Id == id) ;
+            return _ctx.Cars.Where(o => o.IdOwner.Id == user.Id).ToList();
 
+        }
 
         [Obsolete]
         public IEnumerable<Car> GetAll(int id)
@@ -37,7 +46,7 @@ namespace CargoWorld.Data.Repositories
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
-
+        
         public IEnumerable<Car> IAmDriving(int id) => _ctx.Cars.Where(o => o.IdDriver == id);
         /// <summary>
         /// Cars in some special group
