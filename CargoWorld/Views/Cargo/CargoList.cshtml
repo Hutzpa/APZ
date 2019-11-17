@@ -1,11 +1,11 @@
-﻿@model IEnumerable<Cargo>
+﻿@model ListViewModel<Cargo>
 
 @{
     ViewBag.Title = "Ваші вантажі";
 }
 
 
-@if (Model.Count() == 0)
+@if (Model.List.Count() == 0)
 {
     <h3>У вас ще не мае вантажів</h3>
     <a asp-controller="Cargo" asp-action="CreateCargo">Cтворіть новий</a>
@@ -13,7 +13,7 @@
 else
 {
     <ul>
-        @foreach (var c in Model)
+        @foreach (var c in Model.List)
         {
             <li>
                 <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@c.Id_Cargo">@c.CargoName</a>
@@ -24,4 +24,17 @@ else
             <a asp-controller="Cargo" asp-action="CreateCargo" asp-route-id="@c.Id_Cargo"> Edit</a>
         }
     </ul>
+
+    <div>
+        @if (Model.PageNumber > 1)
+        {
+        <a asp-controller="Cargo" asp-action="CargoList" asp-route-pageNumber="@(Model.PageNumber-1)">Previous page</a>
+
+        }
+        @if (Model.CanNext)
+        {
+        <a asp-controller="Cargo" asp-action="CargoList" asp-route-pageNumber="@(Model.PageNumber+1)">Next page</a>
+
+        }
+    </div>
 }

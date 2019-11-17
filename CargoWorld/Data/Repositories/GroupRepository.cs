@@ -1,4 +1,5 @@
 ﻿using CargoWorld.Models;
+using CargoWorld.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,6 @@ namespace CargoWorld.Data.Repositories
 
         public IEnumerable<Group> GetAll() => _ctx.Groups.ToList();
 
-        /// <summary>
-        /// Список машин в групе
-        /// </summary>
-        /// <param name="id">номер групы</param>
-        /// <returns></returns>
-        public IEnumerable<Group> GetAll(int id) => throw new NotImplementedException();
-
         public void Remove(int id) => _ctx.Groups.Remove(Get(id));
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
@@ -42,10 +36,26 @@ namespace CargoWorld.Data.Repositories
         /// <summary>
         /// Выводит все групы конкретного пользователя
         /// </summary>
-        public IEnumerable<Group> GetAll(string id)
+        public ListViewModel<Group> GetAll(string id, int pageNumber)
         {
             ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
-            return _ctx.Groups.Where(o => o.IdOwner.Id == user.Id).ToList();
+
+            int pageSize = 5;
+            int skipAmount = pageSize * (pageNumber - 1);
+            int postsCount = _ctx.Groups.Count();
+
+
+            return new ListViewModel<Group>
+            {
+                PageNumber = pageNumber,
+                CanNext = postsCount > skipAmount + pageSize,
+                List = _ctx.Groups.Where(o => o.IdOwner.Id == user.Id)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToList()
+            };
+
+
         }
 
 

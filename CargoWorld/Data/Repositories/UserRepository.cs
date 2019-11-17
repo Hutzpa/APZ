@@ -1,4 +1,5 @@
 ﻿using CargoWorld.Models;
+using CargoWorld.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,7 @@ namespace CargoWorld.Data.Repositories
 
         public ApplicationUser Get(int id) => _ctx.Users.FirstOrDefault(o => o.Id == id.ToString());
 
-        public IEnumerable<ApplicationUser> GetAll() => _ctx.Users.ToList();
 
-        public IEnumerable<ApplicationUser> GetAll(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public void Remove(int id) => _ctx.Remove(Get(id));
 
@@ -33,7 +29,7 @@ namespace CargoWorld.Data.Repositories
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
-        public IEnumerable<ApplicationUser> GetAll(string id)
+        public ListViewModel<ApplicationUser> GetAll(string id, int pageNumber)
         {
             throw new NotImplementedException();
         }

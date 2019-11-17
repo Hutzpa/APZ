@@ -12,16 +12,6 @@ namespace CargoWorld.Controllers
 {
     public class AuthController : Controller
     {
-        //private UserManager<IdentityUser> _userManager;
-        //private SignInManager<IdentityUser> _signInManager;
-
-        //public AuthController(SignInManager<IdentityUser> signInManager,
-        //    UserManager<IdentityUser> userManager)
-        //{
-        //    _userManager = userManager;
-        //    _signInManager = signInManager;
-        //}
-
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
 

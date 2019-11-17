@@ -46,9 +46,13 @@ namespace CargoWorld.Controllers
 
 
         [HttpGet]
-        public IActionResult GroupList()
+        public IActionResult GroupList(int pageNumber)
         {
-            return View(_groupsRepository.GetAll(_userManager.GetUserId(HttpContext.User)));
+            if (pageNumber < 1)
+                return RedirectToAction("GroupList", new { pageNumber = 1 });
+
+            var list = _groupsRepository.GetAll(_userManager.GetUserId(HttpContext.User), pageNumber);
+            return View(list);
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using CargoWorld.Models;
+using CargoWorld.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,19 +27,25 @@ namespace CargoWorld.Data.Repositories
         /// </summary>
         /// <param name="id">Номер пользователя</param>
         /// <returns></returns>
-        public IEnumerable<Car> GetAll(string id)
+        public ListViewModel<Car> GetAll(string id, int pageNumber)
         {
-       
             ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
 
-            return _ctx.Cars.Where(o => o.IdOwner.Id == user.Id).ToList();
+            int pageSize = 5;
+            int skipAmount = pageSize * (pageNumber - 1);
+            int postsCount = _ctx.Cars.Count();
 
-        }
 
-        [Obsolete]
-        public IEnumerable<Car> GetAll(int id)
-        {
-            throw new NotImplementedException();
+            return new ListViewModel<Car>
+            {
+                PageNumber = pageNumber,
+                CanNext = postsCount > skipAmount + pageSize,
+                List = _ctx.Cars.Where(o => o.IdOwner.Id == user.Id)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToList()
+            };
+
         }
 
         public void Remove(int id) => _ctx.Cars.Remove(Get(id));
@@ -51,7 +58,7 @@ namespace CargoWorld.Data.Repositories
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
-        
+
         public IEnumerable<Car> IAmDriving(int id) => _ctx.Cars.Where(o => o.IdDriver == id);
         /// <summary>
         /// Cars in some special group

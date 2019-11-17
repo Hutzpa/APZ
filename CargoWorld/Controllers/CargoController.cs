@@ -22,7 +22,7 @@ namespace CargoWorld.Controllers
         private UserManager<ApplicationUser> _userManager;
         private IFileManager _fileManager;
 
-        public CargoController(IRepository<Cargo> cargoRepository, 
+        public CargoController(IRepository<Cargo> cargoRepository,
             UserManager<ApplicationUser> userManager,
             IFileManager fileManager)
         {
@@ -34,24 +34,7 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public IActionResult ACargo(int id)
         {
-            var cargo = _cargoRepository.Get(id);
-
-            CargoViewModel cvm = new CargoViewModel
-            {
-                Id_Cargo = cargo.Id_Cargo,
-                Id_Owner = cargo.Id_Owner,
-                IsDelivered = cargo.IsDelivered,
-                CargoName = cargo.CargoName,
-                DeparturePoint = cargo.DeparturePoint,
-                DestinationPoint = cargo.DestinationPoint,
-                Photo = cargo.Photo,
-                Weight = cargo.Weight,
-                CargoType = cargo.CargoType,
-                Height = cargo.Height,
-                Width = cargo.Width,
-                Length = cargo.Length
-            };
-            return View(cvm);
+            return View(_cargoRepository.Get(id));
         }
 
         [HttpGet]
@@ -74,8 +57,8 @@ namespace CargoWorld.Controllers
                     Weight = cargo.Weight,
                     CargoType = cargo.CargoType,
                     Height = cargo.Height,
-                    Width= cargo.Width,
-                    Length  =  cargo.Length
+                    Width = cargo.Width,
+                    Length = cargo.Length
                 });
             }
         }
@@ -109,7 +92,7 @@ namespace CargoWorld.Controllers
                 return RedirectToAction("Index", "Home");
             else
                 return View(cvm);
-                    
+
         }
 
         [HttpGet]
@@ -120,10 +103,13 @@ namespace CargoWorld.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult CargoList()
+        public IActionResult CargoList(int pageNumber)
         {
-            var cargos = _cargoRepository.GetAll(_userManager.GetUserId(HttpContext.User));
-            return View(cargos);
+            if (pageNumber < 1)
+                return RedirectToAction("CargoList", new { pageNumber = 1 });
+
+            var list = _cargoRepository.GetAll(_userManager.GetUserId(HttpContext.User), pageNumber);
+            return View(list);
         }
 
         [HttpGet("/Image/{image}")]

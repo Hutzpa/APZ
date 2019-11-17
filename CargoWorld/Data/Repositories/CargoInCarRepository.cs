@@ -1,4 +1,5 @@
 ﻿using CargoWorld.Models;
+using CargoWorld.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,9 @@ namespace CargoWorld.Data.Repositories
 
         public IEnumerable<CargoInCar> GetAll() => _ctx.CargoInCars.ToList();
 
-        public IEnumerable<CargoInCar> GetAll(int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public IEnumerable<CargoInCar> GetAll(string id)
+
+        public ListViewModel<CargoInCar> GetAll(string id, int pageNumber)
         {
             throw new NotImplementedException();
         }

@@ -18,7 +18,6 @@ namespace CargoWorld.ViewModels
         public string GroupName { get; set; }
 
         public IEnumerable<Car> Cars { get; set; }
-
     }
        
 }

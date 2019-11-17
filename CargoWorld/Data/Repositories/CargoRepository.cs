@@ -1,4 +1,5 @@
 ﻿using CargoWorld.Models;
+using CargoWorld.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace CargoWorld.Data.Repositories
     {
         private AppDbContext _ctx;
 
-        public CargoRepository(AppDbContext ctx )
+        public CargoRepository(AppDbContext ctx)
         {
             _ctx = ctx;
         }
@@ -21,17 +22,29 @@ namespace CargoWorld.Data.Repositories
 
         public IEnumerable<Cargo> GetAll() => _ctx.Cargos.ToList();
 
-        public IEnumerable<Cargo> GetAll(int id) => throw new NotImplementedException();
 
         /// <summary>
         /// Выводит все грузы конкретного пользователя
         /// </summary>
         /// <param name="id">номер пользователя</param>
         /// <returns></returns>
-        public IEnumerable<Cargo> GetAll(string id)
+        public ListViewModel<Cargo> GetAll(string id, int pageNumber)
         {
             ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
-            return _ctx.Cargos.Where(o => o.Id_Owner.Id == user.Id).ToList();
+
+            int pageSize = 5;
+            int skipAmount = pageSize * (pageNumber - 1);
+            int postsCount = _ctx.Cargos.Count();
+
+            return new ListViewModel<Cargo>
+            {
+                PageNumber = pageNumber,
+                CanNext = postsCount > skipAmount + pageSize,
+                List = _ctx.Cargos.Where(o => o.Id_Owner.Id == user.Id)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToList()
+            };
         }
 
         public void Remove(int id) => _ctx.Cargos.Remove(Get(id));

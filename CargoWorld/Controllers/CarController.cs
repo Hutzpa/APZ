@@ -100,28 +100,7 @@ namespace CargoWorld.Controllers
 
         public IActionResult ACar(int id)
         {
-            var cvm = _carRepository.Get(id);
-            CarViewModel car = new CarViewModel
-            {
-                IdOwner = cvm.IdOwner,
-                IdCar = cvm.IdCar,
-                IdDriver = cvm.IdDriver,
-                IdGroup = cvm.IdGroup,
-                CarModel = cvm.CarModel,
-                CarcassNumber = cvm.CarcassNumber,
-                RegistrationNumber = cvm.RegistrationNumber,
-                Photo = cvm.Photo,
-                Color = cvm.Color,
-                CargoType = cvm.CargoType,
-                CarType = cvm.CarType,
-                CarryingCapacity = cvm.CarryingCapacity,
-                CarryingCapacitySqM = cvm.CarryingCapacitySqM,
-                HeightCargoCompartment = cvm.HeightCargoCompartment,
-                WidthCargoCompartment = cvm.WidthCargoCompartment,
-                LengthCargoCompartment = cvm.LengthCargoCompartment,
-                CostPerKm = cvm.CostPerKm
-            };
-            return View(car);
+            return View(_carRepository.Get(id));
         }
 
 
@@ -133,9 +112,13 @@ namespace CargoWorld.Controllers
         }
 
         [HttpGet]
-        public IActionResult MyCars()
+        public IActionResult MyCars(int pageNumber)
         {
-            return View(_carRepository.GetAll(_userManager.GetUserId(HttpContext.User)));
+            if (pageNumber < 1)
+                return RedirectToAction("MyCars", new { pageNumber = 1 });
+
+            var list = _carRepository.GetAll(_userManager.GetUserId(HttpContext.User), pageNumber);
+            return View(list);
         }
 
         [HttpGet]
