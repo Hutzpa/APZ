@@ -19,7 +19,6 @@ namespace CargoWorld.Models
         /// <summary>
         /// Женщина\мужчина
         /// </summary>
-        public string Sex { get; set; }
         public string Geoposition { get; set; }
 
         public List<Group> Groups { get; set; }

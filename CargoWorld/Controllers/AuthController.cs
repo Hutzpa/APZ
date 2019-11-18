@@ -60,15 +60,13 @@ namespace CargoWorld.Controllers
                 return View(vm);
             }
 
-            //var User = new IdentityUser
-            //{
-            //    UserName = vm.Email,
-            //    Email = vm.Email
-            //};
             var User = new ApplicationUser
             {
                 UserName = vm.Email,
-                Email = vm.Email
+                Email = vm.Email,
+                Name = vm.Name,
+                Surname = vm.Surname,
+                Age = vm.Age
             };
             var result = await _userManager.CreateAsync(User, vm.Password);
 
