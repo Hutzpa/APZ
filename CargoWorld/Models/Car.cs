@@ -40,7 +40,6 @@ namespace CargoWorld.Models
         /// объём грузового отделения
         /// </summary>
         public double CarryingCapacitySqM { get; set; }
-
         /// <summary>
         /// Высота грузового отделения
         /// </summary>

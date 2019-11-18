@@ -1,5 +1,6 @@
 ﻿using CargoWorld.Models;
 using CargoWorld.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace CargoWorld.Data.Repositories
 
         public Cargo Get(int id) => _ctx.Cargos.FirstOrDefault(o => o.Id_Cargo == id);
 
-        public IEnumerable<Cargo> GetAll() => _ctx.Cargos.ToList();
+
 
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace CargoWorld.Data.Repositories
                 List = _ctx.Cargos.Where(o => o.Id_Owner.Id == user.Id)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
-                .ToList()
+ 
             };
         }
 

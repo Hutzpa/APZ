@@ -41,7 +41,7 @@ namespace CargoWorld.Controllers
                 return View(new CarViewModel
                 {
                     IdOwner = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User)),
-                    IdCar = car.IdCar,
+                    IdCar = (int)car.IdCar,
                     IdDriver = car.IdDriver,
                     IdGroup = null,
                     CarModel = car.CarModel,

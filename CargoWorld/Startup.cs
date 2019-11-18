@@ -32,6 +32,8 @@ namespace CargoWorld
 
 
 
+
+
             services.AddDbContext<AppDbContext>(opt =>
                  opt.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DbCargo;Trusted_Connection=true;MultipleActiveResultSets=true"));
 

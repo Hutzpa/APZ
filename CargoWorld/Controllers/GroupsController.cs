@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace CargoWorld.Controllers
@@ -33,13 +33,16 @@ namespace CargoWorld.Controllers
         public IActionResult AGroup(string idOfGroup)
         {
             var group = _groupsRepository.Get(Convert.ToInt32(idOfGroup));
-            ViewBag.FreeCars = _groupsRepository.GetCarsWithoutGroup(_userManager.GetUserId(HttpContext.User));
+            
+            var freeCars = _groupsRepository.GetCarsWithoutGroup(_userManager.GetUserId(HttpContext.User));
+            ViewBag.FreeCars = freeCars;
+            ViewBag.FreeCarsCount = freeCars.Count();
            GroupViewModel gvm = new GroupViewModel
             {
-                IdGroup = group.IdGroup,
+                IdGroup = (int)group.IdGroup,
                 IdOwner = group.IdOwner,
                 GroupName = group.GroupName,
-                Cars = _carManager.CarsInRep(group.IdGroup)
+                Cars = _carManager.CarsInRep((int)group.IdGroup)
             };
             return View(gvm);
         }
@@ -71,7 +74,7 @@ namespace CargoWorld.Controllers
                 var cars = _groupsRepository.GetCarsWithoutGroup(_userManager.GetUserId(HttpContext.User));
                 return View(new GroupViewModel
                 {
-                    IdGroup = group.IdGroup,
+                    IdGroup = (int)group.IdGroup,
                     IdOwner = group.IdOwner,
                     GroupName = group.GroupName,
                     Cars = cars,
@@ -107,9 +110,9 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteGroup(int id)
         {
-            _groupsRepository.Remove(id);
+           _groupsRepository.Remove(id);
             await _groupsRepository.SaveChangesAsync();
-            return RedirectToAction("GroupList", "Groups");
+            return RedirectToAction("GroupList");
         }
 
         [HttpGet]
@@ -141,8 +144,41 @@ namespace CargoWorld.Controllers
             
             _carManager.Update(carWithGroup);
             await _carManager.SaveChangesAsync();
-            return RedirectToAction("AGroup", idGroup.ToString());
+            var idG = idGroup.ToString();
+
+            //Не передаёт idGroup
+            return RedirectToAction("AGroup", new { idOfGroup = idCar });
         }
 
+        public async Task<IActionResult> DeleteCarFromGroupAsync(int idCar)
+        {
+            var cvm = _carManager.Get(idCar);
+            Car carWithGroup = new Car
+            {
+                IdOwner = cvm.IdOwner,
+                IdCar = cvm.IdCar,
+                IdDriver = cvm.IdDriver,
+                IdGroup = null,
+                CarModel = cvm.CarModel,
+                CarcassNumber = cvm.CarcassNumber,
+                RegistrationNumber = cvm.RegistrationNumber,
+                Photo = cvm.Photo,
+                Color = cvm.Color,
+                CargoType = cvm.CargoType,
+                CarType = cvm.CarType,
+                CarryingCapacity = cvm.CarryingCapacity,
+                CarryingCapacitySqM = cvm.CarryingCapacitySqM,
+                HeightCargoCompartment = cvm.HeightCargoCompartment,
+                WidthCargoCompartment = cvm.WidthCargoCompartment,
+                LengthCargoCompartment = cvm.LengthCargoCompartment,
+                CostPerKm = cvm.CostPerKm
+            };
+
+            _carManager.Update(carWithGroup);
+            await _carManager.SaveChangesAsync();
+            return RedirectToAction("AGroup", new { idOfGroup = idCar });
+        }
+        
+      
     }
 }

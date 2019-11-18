@@ -21,9 +21,12 @@ namespace CargoWorld.Data.Repositories
 
         public Group Get(int id) => _ctx.Groups.FirstOrDefault(o => o.IdGroup == id);
 
-        public IEnumerable<Group> GetAll() => _ctx.Groups.ToList();
 
-        public void Remove(int id) => _ctx.Groups.Remove(Get(id));
+        public void Remove(int id)
+        {
+            Group group = Get(id);
+            _ctx.Groups.Remove(group);
+        }
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
@@ -44,7 +47,6 @@ namespace CargoWorld.Data.Repositories
             int skipAmount = pageSize * (pageNumber - 1);
             int postsCount = _ctx.Groups.Count();
 
-
             return new ListViewModel<Group>
             {
                 PageNumber = pageNumber,
@@ -52,8 +54,7 @@ namespace CargoWorld.Data.Repositories
                 List = _ctx.Groups.Where(o => o.IdOwner.Id == user.Id)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
-                .ToList()
-            };
+        };
 
 
         }

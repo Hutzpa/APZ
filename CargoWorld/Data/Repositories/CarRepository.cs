@@ -1,5 +1,6 @@
 ﻿using CargoWorld.Models;
 using CargoWorld.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace CargoWorld.Data.Repositories
         public void Create(Car data) => _ctx.Cars.Add(data);
 
 
-        public Car Get(int id) => _ctx.Cars.FirstOrDefault(o => o.IdCar == id);
+        public Car Get(int id) => _ctx.Cars.AsNoTracking().FirstOrDefault(o => o.IdCar == id);
 
         /// <summary>
         /// Все машины конкретного пользователя
@@ -35,7 +36,6 @@ namespace CargoWorld.Data.Repositories
             int skipAmount = pageSize * (pageNumber - 1);
             int postsCount = _ctx.Cars.Count();
 
-
             return new ListViewModel<Car>
             {
                 PageNumber = pageNumber,
@@ -43,8 +43,7 @@ namespace CargoWorld.Data.Repositories
                 List = _ctx.Cars.Where(o => o.IdOwner.Id == user.Id)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
-                .ToList()
-            };
+        };
 
         }
 

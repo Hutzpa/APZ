@@ -6,36 +6,47 @@
 
 
 <div>
-    <span>Назва вашої групи - @Model.GroupName</span>
+    <h3> Назва вашої групи - @Model.GroupName </h3>
+    <hr />
+
+    <a asp-controller="Groups" asp-action="DeleteGroup" asp-route-id="@Model.IdGroup">Delete</a>
 
 
+    @if (ViewBag.FreeCarsCount > 0)
+    {
         <span>Список машин доступних для додавання у цю групу:</span>
-
+        <hr />
         @foreach (var freecar in ViewBag.FreeCars)
         {
             <hr />
-            <span>@freecar.CarModel</span>
-            <a asp-controller="Groups" asp-action="AddCarToGroup" asp-route-idCar="@freecar.IdCar" asp-route-idGroup="@Model.IdGroup" >Додати до групи</a>
+            <span>@freecar.CarModel</span> <h6>|</h6>
+            <a asp-controller="Groups" asp-action="AddCarToGroup" asp-route-idCar="@freecar.IdCar" asp-route-idGroup="@Model.IdGroup">Додати до групи</a>
+            <hr />
+        }
+    }
+
+
+
+    <span>Список машин у групі:</span>
+    <hr />
+    <h4>Название машины  | Номер машины | Редактирование групы</h4>
+    @if (Model.Cars.Count() == 0)
+    {
+        <span>Ви ще не маєте машин у цій групі</span>
+    }
+    else
+    {
+
+        @foreach (var cr in Model.Cars)
+        {
+            <hr />
+            <span> @cr.CarModel </span> <span> | </span>
+            <span> @cr.RegistrationNumber </span> <span> | </span>
+            <a asp-controller="Groups" asp-action="DeleteCarFromGroup" asp-route-idCar="@cr.IdCar"> Удалить машину из групы </a>
             <hr />
         }
 
- 
-        <span>Список машин у групі:</span>
-        @if (Model.Cars.Count() == 0)
-        {
-            <span>Ви ще не маєте машин у цій групі</span>
-        }
-        else
-        {
-            <span>Список машин</span>
-            @foreach (var cr in Model.Cars)
-            {
-                <span>@cr.CarModel</span>
-                <span>@cr.RegistrationNumber</span>
-                <hr />
-            }
+    }
 
-        }
 
-    
 </div>
