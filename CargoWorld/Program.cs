@@ -23,7 +23,6 @@ namespace CargoWorld
 
             var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            //var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             context.Database.EnsureCreated();
@@ -36,11 +35,7 @@ namespace CargoWorld
 
             if (!context.Users.Any(u => u.UserName == "admin"))
             {
-                //var adminUser = new IdentityUser
-                //{
-                //    UserName = "admin",
-                //    Email = "admin@mail"
-                //};
+                
 
                 var adminUser = new ApplicationUser
                 {

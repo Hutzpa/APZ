@@ -1,0 +1,35 @@
+﻿@model SearchViewModel
+
+@{
+
+}
+<style>
+    .list {
+        float: left;
+        margin: 0 50px;
+    }
+</style>
+
+<span>Users</span>
+<ul class='list'>
+    @foreach (var v in Model.Users)
+    {
+        <li>
+            <span>Имя пользователя - </span>
+            <a asp-controller="Home" asp-action="AUser" asp-route-id="@v.Id">@v.UserName</a>
+            <hr />
+        </li>
+    }
+</ul>
+<span>Cargos</span>
+<ul class='list'>
+    @foreach (var v in Model.Cargos)
+    {
+        <li>
+            <span>Название груза - </span>
+            <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@v.Id_Cargo">@v.CargoName</a>
+            <hr />
+        </li>
+    }
+</ul>
+<div style="clear:both"></div>
