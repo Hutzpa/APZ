@@ -12,7 +12,7 @@ namespace CargoWorld.ViewModels
     {
         public int IdCar { get; set; }
 
-        public int IdDriver { get; set; }
+        public string IdDriver { get; set; }
 
         public Group IdGroup { get; set; }
         public List<CargoInCar> CargoInThisCar { get; set; }

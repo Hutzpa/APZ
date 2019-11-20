@@ -43,8 +43,15 @@ namespace CargoWorld.Data.Repositories
                 List = _ctx.Cars.Where(o => o.IdOwner.Id == user.Id)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
-        };
+            };
 
+        }
+
+        public IEnumerable<Car> GetAll(string id)
+        {
+            ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
+            var cars = _ctx.Cars.Where(o => o.IdOwner.Id == user.Id);
+            return cars;
         }
 
         public void Remove(int id) => _ctx.Cars.Remove(Get(id));
@@ -58,7 +65,7 @@ namespace CargoWorld.Data.Repositories
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
 
-        public IEnumerable<Car> IAmDriving(int id) => _ctx.Cars.Where(o => o.IdDriver == id);
+        public IEnumerable<Car> IAmDriving(string id) => _ctx.Cars.Where(o => o.IdDriver == id);
         /// <summary>
         /// Cars in some special group
         /// </summary>

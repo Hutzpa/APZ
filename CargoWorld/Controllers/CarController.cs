@@ -68,7 +68,7 @@ namespace CargoWorld.Controllers
             {
                 IdOwner = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User)),
                 IdCar = cvm.IdCar,
-                IdDriver = cvm.IdDriver,
+                IdDriver = String.Empty,
                 IdGroup = cvm.IdGroup,
                 CarModel = cvm.CarModel,
                 CarcassNumber = cvm.CarcassNumber,

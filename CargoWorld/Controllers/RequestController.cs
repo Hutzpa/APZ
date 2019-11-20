@@ -1,6 +1,7 @@
 ﻿using CargoWorld.Data;
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
+using CargoWorld.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,12 +16,15 @@ namespace CargoWorld.Controllers
     {
         private RequestRepository _requestManager;
         private UserManager<ApplicationUser> _userManager;
+        private UserRepository _userRepository;
 
         public RequestController(IRepository<Request> requestManager,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IRepository<ApplicationUser> userRepository)
         {
             _requestManager = (RequestRepository)requestManager;
             _userManager = userManager;
+            _userRepository = (UserRepository)userRepository;
         }
 
 
@@ -65,7 +69,23 @@ namespace CargoWorld.Controllers
             return RedirectToAction("DrivingRequest");
         }
 
-       
+        [HttpPost]
+        public async Task<IActionResult> CreateDrivingRequestAsync(UserViewModel uvm)
+        {
+            Models.Request request = new Request()
+            {
+                IdCar = uvm.IdCarWithoutDriver,
+                Recipient = _userRepository.Get(uvm.ApplicationUser.Id),
+                RequestType = RequestType.DrivingRequest,
+                Name = "Вас приглашают на работу водителем",
+                Description = "Вас приглашают на работу водителем"
+
+            };
+            _requestManager.Create(request);
+            await _requestManager.SaveChangesAsync();
+            return RedirectToAction("DrivingRequest");
+        }
+
         #endregion
 
         #region User to company
@@ -87,6 +107,8 @@ namespace CargoWorld.Controllers
 
             return RedirectToAction("CompanyToUser");
         }
+
+        
 
 
         #endregion

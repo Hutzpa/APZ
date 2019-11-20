@@ -1,6 +1,21 @@
-﻿@model ApplicationUser
+﻿@model UserViewModel
 
 
 
 
-<h3>@Model.Name</h3>
+<h3>@Model.ApplicationUser.Name</h3>
+
+
+
+@if(ViewBag.CarsWithoutDriver.Count() != 0) { 
+    <form asp-controller="Request" asp-action="CreateDrivingRequestAsync" method="post" enctype="multipart/form-data"> 
+        <input asp-for="ApplicationUser.Id" type="hidden" />
+        <select asp-for="IdCarWithoutDriver">
+            @foreach(var cr in ViewBag.CarsWithoutDriver)
+            {
+                <option value="@cr.IdCar">@cr.CarModel</option>
+            }
+        </select>
+        <input type="submit" value="SendRequest"/>
+    </form>
+}

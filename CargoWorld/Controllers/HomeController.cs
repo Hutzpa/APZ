@@ -18,12 +18,15 @@ namespace CargoWorld.Controllers
     {
         private UserManager<ApplicationUser> _userManager;
         private UserRepository _userRepository;
+        private CarRepository _carRepository;
 
         public HomeController(UserManager<ApplicationUser> userManager,
-            IRepository<ApplicationUser> userRepository)
+            IRepository<ApplicationUser> userRepository,
+            IRepository<Car> carRepository)
         {
             _userManager = userManager;
             _userRepository = (UserRepository)userRepository;
+            _carRepository = (CarRepository)carRepository;
         }
 
         public IActionResult Index()
@@ -41,9 +44,19 @@ namespace CargoWorld.Controllers
         [Authorize]
         public IActionResult AUser(string id)
         {
+            //Пользователь на чью форму заходят
             var user = _userRepository.Get(id);
 
-            return View(user);
+            var curentUser = _userRepository.Get(_userManager.GetUserId(HttpContext.User));
+            ViewBag.CurUserId = curentUser.Id;
+            //Получение машин без водителя
+            ViewBag.CarsWithoutDriver = _carRepository.GetAll(_userManager.GetUserId(HttpContext.User)).ToList();
+            UserViewModel uvm = new UserViewModel
+            {
+                ApplicationUser = user
+            };
+
+            return View(uvm);
         }
 
     }
