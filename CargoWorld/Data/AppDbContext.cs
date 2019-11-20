@@ -23,6 +23,7 @@ namespace CargoWorld.Data
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<CargoInCar> CargoInCars { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<Request> Requests { get; set; }
         override public DbSet<ApplicationUser> Users { get; set; }
     }
 }

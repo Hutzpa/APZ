@@ -4,14 +4,16 @@ using CargoWorld.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CargoWorld.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191119180838_Requests")]
+    partial class Requests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,18 +276,10 @@ namespace CargoWorld.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RecipientId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("RequestType")
                         .HasColumnType("int");
 
-                    b.Property<string>("SenderId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RecipientId");
 
                     b.ToTable("Requests");
                 });
@@ -459,13 +453,6 @@ namespace CargoWorld.Migrations
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")
                         .WithMany("Groups")
                         .HasForeignKey("IdOwnerId");
-                });
-
-            modelBuilder.Entity("CargoWorld.Models.Request", b =>
-                {
-                    b.HasOne("CargoWorld.Models.ApplicationUser", "Recipient")
-                        .WithMany("RequestsToMe")
-                        .HasForeignKey("RecipientId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

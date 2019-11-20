@@ -24,8 +24,7 @@ namespace CargoWorld.Data.Repositories
 
         public void Remove(int id)
         {
-            Group group = Get(id);
-            _ctx.Groups.Remove(group);
+            _ctx.Groups.Remove(Get(id));
         }
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;

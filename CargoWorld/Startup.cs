@@ -53,6 +53,7 @@ namespace CargoWorld
             services.AddTransient<IRepository<Group>, GroupRepository>();
             services.AddTransient<IRepository<CargoInCar>, CargoInCarRepository>();
             services.AddTransient<IRepository<ApplicationUser>, UserRepository>();
+            services.AddTransient<IRepository<Request>, RequestRepository>();
             services.AddTransient<IFileManager,FIleManager>();
 
         }

@@ -24,5 +24,7 @@ namespace CargoWorld.Models
         public List<Group> Groups { get; set; }
         public List<Car> Cars { get; set; }
         public List<Cargo> Cargos { get; set; }
+
+        public List<Request> RequestsToMe { get; set; }
     }
 }

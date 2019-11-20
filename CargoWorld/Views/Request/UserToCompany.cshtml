@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Request>
+
+
+@if (Model.Count() > 0)
+{
+
+    <span>Компании которые предложили вам перевезти груз</span>
+    <hr />
+    <ul>
+        @foreach (var rq in Model)
+        {
+            <li>
+                <span>
+                    Вам предложили перевезти <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@rq.IdCargo">этот</a> груз
+                </span>
+                |
+                <a asp-controller="Request" asp-action="AcceptUserToCompany" asp-route-requestId="@rq.Id">Согласиться </a> |
+                <a asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="UserToCompany" asp-route-requestId="@rq.Id">Отказаться </a> |
+            </li>
+        }
+
+    </ul>
+
+}
+else
+{
+    <span>Нет входящих запросов</span>
+}
