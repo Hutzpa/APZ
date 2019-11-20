@@ -14,7 +14,7 @@ namespace CargoWorld.Data
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
-               // Database.EnsureCreated();
+                Database.EnsureCreated();
 
             
         }
@@ -23,7 +23,7 @@ namespace CargoWorld.Data
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<CargoInCar> CargoInCars { get; set; }
         public DbSet<Group> Groups { get; set; }
-        public DbSet<Request> Requests { get; set; }
+        public DbSet<Request> Request { get; set; }
         override public DbSet<ApplicationUser> Users { get; set; }
     }
 }

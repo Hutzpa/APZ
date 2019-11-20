@@ -18,8 +18,16 @@ namespace CargoWorld.Data.Repositories
             _ctx = ctx;
         }
         public void Create(Cargo data) => _ctx.Cargos.Add(data);
+         
+        public Cargo Get(int id)
+        {
+            //var ownerId = _ctx.Cargos.FirstOrDefault(o => o.Id_Cargo == id).Id_Owner;
+            var ownerId = _ctx.Cargos.Include(o => o.Id_Owner).ToList().FirstOrDefault(o => o.Id_Cargo == id);
 
-        public Cargo Get(int id) => _ctx.Cargos.FirstOrDefault(o => o.Id_Cargo == id);
+
+            return ownerId;
+        }
+
 
 
 
@@ -44,7 +52,7 @@ namespace CargoWorld.Data.Repositories
                 List = _ctx.Cargos.Where(o => o.Id_Owner.Id == user.Id)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
- 
+
             };
         }
 

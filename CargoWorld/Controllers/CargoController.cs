@@ -21,20 +21,40 @@ namespace CargoWorld.Controllers
         private IRepository<Cargo> _cargoRepository;
         private UserManager<ApplicationUser> _userManager;
         private IFileManager _fileManager;
+        private GroupRepository _groupRepository;
 
         public CargoController(IRepository<Cargo> cargoRepository,
             UserManager<ApplicationUser> userManager,
+            IRepository<Group> groupRepository,
             IFileManager fileManager)
         {
             _cargoRepository = cargoRepository;
             _userManager = userManager;
             _fileManager = fileManager;
+            _groupRepository = (GroupRepository)groupRepository;
         }
 
         [HttpGet]
         public IActionResult ACargo(int id)
         {
-            return View(_cargoRepository.Get(id));
+            ViewBag.GroupsToOffer = _groupRepository.GetAll(_userManager.GetUserId(HttpContext.User));
+            var cargo = _cargoRepository.Get(id);
+            CargoViewModel cvm = new CargoViewModel
+            {
+                Id_Cargo = cargo.Id_Cargo,
+                Id_Owner = cargo.Id_Owner,
+                IsDelivered = cargo.IsDelivered,
+                CargoName = cargo.CargoName,
+                DeparturePoint = cargo.DeparturePoint,
+                DestinationPoint = cargo.DestinationPoint,
+                Photo = cargo.Photo,
+                Weight = cargo.Weight,
+                CargoType = cargo.CargoType,
+                Height = cargo.Height,
+                Width = cargo.Width,
+                Length = cargo.Length
+            };
+            return View(cvm);
         }
 
         [HttpGet]
@@ -66,11 +86,11 @@ namespace CargoWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCargo(CargoViewModel cvm)
         {
-
+            var user = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User));
             var cargo = new Cargo
             {
                 Id_Cargo = cvm.Id_Cargo,
-                Id_Owner = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User)),
+                Id_Owner = user,
                 IsDelivered = cvm.IsDelivered,
                 CargoName = cvm.CargoName,
                 DeparturePoint = cvm.DeparturePoint,

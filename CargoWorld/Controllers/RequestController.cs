@@ -48,6 +48,24 @@ namespace CargoWorld.Controllers
             return RedirectToAction("CompanyToUser");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateCompanyToUserAsync(CargoViewModel cvm)
+        {
+            string f = cvm.Id_Owner.Id;
+            Models.Request request = new Request()
+            {
+                Recipient = _userRepository.Get(cvm.Id_Owner.Id),
+                RequestType = RequestType.CompanyOffersToUser,
+                Name = "Вам предложили перевозку груза",
+                Description = "Вам предложили перевозку груза",
+                IdGroup = cvm.idGroup,
+                IdCargo = cvm.Id_Cargo               
+            };
+            _requestManager.Create(request);
+            await _requestManager.SaveChangesAsync();
+            return RedirectToAction("DrivingRequest");
+        }
+
         #endregion
 
         #region Driving

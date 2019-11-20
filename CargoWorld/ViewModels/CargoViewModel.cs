@@ -40,5 +40,7 @@ namespace CargoWorld.ViewModels
         public double Length { get; set; }
 
         public IFormFile Image { get; set; } = null;
+
+        public int? idGroup { get; set; }
     }
 }

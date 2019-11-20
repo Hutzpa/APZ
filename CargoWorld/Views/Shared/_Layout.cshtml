@@ -69,6 +69,11 @@
                     </form>
                 </li>
 
+                <a asp-controller="Request" asp-action="DrivingRequest"> Driving requests</a>
+
+                <a asp-controller="Request" asp-action="CompanyToUser"> Company to user requests</a>
+
+
                 <a asp-controller="Auth" asp-action="Logout"> Log out</a>
 
                 @if (User.IsInRole("Admin"))

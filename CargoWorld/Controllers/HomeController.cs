@@ -27,6 +27,7 @@ namespace CargoWorld.Controllers
             _userManager = userManager;
             _userRepository = (UserRepository)userRepository;
             _carRepository = (CarRepository)carRepository;
+            
         }
 
         public IActionResult Index()
@@ -51,6 +52,8 @@ namespace CargoWorld.Controllers
             ViewBag.CurUserId = curentUser.Id;
             //Получение машин без водителя
             ViewBag.CarsWithoutDriver = _carRepository.GetAll(_userManager.GetUserId(HttpContext.User)).ToList();
+
+
             UserViewModel uvm = new UserViewModel
             {
                 ApplicationUser = user

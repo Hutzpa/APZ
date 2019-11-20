@@ -53,9 +53,16 @@ namespace CargoWorld.Data.Repositories
                 List = _ctx.Groups.Where(o => o.IdOwner.Id == user.Id)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
-        };
+            };
 
 
+        }
+        
+        public IEnumerable<Group> GetAll(string id)
+        {
+            ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
+
+            return _ctx.Groups.Where(o => o.IdOwner.Id == user.Id);
         }
 
 

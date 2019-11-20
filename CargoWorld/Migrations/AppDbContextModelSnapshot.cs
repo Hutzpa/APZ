@@ -296,7 +296,7 @@ namespace CargoWorld.Migrations
 
                     b.HasIndex("RecipientId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Request");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

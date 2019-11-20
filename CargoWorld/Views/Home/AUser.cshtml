@@ -7,8 +7,8 @@
 
 
 
-@if(ViewBag.CarsWithoutDriver.Count() != 0) { 
-    <form asp-controller="Request" asp-action="CreateDrivingRequestAsync" method="post" enctype="multipart/form-data"> 
+@if(Enumerable.Count(ViewBag.CarsWithoutDriver) != 0) { 
+    <form asp-controller="Request" asp-action="CreateDrivingRequest" method="post" enctype="multipart/form-data"> 
         <input asp-for="ApplicationUser.Id" type="hidden" />
         <select asp-for="IdCarWithoutDriver">
             @foreach(var cr in ViewBag.CarsWithoutDriver)

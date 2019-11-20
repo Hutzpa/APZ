@@ -4,7 +4,7 @@
     ViewBag.Title = "Ваiі машини";
 }
 
-@if (Model.List.Count() == 0) 
+@if (Enumerable.Count(Model.List) == 0) 
 {
     <h3>У вас ще не мае машин</h3>
     <a asp-controller="Car" asp-action="CreateCar">Додайте</a>

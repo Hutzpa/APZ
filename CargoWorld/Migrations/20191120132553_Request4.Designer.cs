@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CargoWorld.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191118112753_ModelValidation")]
-    partial class ModelValidation
+    [Migration("20191120132553_Request4")]
+    partial class Request4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -138,8 +138,8 @@ namespace CargoWorld.Migrations
                     b.Property<double>("HeightCargoCompartment")
                         .HasColumnType("float");
 
-                    b.Property<int>("IdDriver")
-                        .HasColumnType("int");
+                    b.Property<string>("IdDriver")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("IdGroup1")
                         .HasColumnType("int");
@@ -258,6 +258,47 @@ namespace CargoWorld.Migrations
                     b.HasIndex("IdOwnerId");
 
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("CargoWorld.Models.Request", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IdCar")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdCargo")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdGroup")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RequestType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipientId");
+
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -429,6 +470,13 @@ namespace CargoWorld.Migrations
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")
                         .WithMany("Groups")
                         .HasForeignKey("IdOwnerId");
+                });
+
+            modelBuilder.Entity("CargoWorld.Models.Request", b =>
+                {
+                    b.HasOne("CargoWorld.Models.ApplicationUser", "Recipient")
+                        .WithMany("RequestsToMe")
+                        .HasForeignKey("RecipientId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
