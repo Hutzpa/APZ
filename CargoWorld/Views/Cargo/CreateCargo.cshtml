@@ -7,63 +7,112 @@
 
 
 
-<div>
+<tr>
     <form asp-controller="Cargo" asp-action="CreateCargo" method="post" enctype="multipart/form-data">
-        <input asp-for="Id_Cargo" type="hidden" />
-        <div>
-            <label>
-                CargoName
-            </label>
-            <input asp-for="CargoName" />
-        </div>
-        <div>
-            <label>
-                DeparturePoint
-            </label>
-            <input asp-for="DeparturePoint" />
-        </div>
-        <div>
-            <label>
-                DestinationPoint
-            </label>
-            <input asp-for="DestinationPoint" />
-        </div>
-        <div>
-            <label>
-                Weight
-            </label>
-            <input asp-for="Weight" />
-        </div>
-        <div>
-            <label>
-                CargoType
-            </label>
-            <input asp-for="CargoType" />
-        </div>
-        <div>
-            <label>
-                Height
-            </label>
-            <input asp-for="Height" />
-        </div>
-        <div>
-            <label>
-                Width
-            </label>
-            <input asp-for="Width" />
-        </div>
-        <div>
-            <label>
-                Length
-            </label>
-            <input asp-for="Length" />
-        </div>
-        <div>
-            <label>
-                Photo
-            </label>
-            <input asp-for="Image" />
-        </div>
-        <input type="submit" value="AddMeow"/>
+        <table align="center">
+            <tr>
+                <td>
+
+                    <input asp-for="Id_Cargo" type="hidden" />
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        CargoName
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="CargoName" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        DeparturePoint
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="DeparturePoint" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        DestinationPoint
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="DestinationPoint" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Weight
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Weight" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        CargoType
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="CargoType" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Height
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Height" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Width
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Width" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Length
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Length" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Photo
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Image" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Додати вантаж" />
+                </td>
+            </tr>
+        </table>
     </form>
-</div>
+</tr>

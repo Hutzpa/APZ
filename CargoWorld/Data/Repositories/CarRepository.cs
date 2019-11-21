@@ -65,7 +65,7 @@ namespace CargoWorld.Data.Repositories
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
 
-        public IEnumerable<Car> IAmDriving(string id) => _ctx.Cars.Where(o => o.IdDriver == id);
+        public Car IAmDriving(string id) => _ctx.Cars.FirstOrDefault(o => o.IdDriver == id);
         /// <summary>
         /// Cars in some special group
         /// </summary>

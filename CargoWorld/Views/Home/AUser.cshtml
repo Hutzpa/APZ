@@ -7,6 +7,9 @@
 
 
 
+
+
+
 @if(Enumerable.Count(ViewBag.CarsWithoutDriver) != 0) { 
     <form asp-controller="Request" asp-action="CreateDrivingRequest" method="post" enctype="multipart/form-data"> 
         <input asp-for="ApplicationUser.Id" type="hidden" />

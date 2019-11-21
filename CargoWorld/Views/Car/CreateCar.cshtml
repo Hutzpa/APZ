@@ -1,92 +1,158 @@
 ﻿@model CarViewModel
 
-@{ 
+@{
     ViewBag.Title = "Нова машина";
 }
 
 <div>
     <form asp-controller="Car" asp-action="CreateCar" method="post" enctype="multipart/form-data">
-        <input asp-for="IdCar" type="hidden"/>
-        <div>
-            <label>
-                Car model
-            </label>
-            <input asp-for="CarModel" />
-        </div>
-        <div>
-            <label>
-                CarcassNumber
-            </label>
-            <input asp-for="CarcassNumber" />
-        </div>
-        <div>
-            <label>
-                RegistrationNumber
-            </label>
-            <input asp-for="RegistrationNumber" />
-        </div>
-        <div>
-            <label>
-                Color
-            </label>
-            <input asp-for="Color" />
-        </div>
-        <div>
-            <label>
-                CarType
-            </label>
-            <input asp-for="CarType" />
-        </div>
-         <div>
-             <label>
-                 CargoType
-             </label>
-            <input asp-for="CargoType" />
-        </div>
-         <div>
-             <label>
-                 CarryingCapacity
-             </label>
-            <input asp-for="CarryingCapacity" />
-        </div>
-         <div>
-             <label>
-                 CarryingCapacitySqM
-             </label>
-            <input asp-for="CarryingCapacitySqM" />
-        </div>
-         <div>
-             <label>
-                 HeightCargoCompartment
-             </label>
-            <input asp-for="HeightCargoCompartment" />
-        </div>
-         <div>
-             <label>
-                 WidthCargoCompartment
-             </label>
-            <input asp-for="WidthCargoCompartment" />
-        </div>
-         <div>
-             <label>
-                 LengthCargoCompartment
-             </label>
-            <input asp-for="LengthCargoCompartment" />
-        </div>
-         <div>
-             <label>
-                 CostPerKm
-             </label>
-            <input asp-for="CostPerKm" />
-        </div>
-         <div>
-             <label>
-                 Image
-             </label>
-             <input asp-for="Image"/>
-         </div>
-         
+        <table  align="center">
+            <tr>
+                <td>
 
-        <input type="submit" value="Add the car " />
+                    <input  asp-for="IdCar" type="hidden" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Модель машини - 
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="CarModel" />
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Номер кузову - 
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="CarcassNumber" />
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Реєстраційний номер - 
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="RegistrationNumber" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Колір - 
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Color" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Тип машини - 
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="CarType" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Тип перевозимого вантажу - 
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="CargoType" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Вантажопідйомність - 
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="CarryingCapacity" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Об'єм вантажного відділення
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="CarryingCapacitySqM" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Висота багажного відділення - 
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="HeightCargoCompartment" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Ширина багажного відділення - 
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="WidthCargoCompartment" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Довжина багажного відділення - 
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="LengthCargoCompartment" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Ціна в гривнях за км. їзди
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="CostPerKm" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        Фотографія машини
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Image" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="submit" value="Додати" />
+                </td>
+            </tr>
+
+        </table>
     </form>
 </div>

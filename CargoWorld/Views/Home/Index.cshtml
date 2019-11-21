@@ -1,14 +1,10 @@
-﻿<h1> INDEX PAGE, HALLLLLO</h1>
+﻿
 
 
 @{
     if (User.Identity.IsAuthenticated)
     {
-        <h3> @User.Identity.Name</h3>
-        <hr />
-        <h3> @ViewBag.UserId</h3>
-
-        <img src="~/content/static/15734395941410.jpg" />
+        <h3>Добридень - @User.Identity.Name</h3>
     }
 }
 

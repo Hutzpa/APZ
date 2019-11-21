@@ -3,33 +3,62 @@
 @{
 
 }
-<style>
-    .list {
-        float: left;
-        margin: 0 50px;
-    }
-</style>
+<table align="center">
+    <tr>
+        <td>
+            <span>Користувачі</span>
 
-<span>Users</span>
-<ul class='list'>
-    @foreach (var v in Model.Users)
-    {
-        <li>
-            <span>Имя пользователя - </span>
-            <a asp-controller="Home" asp-action="AUser" asp-route-id="@v.Id">@v.UserName</a>
-            <hr />
-        </li>
-    }
-</ul>
-<span>Cargos</span>
-<ul class='list'>
-    @foreach (var v in Model.Cargos)
-    {
-        <li>
-            <span>Название груза - </span>
-            <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@v.Id_Cargo">@v.CargoName</a>
-            <hr />
-        </li>
-    }
-</ul>
+        </td>
+        <td>
+            <span>Вантажі</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            @if(Enumerable.Count(Model.Users) > 0)
+            {
+                @foreach (var v in Model.Users)
+                {
+
+                    <span>| Имя пользователя - </span>
+                    <a asp-controller="Home" asp-action="AUser" asp-route-id="@v.Id">@v.UserName    |</a>
+                    <hr />
+
+                }
+
+            }
+            else
+            {
+                <p>Користувачів з такими параметрами не знайдено</p>
+            }
+        </td>
+
+        <td>
+            @if (Enumerable.Count(Model.Cargos) > 0)
+            {
+                @foreach (var v in Model.Cargos)
+                {
+
+                    <span>| Название груза - </span>
+                    <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@v.Id_Cargo">@v.CargoName   |</a>
+                    <hr />
+
+                }
+            }
+            else
+            {
+                <p>Вантажів з такими параметрами не знайдено</p>
+            }
+        </td>
+    </tr>
+
+
+
+
+
+
+
+
+</table>
 <div style="clear:both"></div>

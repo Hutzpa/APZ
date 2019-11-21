@@ -4,32 +4,59 @@
     ViewBag.Title = "Ваiі машини";
 }
 
-@if (Enumerable.Count(Model.List) == 0) 
+
+
+
+
+@if (Enumerable.Count(Model.List) == 0)
 {
     <h3>У вас ще не мае машин</h3>
     <a asp-controller="Car" asp-action="CreateCar">Додайте</a>
 }
 else
 {
-    <ul>
-        @foreach (var cr in Model.List)
-        {
-            <li>
-                <a asp-controller="Car" asp-action="ACar" asp-route-id="@cr.IdCar">@cr.CarModel</a>
-            </li>
+    <table>
 
-            <a asp-controller="Car" asp-action="CreateCar" asp-route-id="@cr.IdCar">
-                Edit
-            </a>
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+
+        </tr>
+
+        <tr>
+            @foreach (var cr in Model.List)
+             {
+                <td>
+                    @if (!String.IsNullOrEmpty(cr.Photo))
+                    {
+                        var imagePath = $"/content/webs/{cr.Photo}";
+                        <img src="@imagePath" height="50" width="50" />
+                    }
+                </td>
+
+                <td>
+                    <a asp-controller="Car" asp-action="ACar" asp-route-id="@cr.IdCar"> @cr.CarModel </a>
+                </td>
+
+                <td>
+                    <a asp-controller="Car" asp-action="CreateCar" asp-route-id="@cr.IdCar"> Edit </a>
+                </td>
 
 
-            <a asp-controller="Car" asp-action="Remove" asp-route-id="@cr.IdCar">
-                Remove
-            </a>
+                <td>
+                    <a asp-controller="Car" asp-action="Remove" asp-route-id="@cr.IdCar"> Remove </a>
+                </td>
+             }
 
-        }
+        </tr>
 
-    </ul>
+    </table>
 
     <div>
         @if (Model.PageNumber > 1)

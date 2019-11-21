@@ -61,7 +61,10 @@ namespace CargoWorld.Data.Repositories
             };
 
             //Null reference exception
-            cargoInCar.Id_Cargo.Add(cargo);
+            cargoInCar.Id_Cargo = new List<Cargo>
+            {
+                cargo
+            };
             cargo.Transfer = cargoInCar;
 
             _ctx.Update(cargo);

@@ -17,7 +17,7 @@ namespace CargoWorld.Controllers
     [Authorize]
     public class CarController : Controller
     {
-        private IRepository<Car> _carRepository;
+        private CarRepository _carRepository;
         private UserManager<ApplicationUser> _userManager;
         private IFileManager _fileManager;
 
@@ -25,7 +25,7 @@ namespace CargoWorld.Controllers
             UserManager<ApplicationUser> userManager,
             IFileManager fileManager)
         {
-            _carRepository = carRepository;
+            _carRepository = (CarRepository)carRepository;
             _userManager = userManager;
             _fileManager = fileManager;
         }
@@ -105,10 +105,10 @@ namespace CargoWorld.Controllers
 
 
         [HttpGet]
-        public IActionResult ImDriving(int id)
+        public IActionResult ImDriving()
         {
-            //var res = _carRepository.IAmDriving(id);
-            return View(/*res*/);
+            var res = _carRepository.IAmDriving(_userManager.GetUserId(HttpContext.User));
+            return View(res);
         }
 
         [HttpGet]
