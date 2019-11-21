@@ -2,6 +2,7 @@
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
 using CargoWorld.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace CargoWorld.Controllers
 {
+    [Authorize]
     public class RequestController : Controller
     {
         private RequestRepository _requestManager;

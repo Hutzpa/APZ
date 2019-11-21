@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,15 @@ namespace CargoWorld.ViewModels
         public ApplicationUser IdOwner { get; set; }
 
         public string CarModel { get; set; }
+        [Required]
+        [StringLength(17,MinimumLength =11,ErrorMessage ="VIN має бути довжиной від 11 до 17 символів")]
         public string CarcassNumber { get; set; }
+
+        [Required]
+        [StringLength(13,MinimumLength = 4,ErrorMessage = "Введіть номер автомобілю")]
         public string RegistrationNumber { get; set; }
+
+        [Required(ErrorMessage = "Додайте фото автомобілю")]
         public string Photo { get; set; }
         public string Color { get; set; }
         /// <summary>

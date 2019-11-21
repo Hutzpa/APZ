@@ -75,6 +75,9 @@ namespace CargoWorld
 
             app.UseRouting();
 
+
+            app.UseStatusCodePages();
+
             app.UseAuthentication();
 
             app.UseAuthorization();

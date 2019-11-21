@@ -63,7 +63,14 @@
                     </label>
                 </td>
                 <td>
-                    <input asp-for="CarType" />
+                    <select asp-for="CarType">
+                        <option value="До 0.8тг">До 0.8т</option>
+                        <option value="До 1.5т">До 1.5т</option>
+                        <option value="До 3т">До 3т</option>
+                        <option value="До 5т">До 5т</option>
+                        <option value="До 10т">До 10т</option>
+                        <option value="До 20т">До 20т</option>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -73,10 +80,15 @@
                     </label>
                 </td>
                 <td>
-                    <input asp-for="CargoType" />
+                    <select asp-for="CargoType">
+                        <option value="Коробки">Коробки</option>
+                        <option value="Твердий">Твердий</option>
+                        <option value="Рідкий">Рідкий</option>
+                        <option value="Сипучий">Сипучий</option>
+                    </select>
                 </td>
             </tr>
-            <tr>
+            @*<tr>
                 <td>
                     <label class="mb-2 mt-2">
                         Вантажопідйомність - 
@@ -85,7 +97,7 @@
                 <td>
                     <input asp-for="CarryingCapacity" />
                 </td>
-            </tr>
+            </tr>*@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">

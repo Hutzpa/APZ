@@ -7,112 +7,116 @@
 
 
 
-<tr>
-    <form asp-controller="Cargo" asp-action="CreateCargo" method="post" enctype="multipart/form-data">
-        <table align="center">
-            <tr>
-                <td>
 
-                    <input asp-for="Id_Cargo" type="hidden" />
-                </td>
+<form asp-controller="Cargo" asp-action="CreateCargo" method="post" enctype="multipart/form-data">
+    <table align="center">
+        <tr>
+            <td>
 
-            </tr>
+                <input asp-for="Id_Cargo" type="hidden" />
+            </td>
 
-            <tr>
-                <td>
-                    <label class="mb-2 mt-2">
-                        CargoName
-                    </label>
-                </td>
-                <td>
-                    <input asp-for="CargoName" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="mb-2 mt-2">
-                        DeparturePoint
-                    </label>
-                </td>
-                <td>
-                    <input asp-for="DeparturePoint" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="mb-2 mt-2">
-                        DestinationPoint
-                    </label>
-                </td>
-                <td>
-                    <input asp-for="DestinationPoint" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="mb-2 mt-2">
-                        Weight
-                    </label>
-                </td>
-                <td>
-                    <input asp-for="Weight" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="mb-2 mt-2">
-                        CargoType
-                    </label>
-                </td>
-                <td>
-                    <input asp-for="CargoType" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="mb-2 mt-2">
-                        Height
-                    </label>
-                </td>
-                <td>
-                    <input asp-for="Height" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="mb-2 mt-2">
-                        Width
-                    </label>
-                </td>
-                <td>
-                    <input asp-for="Width" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="mb-2 mt-2">
-                        Length
-                    </label>
-                </td>
-                <td>
-                    <input asp-for="Length" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="mb-2 mt-2">
-                        Photo
-                    </label>
-                </td>
-                <td>
-                    <input asp-for="Image" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" value="Додати вантаж" />
-                </td>
-            </tr>
-        </table>
-    </form>
-</tr>
+        </tr>
+
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    Назва вантажу - 
+                </label>
+            </td>
+            <td>
+                <input asp-for="CargoName" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    Місце відправлення - 
+                </label>
+            </td>
+            <td>
+                <input asp-for="DeparturePoint" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    Місце призначення - 
+                </label>
+            </td>
+            <td>
+                <input asp-for="DestinationPoint" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    Вага - 
+                </label>
+            </td>
+            <td>
+                <input asp-for="Weight" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    Тип вантажу - 
+                </label>
+            </td>
+            <td>
+                <select asp-for="CargoType">
+                    <option value="Коробки">Коробки</option>
+                    <option value="Твердий">Твердий</option>
+                    <option value="Рідкий">Рідкий</option>
+                    <option value="Сипучий">Сипучий</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    Висота
+                </label>
+            </td>
+            <td>
+                <input asp-for="Height" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    Ширина
+                </label>
+            </td>
+            <td>
+                <input asp-for="Width" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    Довжина
+                </label>
+            </td>
+            <td>
+                <input asp-for="Length" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    Фотографія - 
+                </label>
+            </td>
+            <td>
+                <input asp-for="Image" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Додати вантаж" />
+            </td>
+        </tr>
+    </table>
+</form>

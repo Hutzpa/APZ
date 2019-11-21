@@ -14,6 +14,7 @@ using CargoWorld.ViewModels;
 
 namespace CargoWorld.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private UserManager<ApplicationUser> _userManager;
