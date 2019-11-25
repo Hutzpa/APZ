@@ -52,7 +52,11 @@ namespace CargoWorld.Controllers
                 CargoType = cargo.CargoType,
                 Height = cargo.Height,
                 Width = cargo.Width,
-                Length = cargo.Length
+                Length = cargo.Length,
+                CanBeSepateted = cargo.CanBeSepateted,
+                Bulk = cargo.Bulk
+
+
             };
             return View(cvm);
         }
@@ -78,14 +82,17 @@ namespace CargoWorld.Controllers
                     CargoType = cargo.CargoType,
                     Height = cargo.Height,
                     Width = cargo.Width,
-                    Length = cargo.Length
+                    Length = cargo.Length,
+                    CanBeSepateted = cargo.CanBeSepateted,
+                    Bulk = cargo.Bulk
+
                 });
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateCargo(CargoViewModel cvm)
-        {
+            {
             var user = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User));
             var cargo = new Cargo
             {
@@ -100,7 +107,11 @@ namespace CargoWorld.Controllers
                 CargoType = cvm.CargoType,
                 Height = cvm.Height,
                 Width = cvm.Width,
-                Length = cvm.Length
+                Length = cvm.Length,
+                CanBeSepateted = cvm.CanBeSepateted,
+                Bulk = cvm.Bulk
+                
+
             };
 
             if (cvm.Id_Cargo > 0)
@@ -137,6 +148,13 @@ namespace CargoWorld.Controllers
         {
             var type = image.Substring(image.LastIndexOf('.') + 1);
             return new FileStreamResult(_fileManager.ImageStream(image), $"image/{type}");
+        }
+
+        [Obsolete("Переместить в GROUP CONTROLLER")]
+        public IActionResult GetOptimalCargoForGroup(int idGroup)
+        {
+            /
+            return View();
         }
     }
 }

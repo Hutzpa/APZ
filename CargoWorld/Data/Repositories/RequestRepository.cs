@@ -17,16 +17,16 @@ namespace CargoWorld.Data.Repositories
         {
             _ctx = ctx;
         }
-        public void Create(Request data) => _ctx.Request.Add(data);
+        public void Create(Request data) => _ctx.Requests.Add(data);
 
-        public Request Get(int id) => _ctx.Request.FirstOrDefault(o => o.Id == id);
+        public Request Get(int id) => _ctx.Requests.FirstOrDefault(o => o.Id == id);
 
         public ListViewModel<Request> GetAll(string id, int pageNumber)
         {
             throw new NotImplementedException();
         }
 
-        public void Remove(int id) => _ctx.Request.Remove(Get(id));
+        public void Remove(int id) => _ctx.Requests.Remove(Get(id));
 
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
 
@@ -38,7 +38,7 @@ namespace CargoWorld.Data.Repositories
         public IEnumerable<Request> SelectRequests(RequestType requestType, string idRecipient)
         {
             var recip = _ctx.Users.FirstOrDefault(o => o.Id == idRecipient);
-            var requests = _ctx.Request.Where(o => o.Recipient.Id == recip.Id);
+            var requests = _ctx.Requests.Where(o => o.Recipient.Id == recip.Id);
 
             return requests.Where(o => o.RequestType == (RequestType)requestType);
         }
@@ -70,10 +70,10 @@ namespace CargoWorld.Data.Repositories
             _ctx.Update(cargo);
             _ctx.Update(cargoInCar);
 
-            var toDel = _ctx.Request.Where(o => o.RequestType == RequestType.CompanyOffersToUser &&
+            var toDel = _ctx.Requests.Where(o => o.RequestType == RequestType.CompanyOffersToUser &&
             o.Recipient.Id == _ctx.Users.FirstOrDefault(us => us.Id == userId).Id);
 
-            _ctx.Request.RemoveRange(toDel);
+            _ctx.Requests.RemoveRange(toDel);
 
             await SaveChangesAsync();
         }
@@ -89,9 +89,9 @@ namespace CargoWorld.Data.Repositories
             _ctx.Update(car);
 
 
-            var toDel = _ctx.Request.Where(o => o.RequestType == RequestType.DrivingRequest &&
+            var toDel = _ctx.Requests.Where(o => o.RequestType == RequestType.DrivingRequest &&
             o.Recipient.Id == user.Id);
-            _ctx.Request.RemoveRange(toDel);
+            _ctx.Requests.RemoveRange(toDel);
 
               await SaveChangesAsync();
 

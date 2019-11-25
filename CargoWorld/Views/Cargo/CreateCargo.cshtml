@@ -51,7 +51,7 @@
         <tr>
             <td>
                 <label class="mb-2 mt-2">
-                    Вага - 
+                    Вага(кг) - 
                 </label>
             </td>
             <td>
@@ -66,11 +66,16 @@
             </td>
             <td>
                 <select asp-for="CargoType">
-                    <option value="Коробки">Коробки</option>
-                    <option value="Твердий">Твердий</option>
-                    <option value="Рідкий">Рідкий</option>
-                    <option value="Сипучий">Сипучий</option>
+                    <option value="box">Коробки</option>
+                    <option value="solid">Твердий</option>
+                    <option value="liquid">Рідкий</option>
+                    <option value="loose">Сипучий</option>
                 </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Чи може бути розділений?</label> @Html.CheckBox("CanBeSepateted", false)
             </td>
         </tr>
         <tr>
@@ -80,17 +85,17 @@
                 </label>
             </td>
             <td>
-                <input asp-for="Height" />
+                <input asp-for="Height" placeholder="Використовуюється для розрахунку об'єму вантажа. Якщо тип вантажу не передбачає чітких розміров(сипучий, рідкий) то залиште це поле порожнім" />
             </td>
         </tr>
         <tr>
             <td>
-                <label class="mb-2 mt-2">
+                <label class="mb-2 mt-2"  >
                     Ширина
                 </label>
             </td>
             <td>
-                <input asp-for="Width" />
+                <input asp-for="Width" placeholder="Використовуюється для розрахунку об'єму вантажа. Якщо тип вантажу не передбачає чітких розміров(сипучий, рідкий) то залиште це поле порожнім"  />
             </td>
         </tr>
         <tr>
@@ -100,7 +105,17 @@
                 </label>
             </td>
             <td>
-                <input asp-for="Length" />
+                <input asp-for="Length" placeholder="Використовуюється для розрахунку об'єму вантажа. Якщо тип вантажу не передбачає чітких розміров(сипучий, рідкий) то залиште це поле порожнім" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    Об'єм - 
+                </label>
+            </td>
+            <td>
+                <input asp-for="Bulk" />
             </td>
         </tr>
         <tr>

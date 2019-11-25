@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CargoWorld.Models
 {
-    public class Cargo 
+    public class Cargo
     {
         [Key]
         public int Id_Cargo { get; set; }
@@ -38,6 +38,14 @@ namespace CargoWorld.Models
         public double Height { get; set; }
         public double Width { get; set; }
         public double Length { get; set; }
+        /// <summary>
+        /// Может ли груз быть разделён на несколько частей?
+        /// </summary>
+        public bool CanBeSepateted {get;set;}
+        /// <summary>
+        /// Объём
+        /// </summary>
+        public double Bulk { get; set; }
 
     }
 }

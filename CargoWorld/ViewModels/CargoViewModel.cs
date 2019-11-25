@@ -38,6 +38,12 @@ namespace CargoWorld.ViewModels
         public double Height { get; set; }
         public double Width { get; set; }
         public double Length { get; set; }
+        /// <summary>
+        /// Объём
+        /// </summary>
+        public double Bulk { get; set; }
+        public bool CanBeSepateted { get; set; }
+
 
         public IFormFile Image { get; set; } = null;
 

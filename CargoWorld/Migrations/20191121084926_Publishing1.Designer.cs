@@ -4,14 +4,16 @@ using CargoWorld.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CargoWorld.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191121084926_Publishing1")]
+    partial class Publishing1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,12 +175,6 @@ namespace CargoWorld.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Bulk")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("CanBeSepateted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("CargoName")
                         .HasColumnType("nvarchar(max)");
 
@@ -302,7 +298,7 @@ namespace CargoWorld.Migrations
 
                     b.HasIndex("RecipientId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Request");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -443,7 +439,7 @@ namespace CargoWorld.Migrations
             modelBuilder.Entity("CargoWorld.Models.Car", b =>
                 {
                     b.HasOne("CargoWorld.Models.Group", "IdGroup")
-                        .WithMany("Cars")
+                        .WithMany()
                         .HasForeignKey("IdGroup1");
 
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")

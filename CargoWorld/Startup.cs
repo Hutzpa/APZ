@@ -34,6 +34,10 @@ namespace CargoWorld
 
 
 
+            //services.AddDbContext<AppDbContext>(opt =>
+            //     opt.UseSqlServer("Data Source=SQL6007.site4now.net;Initial Catalog=DB_A50403_DbCargo;User Id=DB_A50403_DbCargo_admin;Password=PAssword7;"));
+
+
             services.AddDbContext<AppDbContext>(opt =>
                  opt.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DbCargo;Trusted_Connection=true;MultipleActiveResultSets=true"));
 

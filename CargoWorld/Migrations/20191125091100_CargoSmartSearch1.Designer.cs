@@ -4,14 +4,16 @@ using CargoWorld.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CargoWorld.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191125091100_CargoSmartSearch1")]
+    partial class CargoSmartSearch1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,9 +174,6 @@ namespace CargoWorld.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Bulk")
-                        .HasColumnType("float");
 
                     b.Property<bool>("CanBeSepateted")
                         .HasColumnType("bit");
@@ -443,7 +442,7 @@ namespace CargoWorld.Migrations
             modelBuilder.Entity("CargoWorld.Models.Car", b =>
                 {
                     b.HasOne("CargoWorld.Models.Group", "IdGroup")
-                        .WithMany("Cars")
+                        .WithMany()
                         .HasForeignKey("IdGroup1");
 
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")

@@ -16,5 +16,6 @@ namespace CargoWorld.Models
 
         public string GroupName { get; set; }
 
+        public List<Car> Cars { get; set; }
     }
 }
