@@ -70,7 +70,7 @@ namespace CargoWorld.Data.Repositories
         public List<Car> CreateGroupForCargo(int idCargo)
         {
             //Находим нужный груз
-            Cargo cargo = _ctx.Cargos.FirstOrDefault(o => o.Id_Cargo == idCargo);
+            Cargo cargo = _ctx.Cargos.AsNoTracking().FirstOrDefault(o => o.Id_Cargo == idCargo);
 
             //Список машин в групе
             List<Car> carsInThisGroup = new List<Car>();
@@ -98,18 +98,19 @@ namespace CargoWorld.Data.Repositories
             }
             else
             {
-                //груз разделён на столько частей
-                byte cargoParts = 1;
+             
                 //% груза распиханый по машинам
                 int cargoAmount = 0;
                 //Если груз может быть разделён
                 if (cargo.CanBeSepateted)
                 {
+                        byte cargoParts = 1;
                     //Проходимся по всем свободным машинам
                     for (int i = 0; i < freeCars.Count();)
                     {
                         //Объём этой машины
                         var bulk = freeCars[i].CarryingCapacitySqM == 0 ? freeCars[i].HeightCargoCompartment * freeCars[i].WidthCargoCompartment * freeCars[i].LengthCargoCompartment : freeCars[i].CarryingCapacitySqM;
+                        //груз разделён на столько частей
                         //Пытаемся максимально делить груз
                         for (; cargoParts <= 3;)
                         {
@@ -120,7 +121,10 @@ namespace CargoWorld.Data.Repositories
                                 carsInThisGroup.Add(freeCars[i]);
                                 //считаем, сколько груза мы положили
                                 cargoAmount += (100 / cargoParts);
+                                if (cargoAmount >= 98)
+                                    return carsInThisGroup;
                                 //Считаем оставшеесе свободное место в машине
+                                //bulk -= cargoBulk / cargoParts;
                                 bulk -= cargoBulk * (100 - cargoAmount) / 100;
                                 //считаем оставшийся объём груза
                                 cargoBulk = cargoBulk * (100 - cargoAmount) / 100;
@@ -130,10 +134,9 @@ namespace CargoWorld.Data.Repositories
                                 // делим груз ещё сильнее
                                 cargoParts++;
                             }
-                        
+
                         }
-                        if (cargoAmount >= 98)
-                            return carsInThisGroup;
+                        
                         cargoParts = 2;
                         i++;
                     }
