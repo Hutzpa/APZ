@@ -12,7 +12,7 @@ namespace CargoWorld.Models
         [Key]
         public int Id_Cargo { get; set; }
         public ApplicationUser Id_Owner { get; set; }
-        public CargoInCar Transfer { get; set; }
+        public ICollection<CargoInCar> Transfer { get; set; }
         public bool IsDelivered { get; set; }
 
         public string CargoName { get; set; }

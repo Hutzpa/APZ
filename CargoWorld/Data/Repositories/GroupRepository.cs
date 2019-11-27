@@ -64,6 +64,8 @@ namespace CargoWorld.Data.Repositories
             return _ctx.Groups.Where(o => o.IdOwner.Id == user.Id);
         }
 
+
+        #region 
         [Obsolete("Переместить метод в CAR REPOSITORY")]
         public List<Car> CreateGroupForCargo(int idCargo)
         {
@@ -73,19 +75,24 @@ namespace CargoWorld.Data.Repositories
             //Список машин в групе
             List<Car> carsInThisGroup = new List<Car>();
 
-            //Находим все не занятые машины с подходящим типом грузового отделения и сортируем по убыванию объёма
-            var freeCars = _ctx.Cars.AsNoTracking().Where(o => o.IdGroup == null && o.CargoType == cargo.CargoType).OrderBy(or => or.CarryingCapacitySqM).ToList();
+            // Находим все не занятые машины с подходящим типом грузового отделения и сортируем по убыванию объёма
+            var freeCars = _ctx.Cars.AsNoTracking().Where(o => o.IdGroup == null && o.CargoType == cargo.CargoType && o.CarryingCapacitySqM > cargo.Bulk / 3).OrderByDescending(or => or.CarryingCapacitySqM).ToList();
 
+            //почему-то не записывает резульатат, запишу вручную
             double cargoBulk = cargo.Bulk == 0 ? cargo.Height * cargo.Width * cargo.Length : cargo.Bulk;
 
             //Если объём груза меньше максимума, то находим наилучшую для него машину
-            if (cargoBulk <= freeCars.First().CarryingCapacitySqM)
+            if (cargoBulk <= freeCars.First()?.CarryingCapacitySqM)  //работает как надо
             {
-                for (int i = 0; i < freeCars.Count(); i++)
+                for (int i = freeCars.Count() - 1; i != 0; i--)
                 {
-                    //Если текущий элемент меньше по V чем груз, то запихиваем груз в предыдущую машину(т.к. мы уже проверили первый элемент)
-                    if (cargoBulk != freeCars[i].CarryingCapacitySqM)
-                        carsInThisGroup.Add(freeCars[i - 1]);
+                    //Начинаем с самого маленького, и идём вверх пока не влезет
+                    if (cargoBulk <= freeCars[i].CarryingCapacitySqM)
+                    {
+                        carsInThisGroup.Add(freeCars[i]);
+                        //для выхода из цикла
+                        i = 1;
+                    }
 
                 }
             }
@@ -94,46 +101,56 @@ namespace CargoWorld.Data.Repositories
                 //груз разделён на столько частей
                 byte cargoParts = 1;
                 //% груза распиханый по машинам
-                double cargoAmount = 0.0;
+                int cargoAmount = 0;
                 //Если груз может быть разделён
                 if (cargo.CanBeSepateted)
                 {
                     //Проходимся по всем свободным машинам
-                    for (int i = 0; i < freeCars.Count(); i++)
+                    for (int i = 0; i < freeCars.Count();)
                     {
+                        //Объём этой машины
+                        var bulk = freeCars[i].CarryingCapacitySqM == 0 ? freeCars[i].HeightCargoCompartment * freeCars[i].WidthCargoCompartment * freeCars[i].LengthCargoCompartment : freeCars[i].CarryingCapacitySqM;
                         //Пытаемся максимально делить груз
                         for (; cargoParts <= 3;)
                         {
-                            //Если часть груза оставшаяся после разделения меньше максимального объёма машины, ищем подходящее
-                            if (cargoBulk/cargoParts <= freeCars.First().CarryingCapacitySqM)
+                            //Если часть груза оставшаяся после разделения меньше максимального объёма машины, ищем подходящее,если нет, то увеличиваем количество частей
+                            if (cargoBulk / cargoParts < bulk)
                             {
-                                //находим(или нет) подходящее
-                                if (cargoBulk / cargoParts != freeCars[i].CarryingCapacitySqM)
-                                {
-                                    carsInThisGroup.Add(freeCars[i - 1]);
-                                    //считаем, сколько груза мы положили
-                                    cargoAmount += 1 / cargoParts;
-                                    //считаем оставшийся объём груза
-                                    cargoBulk = cargoBulk * (1 - cargoAmount);
-                                }
-                                else
-                                {
-                                    //делим груз ещё сильнее
-                                    cargoParts++;
-                                }
+                                //Добавляем машину в потенциальную группу
+                                carsInThisGroup.Add(freeCars[i]);
+                                //считаем, сколько груза мы положили
+                                cargoAmount += (100 / cargoParts);
+                                //Считаем оставшеесе свободное место в машине
+                                bulk -= cargoBulk * (100 - cargoAmount) / 100;
+                                //считаем оставшийся объём груза
+                                cargoBulk = cargoBulk * (100 - cargoAmount) / 100;
                             }
+                            else
+                            {
+                                // делим груз ещё сильнее
+                                cargoParts++;
+                            }
+                        
                         }
+                        if (cargoAmount >= 98)
+                            return carsInThisGroup;
+                        cargoParts = 2;
+                        i++;
                     }
-                    //Если по итогу проверки всех машин, груз распихан не полностью, то групу под этот груз сформировать нельзя
-                    if (cargoAmount >= 0.98)
+                    // Если по итогу проверки всех машин, груз распихан не полностью, то групу под этот груз сформировать нельзя
+                    if (cargoAmount >= 98)
                         return carsInThisGroup;
+                    else
+                        return null;
                 }
                 else
                 {
                     return null;
                 }
             }
-            return null;
+            return carsInThisGroup;
         }
+        #endregion
+
     }
 }

@@ -14,6 +14,8 @@
     <img src="@imagePath" />
 }
 
+<a asp-controller="Cargo" asp-action="CreateOptimalGroup" asp-route-idCargo="@Model.Id_Cargo">@Model.Id_Cargo </a>
+
 @if (Enumerable.Count(ViewBag.GroupsToOffer) > 0)
 {
     <form asp-controller="Request" asp-action="CreateCompanyToUser" method="post" enctype="multipart/form-data">

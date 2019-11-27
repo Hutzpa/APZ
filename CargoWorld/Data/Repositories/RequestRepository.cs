@@ -43,9 +43,12 @@ namespace CargoWorld.Data.Repositories
             return requests.Where(o => o.RequestType == (RequestType)requestType);
         }
 
-
+        [Obsolete("НЕ РАБОТАЕТ")]
         public async Task AcceptCompanyToUserAsync(int idCargo, int idGroup, string userId)
         {
+            //Принятие предложения компании - пользователю о перевозке грузаЫ
+            throw new NullReferenceException();
+            
 
             //.In.FirstOrDefault(o => o.Id_Cargo == idCargo);
             var cargo = _ctx.Cargos.Include(o => o.Id_Owner).ToList().FirstOrDefault(c => c.Id_Cargo == idCargo);
@@ -56,16 +59,14 @@ namespace CargoWorld.Data.Repositories
 
             var cargoInCar = new CargoInCar
             {
-                Id_Car = firstCarInGroup,
+                Car = firstCarInGroup,
                 AmountOfCarog = 100,
             };
 
             //Null reference exception
-            cargoInCar.Id_Cargo = new List<Cargo>
-            {
-                cargo
-            };
-            cargo.Transfer = cargoInCar;
+            cargoInCar.Cargo = cargo;
+            
+            //cargo.Transfer = cargoInCar;
 
             _ctx.Update(cargo);
             _ctx.Update(cargoInCar);

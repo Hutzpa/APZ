@@ -153,7 +153,14 @@ namespace CargoWorld.Controllers
         [Obsolete("Переместить в GROUP CONTROLLER")]
         public IActionResult GetOptimalCargoForGroup(int idGroup)
         {
-            /
+            
+            return View();
+        }
+
+
+        public IActionResult CreateOptimalGroup(int idCargo)
+        {
+          List<Car> get =  _groupRepository.CreateGroupForCargo(idCargo);
             return View();
         }
     }
