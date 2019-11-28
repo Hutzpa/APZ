@@ -38,7 +38,7 @@ namespace CargoWorld.Data.Repositories
         public IEnumerable<Request> SelectRequests(RequestType requestType, string idRecipient)
         {
             var recip = _ctx.Users.FirstOrDefault(o => o.Id == idRecipient);
-            var requests = _ctx.Requests.Where(o => o.Recipient.Id == recip.Id);
+            var requests = _ctx.Requests.Where(o => o.Recip.Id == recip.Id);
 
             return requests.Where(o => o.RequestType == (RequestType)requestType);
         }
@@ -59,7 +59,7 @@ namespace CargoWorld.Data.Repositories
 
             var cargoInCar = new CargoInCar
             {
-                Car = firstCarInGroup,
+                Transporter = firstCarInGroup,
                 AmountOfCarog = 100,
             };
 
@@ -72,7 +72,7 @@ namespace CargoWorld.Data.Repositories
             _ctx.Update(cargoInCar);
 
             var toDel = _ctx.Requests.Where(o => o.RequestType == RequestType.CompanyOffersToUser &&
-            o.Recipient.Id == _ctx.Users.FirstOrDefault(us => us.Id == userId).Id);
+            o.Recip.Id == _ctx.Users.FirstOrDefault(us => us.Id == userId).Id);
 
             _ctx.Requests.RemoveRange(toDel);
 
@@ -91,7 +91,7 @@ namespace CargoWorld.Data.Repositories
 
 
             var toDel = _ctx.Requests.Where(o => o.RequestType == RequestType.DrivingRequest &&
-            o.Recipient.Id == user.Id);
+            o.Recip.Id == user.Id);
             _ctx.Requests.RemoveRange(toDel);
 
               await SaveChangesAsync();

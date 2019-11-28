@@ -60,6 +60,8 @@ namespace CargoWorld.Data.Repositories
         public async Task<bool> SaveChangesAsync() => await _ctx.SaveChangesAsync() != 0 ? true : false;
         public void Update(Cargo update) => _ctx.Cargos.Update(update);
 
+
+
         #region Найти оптимальный груз для группы
         public IEnumerable<Cargo> SearchOptimalCargoForGroup(int groupId)
         {
@@ -79,22 +81,25 @@ namespace CargoWorld.Data.Repositories
             //все грузы
             foreach (var c in _ctx.Cargos)
             {
-                //Получаем свободное пространство во всех грузовиках для подходящего типа груза
+                //Получаем свободное пространство во всех грузовиках этой группы для подходящего типа груза
                 double groupFreeSpace = 0.0;
                 foreach (Car car in group.Cars.Where(car => car.CargoType == c.CargoType))
                 {
-                    var cagroInCar = _ctx.CargoInCars.Include(o => o.Car).Where(cg => cg.Car == car);
+                    var cagroInCar = _ctx.CargoInCars.Include(o => o.Transporter).Where(cg => cg.Transporter == car);
                     //Весь объём грузового отделения машины
                     double totalBulk = (car.HeightCargoCompartment * car.WidthCargoCompartment * car.LengthCargoCompartment) == 0 ? car.CarryingCapacitySqM : (car.HeightCargoCompartment * car.WidthCargoCompartment * car.LengthCargoCompartment);
                     //Занятый объём грузового отделения
                     double bussyBulk = 0.0;
-                    foreach (CargoInCar cargo in cagroInCar)
-                        //Прибавляем занятый каждым грузом объём, если он не указан как параметр, указываем
-                        bussyBulk += (cargo.Cargo.Height * cargo.Cargo.Width * cargo.Cargo.Length) == 0
-                            ? cargo.Cargo.Bulk
-                            : (cargo.Cargo.Height * cargo.Cargo.Width * cargo.Cargo.Length);
-
-                    //считаем свободное пространство автомобиля и прибавляем к свободному пространству типа груза в групе
+                    //Если в машине есть груз, считаем занятый объём
+                    if(cagroInCar.Count() != 0)
+                    {
+                        foreach (CargoInCar cargo in cagroInCar)
+                            //Прибавляем занятый каждым грузом объём, если он не указан как параметр, указываем
+                            bussyBulk += (cargo.Cargo.Height * cargo.Cargo.Width * cargo.Cargo.Length) == 0
+                                ? cargo.Cargo.Bulk
+                                : (cargo.Cargo.Height * cargo.Cargo.Width * cargo.Cargo.Length);
+                    }
+                    //считаем свободное пространство автомобиля и прибавляем к свободному пространству подходящего типа груза в групе
                     groupFreeSpace += totalBulk - bussyBulk;
                 }
                 //На сколько частей делят груз в данный момент
@@ -107,24 +112,29 @@ namespace CargoWorld.Data.Repositories
                 {
                     //Объём этого груза
                     double cargoBulk = c.Bulk == 0 ? (c.Height * c.Width * c.Length) / countOfParts : c.Bulk / countOfParts;
-                    //Если объём этого груза меньше чем свободный объём в машинах  подходящего типа
+                    //Если объём этого груза меньше чем весь свободный объём в машинах  подходящего типа в группе
                     if (groupFreeSpace > cargoBulk)
                     {
                         //получаем все грузы в этой машине
-                        var cagroInCar = _ctx.CargoInCars.Include(o => o.Car).Where(cg => cg.Car == car);
+                        var cagroInCar = _ctx.CargoInCars.Include(o => o.Transporter).Where(cg => cg.Transporter == car);
                         //Объём грузового отделения
                         double totalBulk = (car.HeightCargoCompartment * car.WidthCargoCompartment * car.LengthCargoCompartment) == 0?car.CarryingCapacitySqM : (car.HeightCargoCompartment * car.WidthCargoCompartment * car.LengthCargoCompartment);
                         //Счётчик занятого объёма в грузовом отделении этой машины
                         double bussyBulk = 0.0;
 
+                        
                         foreach (CargoInCar cargo in cagroInCar)
+                        {
+
                             //Считаем занятный всеми грузами объём грузового отделения 
-                            bussyBulk += cargo.Cargo.Height * cargo.Cargo.Width * cargo.Cargo.Length;
+                            bussyBulk += cargo.Cargo.Bulk == 0 
+                                ? cargo.Cargo.Height * cargo.Cargo.Width * cargo.Cargo.Length 
+                                : cargo.Cargo.Bulk;
+                        }
 
                         //Если свободного пространства в грузовом отделении хватает чтоб запихнуть туда груз целиком, то запихиваем
-                        if (bussyBulk + cargoBulk <= totalBulk)
+                        if (bussyBulk + cargoBulk <= totalBulk) //работает, добавляет
                             cargosForThisGroup.Add(c);
-
                         else //а если нет.....
                         {
                             //может ли быть груз разделён? нет - выходим, переходим к другой машине
@@ -134,8 +144,15 @@ namespace CargoWorld.Data.Repositories
                                 for (; countOfParts <= 3;)
                                 {
                                     //Если свободный объём в этой машине, больше чем объём груза, то мы его запихиваем, и записываем 
-                                    if (CanIPlaceCargoHere(bussyBulk, totalBulk, (cargoBulk*(1-percentOfCargoPlacing))))
+                                    if (bussyBulk+cargoBulk/countOfParts < totalBulk)
+                                    {
                                         percentOfCargoPlacing += 1 / countOfParts;
+                                        //делим груз
+                                        cargoBulk /= countOfParts;
+                                        //прибавляем к занятому объёму грузового отделения объём части груза
+                                        bussyBulk = cargoBulk * percentOfCargoPlacing; 
+
+                                    }
                                     else //или же, проверяем,не влезет ли в машину груз делённый на 3
                                         countOfParts++;
                                 }

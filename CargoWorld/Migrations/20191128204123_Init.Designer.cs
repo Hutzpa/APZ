@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CargoWorld.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191119184057_Requests1")]
-    partial class Requests1
+    [Migration("20191128204123_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -138,8 +138,8 @@ namespace CargoWorld.Migrations
                     b.Property<double>("HeightCargoCompartment")
                         .HasColumnType("float");
 
-                    b.Property<int>("IdDriver")
-                        .HasColumnType("int");
+                    b.Property<string>("IdDriver")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("IdGroup1")
                         .HasColumnType("int");
@@ -175,6 +175,12 @@ namespace CargoWorld.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<double>("Bulk")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("CanBeSepateted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("CargoName")
                         .HasColumnType("nvarchar(max)");
 
@@ -202,9 +208,6 @@ namespace CargoWorld.Migrations
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TransferId_Delivery")
-                        .HasColumnType("int");
-
                     b.Property<int>("Weight")
                         .HasColumnType("int");
 
@@ -214,8 +217,6 @@ namespace CargoWorld.Migrations
                     b.HasKey("Id_Cargo");
 
                     b.HasIndex("Id_OwnerId");
-
-                    b.HasIndex("TransferId_Delivery");
 
                     b.ToTable("Cargos");
                 });
@@ -230,12 +231,17 @@ namespace CargoWorld.Migrations
                     b.Property<int>("AmountOfCarog")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Id_CarIdCar")
+                    b.Property<int?>("CargoId_Cargo")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TransporterIdCar")
                         .HasColumnType("int");
 
                     b.HasKey("Id_Delivery");
 
-                    b.HasIndex("Id_CarIdCar");
+                    b.HasIndex("CargoId_Cargo");
+
+                    b.HasIndex("TransporterIdCar");
 
                     b.ToTable("CargoInCars");
                 });
@@ -273,23 +279,27 @@ namespace CargoWorld.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("IdCar")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdCargo")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdGroup")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RecipientId")
+                    b.Property<string>("RecipId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("RequestType")
                         .HasColumnType("int");
 
-                    b.Property<string>("SenderId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipientId");
-
-                    b.HasIndex("SenderId");
+                    b.HasIndex("RecipId");
 
                     b.ToTable("Requests");
                 });
@@ -432,7 +442,7 @@ namespace CargoWorld.Migrations
             modelBuilder.Entity("CargoWorld.Models.Car", b =>
                 {
                     b.HasOne("CargoWorld.Models.Group", "IdGroup")
-                        .WithMany()
+                        .WithMany("Cars")
                         .HasForeignKey("IdGroup1");
 
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")
@@ -445,17 +455,17 @@ namespace CargoWorld.Migrations
                     b.HasOne("CargoWorld.Models.ApplicationUser", "Id_Owner")
                         .WithMany("Cargos")
                         .HasForeignKey("Id_OwnerId");
-
-                    b.HasOne("CargoWorld.Models.CargoInCar", "Transfer")
-                        .WithMany("Id_Cargo")
-                        .HasForeignKey("TransferId_Delivery");
                 });
 
             modelBuilder.Entity("CargoWorld.Models.CargoInCar", b =>
                 {
-                    b.HasOne("CargoWorld.Models.Car", "Id_Car")
+                    b.HasOne("CargoWorld.Models.Cargo", "Cargo")
+                        .WithMany("Transfer")
+                        .HasForeignKey("CargoId_Cargo");
+
+                    b.HasOne("CargoWorld.Models.Car", "Transporter")
                         .WithMany("CargoInThisCar")
-                        .HasForeignKey("Id_CarIdCar");
+                        .HasForeignKey("TransporterIdCar");
                 });
 
             modelBuilder.Entity("CargoWorld.Models.Group", b =>
@@ -467,13 +477,9 @@ namespace CargoWorld.Migrations
 
             modelBuilder.Entity("CargoWorld.Models.Request", b =>
                 {
-                    b.HasOne("CargoWorld.Models.ApplicationUser", "Recipient")
-                        .WithMany()
-                        .HasForeignKey("RecipientId");
-
-                    b.HasOne("CargoWorld.Models.ApplicationUser", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId");
+                    b.HasOne("CargoWorld.Models.ApplicationUser", "Recip")
+                        .WithMany("RequestsToMe")
+                        .HasForeignKey("RecipId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

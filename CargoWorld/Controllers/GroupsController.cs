@@ -20,14 +20,17 @@ namespace CargoWorld.Controllers
         private GroupRepository _groupsRepository;
         private UserManager<ApplicationUser> _userManager;
         private CarRepository _carManager;
+        private CargoRepository _cargoManager;
 
         public GroupsController(IRepository<Group> groupsRepository, 
             UserManager<ApplicationUser> userManager,
-            IRepository<Car> carManager)
+            IRepository<Car> carManager,
+            IRepository<Cargo> cargoManager)
         {
             _groupsRepository = (GroupRepository)groupsRepository;
             _userManager = userManager;
             _carManager = (CarRepository)carManager;
+            _cargoManager = (CargoRepository)cargoManager;
         }
 
         public IActionResult AGroup(string idOfGroup)
@@ -178,7 +181,12 @@ namespace CargoWorld.Controllers
             await _carManager.SaveChangesAsync();
             return RedirectToAction("AGroup", new { idOfGroup = idCar });
         }
-        
-      
+
+
+        public IActionResult GetOptimalCargoForGroup(int idGroup)
+        {
+            _cargoManager.SearchOptimalCargoForGroup(idGroup);
+            return View();
+        }
     }
 }

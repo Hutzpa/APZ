@@ -36,8 +36,9 @@ namespace CargoWorld.Models
 
         public RequestType RequestType { get; set; }
 
+      
+       // public string SenderId { get; set; }
 
-        public string SenderId { get; set; }
-        public ApplicationUser Recipient { get; set; }
+        public ApplicationUser Recip { get; set; }
     }
 }

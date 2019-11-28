@@ -150,17 +150,12 @@ namespace CargoWorld.Controllers
             return new FileStreamResult(_fileManager.ImageStream(image), $"image/{type}");
         }
 
-        [Obsolete("Переместить в GROUP CONTROLLER")]
-        public IActionResult GetOptimalCargoForGroup(int idGroup)
-        {
-            
-            return View();
-        }
+       
 
 
         public IActionResult CreateOptimalGroup(int idCargo)
         {
-          List<Car> get =  _groupRepository.CreateGroupForCargo(idCargo);
+          List<Car> get =  _groupRepository.CreateGroupForCargo(idCargo, _userManager.GetUserId(HttpContext.User));
             return View();
         }
     }

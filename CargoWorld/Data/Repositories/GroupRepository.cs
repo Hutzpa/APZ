@@ -65,9 +65,7 @@ namespace CargoWorld.Data.Repositories
         }
 
 
-        #region 
-        [Obsolete("Переместить метод в CAR REPOSITORY")]
-        public List<Car> CreateGroupForCargo(int idCargo)
+        public List<Car> CreateGroupForCargo(int idCargo, string idOwner)
         {
             //Находим нужный груз
             Cargo cargo = _ctx.Cargos.AsNoTracking().FirstOrDefault(o => o.Id_Cargo == idCargo);
@@ -75,8 +73,11 @@ namespace CargoWorld.Data.Repositories
             //Список машин в групе
             List<Car> carsInThisGroup = new List<Car>();
 
-            // Находим все не занятые машины с подходящим типом грузового отделения и сортируем по убыванию объёма
-            var freeCars = _ctx.Cars.AsNoTracking().Where(o => o.IdGroup == null && o.CargoType == cargo.CargoType && o.CarryingCapacitySqM > cargo.Bulk / 3).OrderByDescending(or => or.CarryingCapacitySqM).ToList();
+            // Находим все не занятые машины с подходящим типом грузового отделения этого владельца и сортируем по убыванию объёма
+            var freeCars = _ctx.Cars.Include(i=>i.IdOwner)
+                .AsNoTracking()
+                .Where(o => o.IdGroup == null && o.CargoType == cargo.CargoType && o.IdOwner.Id == idOwner && o.CarryingCapacitySqM > cargo.Bulk / 3)
+                .OrderByDescending(or => or.CarryingCapacitySqM).ToList();
 
             //почему-то не записывает резульатат, запишу вручную
             double cargoBulk = cargo.Bulk == 0 ? cargo.Height * cargo.Width * cargo.Length : cargo.Bulk;
@@ -153,7 +154,5 @@ namespace CargoWorld.Data.Repositories
             }
             return carsInThisGroup;
         }
-        #endregion
-
     }
 }
