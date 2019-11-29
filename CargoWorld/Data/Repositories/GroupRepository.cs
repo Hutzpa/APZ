@@ -125,7 +125,6 @@ namespace CargoWorld.Data.Repositories
                                 if (cargoAmount >= 98)
                                     return carsInThisGroup;
                                 //Считаем оставшеесе свободное место в машине
-                                //bulk -= cargoBulk / cargoParts;
                                 bulk -= cargoBulk * (100 - cargoAmount) / 100;
                                 //считаем оставшийся объём груза
                                 cargoBulk = cargoBulk * (100 - cargoAmount) / 100;

@@ -72,14 +72,10 @@ namespace CargoWorld.Data.Repositories
             //Грузы, рекомендуемые для этой групы
             List<Cargo> cargosForThisGroup = new List<Cargo>();
 
-            ////Получаем занятый, общий и свободный объём всех машин подходящего типа в групе
-            //foreach (var car in group.Cars)
-            //{
-            //   // var cagroInCar = _ctx.CargoInCars.Include(o => o.Car).Where(cg => cg.Car == car);
-            //}
+
 
             //все грузы
-            foreach (var c in _ctx.Cargos)
+            foreach (var c in _ctx.Cargos.AsNoTracking())
             {
                 //Получаем свободное пространство во всех грузовиках этой группы для подходящего типа груза
                 double groupFreeSpace = 0.0;
@@ -91,7 +87,7 @@ namespace CargoWorld.Data.Repositories
                     //Занятый объём грузового отделения
                     double bussyBulk = 0.0;
                     //Если в машине есть груз, считаем занятый объём
-                    if(cagroInCar.Count() != 0)
+                    if (cagroInCar.Count() != 0)
                     {
                         foreach (CargoInCar cargo in cagroInCar)
                             //Прибавляем занятый каждым грузом объём, если он не указан как параметр, указываем
@@ -105,30 +101,29 @@ namespace CargoWorld.Data.Repositories
                 //На сколько частей делят груз в данный момент
                 byte countOfParts = 1;
                 //Сформированность груза на данный момент
-                double percentOfCargoPlacing = 0.0;
+                int percentOfCargoPlacing = 0;
+                //Объём этого груза
+                double cargoBulk = c.Bulk == 0 ? (c.Height * c.Width * c.Length) / countOfParts : c.Bulk / countOfParts;
 
-                //Цикл для всех машин с типом грузового отделения подходящим под тип груза
-                foreach (Car car in group.Cars.Where(car => car.CargoType == c.CargoType))
+                if (groupFreeSpace > cargoBulk)
                 {
-                    //Объём этого груза
-                    double cargoBulk = c.Bulk == 0 ? (c.Height * c.Width * c.Length) / countOfParts : c.Bulk / countOfParts;
-                    //Если объём этого груза меньше чем весь свободный объём в машинах  подходящего типа в группе
-                    if (groupFreeSpace > cargoBulk)
+                    //Цикл для всех машин с типом грузового отделения подходящим под тип груза
+                    foreach (Car car in group.Cars.Where(car => car.CargoType == c.CargoType))
                     {
+
                         //получаем все грузы в этой машине
                         var cagroInCar = _ctx.CargoInCars.Include(o => o.Transporter).Where(cg => cg.Transporter == car);
                         //Объём грузового отделения
-                        double totalBulk = (car.HeightCargoCompartment * car.WidthCargoCompartment * car.LengthCargoCompartment) == 0?car.CarryingCapacitySqM : (car.HeightCargoCompartment * car.WidthCargoCompartment * car.LengthCargoCompartment);
+                        double totalBulk = (car.HeightCargoCompartment * car.WidthCargoCompartment * car.LengthCargoCompartment) == 0 ? car.CarryingCapacitySqM : (car.HeightCargoCompartment * car.WidthCargoCompartment * car.LengthCargoCompartment);
                         //Счётчик занятого объёма в грузовом отделении этой машины
                         double bussyBulk = 0.0;
 
-                        
+
                         foreach (CargoInCar cargo in cagroInCar)
                         {
-
                             //Считаем занятный всеми грузами объём грузового отделения 
-                            bussyBulk += cargo.Cargo.Bulk == 0 
-                                ? cargo.Cargo.Height * cargo.Cargo.Width * cargo.Cargo.Length 
+                            bussyBulk += cargo.Cargo.Bulk == 0
+                                ? cargo.Cargo.Height * cargo.Cargo.Width * cargo.Cargo.Length
                                 : cargo.Cargo.Bulk;
                         }
 
@@ -144,24 +139,27 @@ namespace CargoWorld.Data.Repositories
                                 for (; countOfParts <= 3;)
                                 {
                                     //Если свободный объём в этой машине, больше чем объём груза, то мы его запихиваем, и записываем 
-                                    if (bussyBulk+cargoBulk/countOfParts < totalBulk)
+                                    if (bussyBulk + cargoBulk / countOfParts < totalBulk)
                                     {
-                                        percentOfCargoPlacing += 1 / countOfParts;
-                                        //делим груз
-                                        cargoBulk /= countOfParts;
+                                        //% 
+                                        percentOfCargoPlacing += (100 / countOfParts);
+                                        //делим груз и получаем оставшийся объём
+                                        // cargoBulk = cargoBulk * (100-percentOfCargoPlacing)/100;
+                                        cargoBulk = cargoBulk / countOfParts;
                                         //прибавляем к занятому объёму грузового отделения объём части груза
-                                        bussyBulk = cargoBulk * percentOfCargoPlacing; 
+                                        bussyBulk += cargoBulk;
 
                                     }
-                                    else //или же, проверяем,не влезет ли в машину груз делённый на 3
+                                    else //или же, проверяем,не влезет ли в машину груз делённый ещё сильнее
                                         countOfParts++;
                                 }
                             }
                         }
+
                     }
                 }
                 //Если по истечении всех проверок, груз не сформирован полностью, то его не добавляют и переходят к следующему
-                if (percentOfCargoPlacing >= 0.98)
+                if (percentOfCargoPlacing >= 98)
                     cargosForThisGroup.Add(c);
             }
             // Список грузов рекомендованный для этой групы
@@ -172,6 +170,6 @@ namespace CargoWorld.Data.Repositories
             return bussyBulkInThisCar + cargoBulk > totalBulkInThisCar;
         }
 
-#endregion
+        #endregion
     }
 }
