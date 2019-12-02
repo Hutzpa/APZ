@@ -1,0 +1,29 @@
+﻿@model OptimalGroupViewModel
+
+
+
+<p>Запропонована група для вантажу -  <h4>@Model.Cargo.CargoName</h4> </p>
+
+
+
+@if (Model.CarsThisGroup.Count() == 0)
+{
+    <label>Нажаль, ви не маєте підходящих для цього вантажу машин</label>
+}
+else
+{
+
+    <ul>
+        @foreach (var car in Model.CarsThisGroup)
+        {
+            <img src="@car.Photo" height="200" width="200" />
+            <li>
+                <label>Модель - @car.CarModel |Тип машини - @car.CarType | Номер - @car.RegistrationNumber | </label>
+            </li>
+        }
+
+        <form>
+            <input type="submit" value="Створити групу та запропонувати перевезення" />
+        </form>
+    </ul>
+}

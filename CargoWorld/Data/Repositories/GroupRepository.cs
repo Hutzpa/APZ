@@ -79,7 +79,7 @@ namespace CargoWorld.Data.Repositories
                 .Where(o => o.IdGroup == null && o.CargoType == cargo.CargoType && o.IdOwner.Id == idOwner && o.CarryingCapacitySqM > cargo.Bulk / 3)
                 .OrderByDescending(or => or.CarryingCapacitySqM).ToList();
 
-            //почему-то не записывает резульатат, запишу вручную
+            //объём груза
             double cargoBulk = cargo.Bulk == 0 ? cargo.Height * cargo.Width * cargo.Length : cargo.Bulk;
 
             //Если объём груза меньше максимума, то находим наилучшую для него машину
@@ -110,24 +110,25 @@ namespace CargoWorld.Data.Repositories
                     for (int i = 0; i < freeCars.Count();)
                     {
                         //Объём этой машины
-                        var bulk = freeCars[i].CarryingCapacitySqM == 0 ? freeCars[i].HeightCargoCompartment * freeCars[i].WidthCargoCompartment * freeCars[i].LengthCargoCompartment : freeCars[i].CarryingCapacitySqM;
+                        var carBulk = freeCars[i].CarryingCapacitySqM == 0 ? freeCars[i].HeightCargoCompartment * freeCars[i].WidthCargoCompartment * freeCars[i].LengthCargoCompartment : freeCars[i].CarryingCapacitySqM;
                         //груз разделён на столько частей
                         //Пытаемся максимально делить груз
                         for (; cargoParts <= 3;)
                         {
                             //Если часть груза оставшаяся после разделения меньше максимального объёма машины, ищем подходящее,если нет, то увеличиваем количество частей
-                            if (cargoBulk / cargoParts < bulk)
+                            if (cargoBulk / cargoParts < carBulk)
                             {
                                 //Добавляем машину в потенциальную группу
-                                carsInThisGroup.Add(freeCars[i]);
+                                if(!carsInThisGroup.Contains(freeCars[i]))
+                                    carsInThisGroup.Add(freeCars[i]);
                                 //считаем, сколько груза мы положили
                                 cargoAmount += (100 / cargoParts);
                                 if (cargoAmount >= 98)
                                     return carsInThisGroup;
                                 //Считаем оставшеесе свободное место в машине
-                                bulk -= cargoBulk * (100 - cargoAmount) / 100;
+                                carBulk -= cargoBulk * (100 - cargoAmount) / 100;
                                 //считаем оставшийся объём груза
-                                cargoBulk = cargoBulk * (100 - cargoAmount) / 100;
+                                cargoBulk = cargoBulk * (100 - cargoAmount)/100;
                             }
                             else
                             {

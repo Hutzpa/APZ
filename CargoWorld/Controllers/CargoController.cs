@@ -92,7 +92,7 @@ namespace CargoWorld.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateCargo(CargoViewModel cvm)
-            {
+        {
             var user = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User));
             var cargo = new Cargo
             {
@@ -110,7 +110,7 @@ namespace CargoWorld.Controllers
                 Length = cvm.Length,
                 CanBeSepateted = cvm.CanBeSepateted,
                 Bulk = cvm.Bulk
-                
+
 
             };
 
@@ -150,13 +150,19 @@ namespace CargoWorld.Controllers
             return new FileStreamResult(_fileManager.ImageStream(image), $"image/{type}");
         }
 
-       
 
 
-        public IActionResult CreateOptimalGroup(int idCargo)
+
+        public IActionResult OptimalGroup(int idCargo)
         {
-          List<Car> get =  _groupRepository.CreateGroupForCargo(idCargo, _userManager.GetUserId(HttpContext.User));
-            return View();
+
+            var ogv = new OptimalGroupViewModel
+            {
+                CarsThisGroup = _groupRepository.CreateGroupForCargo(idCargo, _userManager.GetUserId(HttpContext.User)),
+                Cargo = _cargoRepository.Get(idCargo),
+
+            };
+            return View(ogv);
         }
     }
 }

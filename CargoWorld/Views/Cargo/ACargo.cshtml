@@ -11,10 +11,14 @@
 @if (!String.IsNullOrEmpty(Model.Photo))
 {
     var imagePath = $"/content/webs/{Model.Photo}";
-    <img src="@imagePath" />
+    <img src="@imagePath" height="200" width="200" />
 }
 
-<a asp-controller="Cargo" asp-action="CreateOptimalGroup" asp-route-idCargo="@Model.Id_Cargo">@Model.Id_Cargo </a>
+<hr />
+<p>
+    <a asp-controller="Cargo" asp-action="OptimalGroup" asp-route-idCargo="@Model.Id_Cargo">Створити оптимальну групу для цього вантажу</a>
+</p>
+<hr />
 
 @if (Enumerable.Count(ViewBag.GroupsToOffer) > 0)
 {

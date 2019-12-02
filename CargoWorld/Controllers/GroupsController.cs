@@ -22,7 +22,7 @@ namespace CargoWorld.Controllers
         private CarRepository _carManager;
         private CargoRepository _cargoManager;
 
-        public GroupsController(IRepository<Group> groupsRepository, 
+        public GroupsController(IRepository<Group> groupsRepository,
             UserManager<ApplicationUser> userManager,
             IRepository<Car> carManager,
             IRepository<Cargo> cargoManager)
@@ -36,11 +36,11 @@ namespace CargoWorld.Controllers
         public IActionResult AGroup(string idOfGroup)
         {
             var group = _groupsRepository.Get(Convert.ToInt32(idOfGroup));
-            
+
             var freeCars = _groupsRepository.GetCarsWithoutGroup(_userManager.GetUserId(HttpContext.User));
             ViewBag.FreeCars = freeCars;
             ViewBag.FreeCarsCount = freeCars.Count();
-           GroupViewModel gvm = new GroupViewModel
+            GroupViewModel gvm = new GroupViewModel
             {
                 IdGroup = (int)group.IdGroup,
                 IdOwner = group.IdOwner,
@@ -96,7 +96,7 @@ namespace CargoWorld.Controllers
                 IdOwner = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User))
             };
 
-           
+
 
             if (gvm.IdGroup > 0)
                 _groupsRepository.Update(group);
@@ -113,7 +113,7 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteGroup(int id)
         {
-           _groupsRepository.Remove(id);
+            _groupsRepository.Remove(id);
             await _groupsRepository.SaveChangesAsync();
             return RedirectToAction("GroupList");
         }
@@ -144,7 +144,7 @@ namespace CargoWorld.Controllers
                 LengthCargoCompartment = cvm.LengthCargoCompartment,
                 CostPerKm = cvm.CostPerKm
             };
-            
+
             _carManager.Update(carWithGroup);
             await _carManager.SaveChangesAsync();
             var idG = idGroup.ToString();
@@ -185,8 +185,12 @@ namespace CargoWorld.Controllers
 
         public IActionResult GetOptimalCargoForGroup(int idGroup)
         {
-            _cargoManager.SearchOptimalCargoForGroup(idGroup);
-            return View();
+            var cvm = new OptimalCargoViewModel
+            {
+                Cargos = _cargoManager.SearchOptimalCargoForGroup(idGroup),
+                OurGroup = _groupsRepository.Get(idGroup)
+            };
+            return View(cvm);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace CargoWorld.Data.Repositories
         {
 
             //Искомая група и машины в ней и грузы в этих машинах
-            var group = _ctx.Groups.Include(o => o.Cars).FirstOrDefault(g => g.IdGroup == groupId);
+            var group = _ctx.Groups.Include(o => o.Cars).Include(o=>o.IdOwner).FirstOrDefault(g => g.IdGroup == groupId);
 
             //Грузы, рекомендуемые для этой групы
             List<Cargo> cargosForThisGroup = new List<Cargo>();
@@ -144,7 +144,6 @@ namespace CargoWorld.Data.Repositories
                                         //% 
                                         percentOfCargoPlacing += (100 / countOfParts);
                                         //делим груз и получаем оставшийся объём
-                                        // cargoBulk = cargoBulk * (100-percentOfCargoPlacing)/100;
                                         cargoBulk = cargoBulk / countOfParts;
                                         //прибавляем к занятому объёму грузового отделения объём части груза
                                         bussyBulk += cargoBulk;

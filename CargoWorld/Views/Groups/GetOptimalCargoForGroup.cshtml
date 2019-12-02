@@ -1,0 +1,34 @@
+﻿@model OptimalCargoViewModel
+
+
+<p>
+    <label>Назва групи - @Model.OurGroup.GroupName</label>
+</p>
+
+@if (Model.Cargos.Count() == 0)
+{
+    <label>Нажаль, підходящих для цієї групи вантажів не знайдено, спробуйте пізніше</label>
+}
+else
+{
+    <ul>
+        @foreach (Cargo cr in Model.Cargos)
+        {
+            <li>
+                <form asp-controller="Request" asp-action="CreateCompanyToUser" method="post" enctype="multipart/form-data">
+                    <input asp-for="@cr.Id_Cargo" type="hidden" />
+                    <input asp-for="@Model.OurGroup.IdOwner" type="hidden" />
+                    <input asp-for="@Model.OurGroup.IdGroup" type="hidden" />
+
+
+                    <label>
+                        Назва - @cr.CargoName | Тип вантажу - @cr.CargoType | Точка призначення - @cr.DestinationPoint | Вага - @cr.Weight | Об'єм - @cr.Bulk |
+                    </label>
+
+                    <input type="submit" value="Запропонувати перевезення" />
+                </form>
+            </li>
+        }
+    </ul>
+
+}
