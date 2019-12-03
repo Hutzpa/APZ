@@ -18,7 +18,7 @@ namespace CargoWorld.Controllers
     [Authorize]
     public class CargoController : Controller
     {
-        private IRepository<Cargo> _cargoRepository;
+        private CargoRepository _cargoRepository;
         private UserManager<ApplicationUser> _userManager;
         private IFileManager _fileManager;
         private GroupRepository _groupRepository;
@@ -28,7 +28,7 @@ namespace CargoWorld.Controllers
             IRepository<Group> groupRepository,
             IFileManager fileManager)
         {
-            _cargoRepository = cargoRepository;
+            _cargoRepository = (CargoRepository)cargoRepository;
             _userManager = userManager;
             _fileManager = fileManager;
             _groupRepository = (GroupRepository)groupRepository;
@@ -37,7 +37,6 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public IActionResult ACargo(int id)
         {
-            ViewBag.GroupsToOffer = _groupRepository.GetAll(_userManager.GetUserId(HttpContext.User));
             var cargo = _cargoRepository.Get(id);
             CargoViewModel cvm = new CargoViewModel
             {
@@ -58,6 +57,9 @@ namespace CargoWorld.Controllers
 
 
             };
+            var grps = _groupRepository.GetAll(_userManager.GetUserId(HttpContext.User))
+                .Where(o=>o.Cars.FirstOrDefault(o=>o.CargoType == cvm.CargoType) != null);
+            ViewBag.GroupsToOffer = grps;
             return View(cvm);
         }
 
@@ -151,7 +153,22 @@ namespace CargoWorld.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult IMTransporting()
+        {
+            var cargos = _cargoRepository.CargosImTransporting(_userManager.GetUserId(HttpContext.User));
+            return View(cargos);
+        }
 
+        [Obsolete("Не сделано")]
+        public async Task<IActionResult> SetDeliveredAsync(int idCargo)
+        {
+            Cargo cr = _cargoRepository.Get(idCargo);
+            cr.IsDelivered = true;
+            _cargoRepository.Update(cr);
+            await _cargoRepository.SaveChangesAsync();
+            return RedirectToAction("IMTransporting");
+        }
 
         public IActionResult OptimalGroup(int idCargo)
         {

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<CargoInCar>
+
+
+@if (Model == null || Model.Count() == 0)
+{
+    <div class="text-center">
+        <label>Ви не перевозите жодного вантажу</label>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <ul>
+            @foreach(var cr in Model)
+            {
+                
+                <li><label>Назва вантажу - @cr.Cargo.CargoName | Куди прямує -  @cr.Cargo.DestinationPoint |Тип вантажу - @cr.Cargo.CargoType |Чи було доставлено - @cr.Cargo.IsDelivered</label> | 
+                    <a asp-controller="Cargo" asp-action="SetDelivered" asp-route-idCargo="@cr.Cargo.Id_Cargo">Відмітити про доставку</a>
+                </li>
+            }
+        </ul>
+    </div>
+}

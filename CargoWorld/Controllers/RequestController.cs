@@ -39,12 +39,9 @@ namespace CargoWorld.Controllers
             return View(requests);
         }
 
-
+        //Пользователь предлагает компании перевозку груза
         public async Task<IActionResult> AcceptCompanyToUserAsync(int requestId)
         {
-            //            Груз автоматически добавляеться в “cargoInTheCar”
-            //(все остальные реквесты на перевозку ЭТОГО груза удаляются)
-
             var request = _requestManager.Get(requestId);
 
             await _requestManager.AcceptCompanyToUserAsync((int)request.IdCargo, (int)request.IdGroup, _userManager.GetUserId(HttpContext.User));
@@ -99,21 +96,40 @@ namespace CargoWorld.Controllers
                 IdCar = uvm.IdCarWithoutDriver,
                 Recip = _userRepository.Get(uvm.ApplicationUser.Id),
                 RequestType = RequestType.DrivingRequest,
-                Name = "Вас приглашают на работу водителем",
-                Description = "Вас приглашают на работу водителем"
+                Name = "Вас запрошують працювати водієм",
+                Description = "Вас запрошують працювати водієм"
 
             };
             _requestManager.Create(request);
             await _requestManager.SaveChangesAsync();
-            return RedirectToAction("DrivingRequest");
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion
 
         #region User to company
+
+        public async Task<IActionResult> CreateUserToCompanyAsync(UserViewModel uvm)
+        {
+            Models.Request request = new Request()
+            {
+                Recip = _userRepository.Get(uvm.ApplicationUser.Id),
+                IdCargo = uvm.IdCargo,
+                RequestType = RequestType.UserOffersToCompany,
+                Name = "Вам пропонують перевезти вантаж",
+                Description = "Вам пропонують перевезти вантаж"
+            };
+            _requestManager.Create(request);
+            await _requestManager.SaveChangesAsync();
+            return RedirectToAction("DrivingRequest");
+
+        }
+
+
         [HttpGet]
         public IActionResult UserToCompany()
         {
+            //здеся проверять на всю 
             var requests = _requestManager.SelectRequests(RequestType.UserOffersToCompany, _userManager.GetUserId(HttpContext.User));
             return View(requests);
         }
@@ -122,11 +138,9 @@ namespace CargoWorld.Controllers
         {
             // есть два варика, сформировать групу под груз, или выбрать из списка групу из существующих куда пихать(груз добавляется в cargoin the car)
 
-            //Здесь реализую только добавление в первую групу
+          
             var request = _requestManager.Get(requestId);
-
-            await _requestManager.AcceptCompanyToUserAsync((int)request.IdCargo, (int)request.IdGroup, _userManager.GetUserId(HttpContext.User));
-
+            await _requestManager.AcceptUserToCompany((int)request.IdCargo, (int)request.IdGroup, request.Id);
             return RedirectToAction("CompanyToUser");
         }
 

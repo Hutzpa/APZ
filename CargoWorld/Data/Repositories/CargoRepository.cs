@@ -23,8 +23,6 @@ namespace CargoWorld.Data.Repositories
         {
             //var ownerId = _ctx.Cargos.FirstOrDefault(o => o.Id_Cargo == id).Id_Owner;
             var ownerId = _ctx.Cargos.Include(o => o.Id_Owner).ToList().FirstOrDefault(o => o.Id_Cargo == id);
-
-
             return ownerId;
         }
 
@@ -164,11 +162,24 @@ namespace CargoWorld.Data.Repositories
             // Список грузов рекомендованный для этой групы
             return cargosForThisGroup;
         }
-        private bool CanIPlaceCargoHere(double bussyBulkInThisCar, double totalBulkInThisCar, double cargoBulk)
+      
+
+
+        public IEnumerable<CargoInCar> CargosImTransporting(string idUser)
         {
-            return bussyBulkInThisCar + cargoBulk > totalBulkInThisCar;
+            var cargoInCars = _ctx.CargoInCars
+                .Include(o => o.Cargo)
+                .Include(o => o.Transporter)
+                .Include(o => o.Transporter.IdOwner)
+                .Where(o => o.Transporter.IdOwner.Id == idUser);
+
+            return cargoInCars;
         }
 
+        public IEnumerable<Cargo> CargosOfSpecUser(string idUser)
+        {
+            return _ctx.Cargos.Include(o => o.Id_Owner).Where(o => o.Id_Owner.Id == idUser);
+        }
         #endregion
     }
 }

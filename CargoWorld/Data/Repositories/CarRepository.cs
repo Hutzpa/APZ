@@ -66,6 +66,14 @@ namespace CargoWorld.Data.Repositories
 
 
         public Car IAmDriving(string id) => _ctx.Cars.FirstOrDefault(o => o.IdDriver == id);
+
+        public async Task RefuseDrivingAsync(int idCar)
+        {
+            Car car = _ctx.Cars.FirstOrDefault(o => o.IdCar == idCar);
+            car.IdDriver = null;
+            await SaveChangesAsync();
+        }
+
         /// <summary>
         /// Cars in some special group
         /// </summary>

@@ -12,5 +12,6 @@ namespace CargoWorld.ViewModels
         public ApplicationUser ApplicationUser { get; set; }
 
         public int IdCarWithoutDriver { get; set; }
+        public int IdCargo { get; set; }
     }
 }

@@ -20,14 +20,17 @@ namespace CargoWorld.Controllers
         private UserManager<ApplicationUser> _userManager;
         private UserRepository _userRepository;
         private CarRepository _carRepository;
+        private CargoRepository _cargoRepository;
 
         public HomeController(UserManager<ApplicationUser> userManager,
             IRepository<ApplicationUser> userRepository,
-            IRepository<Car> carRepository)
+            IRepository<Car> carRepository,
+            IRepository<Cargo> cargoRepository)
         {
             _userManager = userManager;
             _userRepository = (UserRepository)userRepository;
             _carRepository = (CarRepository)carRepository;
+            _cargoRepository = (CargoRepository)cargoRepository;
             
         }
 
@@ -50,11 +53,11 @@ namespace CargoWorld.Controllers
             var user = _userRepository.Get(id);
 
             var curentUser = _userRepository.Get(_userManager.GetUserId(HttpContext.User));
-            ViewBag.CurUserId = curentUser.Id;
+         
             //Получение машин без водителя
             ViewBag.CarsWithoutDriver = _carRepository.GetAll(_userManager.GetUserId(HttpContext.User)).ToList();
 
-
+            ViewBag.UserCargos = _cargoRepository.CargosOfSpecUser(_userManager.GetUserId(HttpContext.User));
             UserViewModel uvm = new UserViewModel
             {
                 ApplicationUser = user

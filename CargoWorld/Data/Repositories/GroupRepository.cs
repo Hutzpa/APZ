@@ -59,9 +59,11 @@ namespace CargoWorld.Data.Repositories
         }
         public IEnumerable<Group> GetAll(string id)
         {
-            ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
-
-            return _ctx.Groups.Where(o => o.IdOwner.Id == user.Id);
+            
+            return _ctx.Groups
+                .Include(o=> o.Cars)
+                .Include(o=> o.IdOwner)
+                .Where(o => o.IdOwner.Id == id);
         }
 
 
@@ -83,7 +85,7 @@ namespace CargoWorld.Data.Repositories
             double cargoBulk = cargo.Bulk == 0 ? cargo.Height * cargo.Width * cargo.Length : cargo.Bulk;
 
             //Если объём груза меньше максимума, то находим наилучшую для него машину
-            if (cargoBulk <= freeCars.First()?.CarryingCapacitySqM)  //работает как надо
+            if (cargoBulk <= freeCars?.First()?.CarryingCapacitySqM)  //работает как надо
             {
                 for (int i = freeCars.Count() - 1; i != 0; i--)
                 {

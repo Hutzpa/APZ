@@ -111,6 +111,14 @@ namespace CargoWorld.Controllers
             return View(res);
         }
 
+        public async Task<IActionResult> DrivingRefuseAsync(int idCar)
+        {
+            await _carRepository.RefuseDrivingAsync(idCar);
+            // refusing
+            return RedirectToAction("ImDriving");
+        }
+
+
         [HttpGet]
         public IActionResult MyCars(int pageNumber)
         {

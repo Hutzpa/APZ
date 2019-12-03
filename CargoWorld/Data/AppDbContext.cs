@@ -14,7 +14,8 @@ namespace CargoWorld.Data
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
-                Database.EnsureCreated();
+            
+                //Database.EnsureCreated();
 
             
         }
@@ -25,5 +26,16 @@ namespace CargoWorld.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<Request> Requests { get; set; }
         override public DbSet<ApplicationUser> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Car>()
+                .HasOne(o => o.IdGroup)
+                .WithMany(o => o.Cars)
+                .OnDelete(DeleteBehavior.SetNull);
+
+        }
     }
 }

@@ -43,33 +43,41 @@ namespace CargoWorld.Data.Repositories
             return requests.Where(o => o.RequestType == (RequestType)requestType);
         }
 
-        [Obsolete("НЕ РАБОТАЕТ")]
+        public async Task AcceptUserToCompany(int id_Cargo, int id_Group, int id_Request)
+        {
+            var cargo = _ctx.Cargos.Include(o => o.Id_Owner).FirstOrDefault(c => c.Id_Cargo == id_Cargo);
+            var group = _ctx.Groups.Include(o => o.IdOwner)
+                .Include(o => o.Cars)
+                .ToList().FirstOrDefault(o => o.IdGroup == id_Group);
+            var cargoInCar = new CargoInCar
+            {
+                Transporter = group.Cars.FirstOrDefault(o => o.CargoType == cargo.CargoType),
+                AmountOfCarog = 100,
+                Cargo = cargo
+            };
+            _ctx.CargoInCars.Add(cargoInCar);
+            Remove(id_Request);
+            await SaveChangesAsync();
+        }
+
         public async Task AcceptCompanyToUserAsync(int idCargo, int idGroup, string userId)
         {
             //Принятие предложения компании - пользователю о перевозке грузаЫ
-            throw new NullReferenceException();
-            
 
-            //.In.FirstOrDefault(o => o.Id_Cargo == idCargo);
-            var cargo = _ctx.Cargos.Include(o => o.Id_Owner).ToList().FirstOrDefault(c => c.Id_Cargo == idCargo);
-            var group = _ctx.Groups.Include(o=> o.IdOwner).ToList().FirstOrDefault(o => o.IdGroup == idGroup);
-            var firstCarInGroup = _ctx.Cars.FirstOrDefault(o => o.IdGroup.IdGroup == group.IdGroup);
+            var cargo = _ctx.Cargos.Include(o => o.Id_Owner).FirstOrDefault(c => c.Id_Cargo == idCargo);
 
-            //редачим карго и создаём карго ин кар 
+            var group = _ctx.Groups.Include(o => o.IdOwner)
+                .Include(o => o.Cars)
+                .ToList().FirstOrDefault(o => o.IdGroup == idGroup);
 
             var cargoInCar = new CargoInCar
             {
-                Transporter = firstCarInGroup,
+                Transporter = group.Cars.FirstOrDefault(o => o.CargoType == cargo.CargoType),
                 AmountOfCarog = 100,
+                Cargo = cargo
             };
 
-            //Null reference exception
-            cargoInCar.Cargo = cargo;
-            
-            //cargo.Transfer = cargoInCar;
-
-            _ctx.Update(cargo);
-            _ctx.Update(cargoInCar);
+            _ctx.CargoInCars.Add(cargoInCar);
 
             var toDel = _ctx.Requests.Where(o => o.RequestType == RequestType.CompanyOffersToUser &&
             o.Recip.Id == _ctx.Users.FirstOrDefault(us => us.Id == userId).Id);
@@ -94,7 +102,7 @@ namespace CargoWorld.Data.Repositories
             o.Recip.Id == user.Id);
             _ctx.Requests.RemoveRange(toDel);
 
-              await SaveChangesAsync();
+            await SaveChangesAsync();
 
         }
 
