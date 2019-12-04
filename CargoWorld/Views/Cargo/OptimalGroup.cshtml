@@ -8,22 +8,25 @@
 
 @if (Model.CarsThisGroup.Count() == 0)
 {
-    <label>Нажаль, ви не маєте підходящих для цього вантажу машин</label>
+    <label>Нажаль, ви не маєте підходящих для цього вантажу або вільних машин</label>
 }
 else
 {
+    <form asp-controller="Groups" asp-action="CreateOptimalGroup" method="post" enctype="multipart/form-data">
+                    
+                    <input asp-for="Cargo.Id_Cargo" value="@Model.Cargo.Id_Cargo" type="hidden" />
 
-    <ul>
-        @foreach (var car in Model.CarsThisGroup)
-        {
-            <img src="@car.Photo" height="200" width="200" />
-            <li>
-                <label>Модель - @car.CarModel |Тип машини - @car.CarType | Номер - @car.RegistrationNumber | </label>
-            </li>
-        }
+        <ul>
+            @foreach (var car in Model.CarsThisGroup)
+            {
+                <li>
+                    <img src="@car.Photo" height="200" width="200" />
+                    <label>Модель - @car.CarModel |Тип машини - @car.CarType | Номер - @car.RegistrationNumber | </label>
+                </li>
+            }
 
-        <form>
-            <input type="submit" value="Створити групу та запропонувати перевезення" />
-        </form>
-    </ul>
+        </ul>
+                    
+        <input type="submit" value="Створити групу та запропонувати перевезення" />
+    </form>
 }

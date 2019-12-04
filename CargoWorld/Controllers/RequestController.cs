@@ -20,14 +20,17 @@ namespace CargoWorld.Controllers
         private RequestRepository _requestManager;
         private UserManager<ApplicationUser> _userManager;
         private UserRepository _userRepository;
+        private IRepository<Group> _groupRepository;
 
         public RequestController(IRepository<Request> requestManager,
             UserManager<ApplicationUser> userManager,
-            IRepository<ApplicationUser> userRepository)
+            IRepository<ApplicationUser> userRepository,
+            IRepository<Group> groupRepository)
         {
             _requestManager = (RequestRepository)requestManager;
             _userManager = userManager;
             _userRepository = (UserRepository)userRepository;
+            _groupRepository = groupRepository;
         }
 
 
@@ -130,7 +133,8 @@ namespace CargoWorld.Controllers
         public IActionResult UserToCompany()
         {
             //здеся проверять на всю 
-            var requests = _requestManager.SelectRequests(RequestType.UserOffersToCompany, _userManager.GetUserId(HttpContext.User));
+            var requests = _requestManager.SelectRequests(RequestType.UserOffersToCompany, _userManager.GetUserId(HttpContext.User))
+                .Where(o=>
             return View(requests);
         }
 

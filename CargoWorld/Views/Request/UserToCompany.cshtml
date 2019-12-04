@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Request>
+﻿@model List<RequestViewModel>
 
 
 @if (Model.Count() > 0)
@@ -11,11 +11,27 @@
         {
             <li>
                 <span>
-                    Вам предложили перевезти <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@rq.IdCargo">этот</a> груз
+                    Вам предложили перевезти <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@rq.Request.IdCargo">цей</a> вантаж
                 </span>
+                |<a asp-controller="Cargo" asp-action="OptimalGroup" asp-route-idCargo="@rq.Request.IdCargo">Сформувати групу для цього вантажу</a>
                 |
-                <a asp-controller="Request" asp-action="AcceptUserToCompany" asp-route-requestId="@rq.Id">Согласиться </a> |
-                <a asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="UserToCompany" asp-route-requestId="@rq.Id">Отказаться </a> |
+                Список групп с подходящими машинами
+                @if (rq.Groups != null && rq.Groups.Count() > 0)
+                {
+                    <form asp-controller="Request" asp-action="AcceptUserToCompany" method="post" enctype="multipart/form-data">
+                        <input asp-for="@rq.Request.Id" type="hidden" />
+                        <select asp-for="@rq.Request.IdGroup">
+                            @foreach (Group gr in rq.Groups)
+                            {
+                                <option value="@gr.IdGroup">@gr.GroupName</option>
+                            }
+                        </select>
+                        <input type="submit" value="Обрати цю групу та погодитись" />
+                    </form>
+
+                }
+
+                | <a asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="UserToCompany" asp-route-requestId="@rq.Request.Id">Відмовитись </a> |
             </li>
         }
 

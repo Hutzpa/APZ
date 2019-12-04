@@ -37,8 +37,8 @@ namespace CargoWorld.Data.Repositories
         /// </summary>
         public IEnumerable<Request> SelectRequests(RequestType requestType, string idRecipient)
         {
-            var recip = _ctx.Users.FirstOrDefault(o => o.Id == idRecipient);
-            var requests = _ctx.Requests.Where(o => o.Recip.Id == recip.Id);
+            var requests = _ctx.Requests.Include(o=>o.Recip)
+                .Where(o => o.Recip.Id == idRecipient);
 
             return requests.Where(o => o.RequestType == (RequestType)requestType);
         }
