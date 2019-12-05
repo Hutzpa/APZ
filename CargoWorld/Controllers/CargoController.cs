@@ -176,8 +176,7 @@ namespace CargoWorld.Controllers
             var ogv = new OptimalGroupViewModel
             {
                 CarsThisGroup = _groupRepository.CreateGroupForCargo(idCargo, _userManager.GetUserId(HttpContext.User)),
-                Cargo = _cargoRepository.Get(idCargo),
-
+                Cargo = _cargoRepository.Get(idCargo)
             };
             return View(ogv);
         }

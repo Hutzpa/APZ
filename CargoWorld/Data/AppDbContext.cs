@@ -31,6 +31,8 @@ namespace CargoWorld.Data
         {
             base.OnModelCreating(builder);
 
+            
+
             builder.Entity<Car>()
                 .HasOne(o => o.IdGroup)
                 .WithMany(o => o.Cars)

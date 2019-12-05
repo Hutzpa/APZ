@@ -21,16 +21,19 @@ namespace CargoWorld.Controllers
         private UserManager<ApplicationUser> _userManager;
         private CarRepository _carManager;
         private CargoRepository _cargoManager;
+        private UserRepository _userRepository;
 
         public GroupsController(IRepository<Group> groupsRepository,
             UserManager<ApplicationUser> userManager,
             IRepository<Car> carManager,
-            IRepository<Cargo> cargoManager)
+            IRepository<Cargo> cargoManager,
+            IRepository<ApplicationUser> userRepository)
         {
             _groupsRepository = (GroupRepository)groupsRepository;
             _userManager = userManager;
             _carManager = (CarRepository)carManager;
             _cargoManager = (CargoRepository)cargoManager;
+            _userRepository = (UserRepository)userRepository;
         }
 
         public IActionResult AGroup(string idOfGroup)
@@ -192,5 +195,40 @@ namespace CargoWorld.Controllers
             };
             return View(cvm);
         }
-    }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOptimalGroupAsync(OptimalGroupViewModel ogvm, int[] items)
+        {
+
+            List<Car> carsThisGroup = new List<Car>();
+
+            foreach(int i in items)
+            {
+                carsThisGroup.Add(_carManager.Get(i));
+            }
+           
+
+            Group group = new Group()
+            {
+                IdGroup = 0,
+                IdOwner = _userRepository.Get(_userManager.GetUserId(HttpContext.User)),
+                GroupName = "GroupFor" + _cargoManager.Get(ogvm.Cargo.Id_Cargo).CargoName,
+            };
+
+            _groupsRepository.Create(group);
+            
+           // await _groupsRepository.SaveChangesAsync();
+
+            foreach(Car car in carsThisGroup)
+            {
+                car.IdGroup = group;
+               
+            }
+
+            _groupsRepository.UpdateMany(carsThisGroup); // ошбика отслеживания Пользователя?!
+            await _groupsRepository.SaveChangesAsync();
+
+            return View();
+        }
+    } 
 }

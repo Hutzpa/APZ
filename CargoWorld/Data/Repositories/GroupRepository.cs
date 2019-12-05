@@ -20,8 +20,14 @@ namespace CargoWorld.Data.Repositories
         public void Create(Group data) => _ctx.Groups.Add(data);
 
         public Group Get(int id) => _ctx.Groups.FirstOrDefault(o => o.IdGroup == id);
+        public Group GetNoTracking(int id) { 
+            Group g = _ctx.Groups.AsNoTracking().FirstOrDefault(o => o.IdGroup == id);
+            //_ctx.Entry<Group>(g).State = EntityState.Detached;
 
+            return g;
+        }
 
+        
         public void Remove(int id)
         {
             _ctx.Groups.Remove(Get(id));
@@ -57,6 +63,13 @@ namespace CargoWorld.Data.Repositories
 
 
         }
+
+        public void UpdateMany(IEnumerable<Car> cars)
+        {
+        
+            _ctx.Cars.UpdateRange(cars);
+        }
+
         public IEnumerable<Group> GetAll(string id)
         {
 
@@ -91,6 +104,8 @@ namespace CargoWorld.Data.Repositories
                 {
                     for (int i = freeCars.Count(); i != 0; i--)
                     {
+                       
+
                         //Начинаем с самого маленького, и идём вверх пока не влезет
                         if (cargoBulk <= freeCars[i-1].CarryingCapacitySqM)
                         {

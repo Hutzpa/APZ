@@ -25,18 +25,9 @@ namespace CargoWorld
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-
-
-
-
-            //services.AddDbContext<AppDbContext>(opt =>
-            //     opt.UseSqlServer("Data Source=SQL6007.site4now.net;Initial Catalog=DB_A50403_DbCargo;User Id=DB_A50403_DbCargo_admin;Password=PAssword7;"));
-
 
             services.AddDbContext<AppDbContext>(opt =>
                  opt.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DbCargo;Trusted_Connection=true;MultipleActiveResultSets=true"));

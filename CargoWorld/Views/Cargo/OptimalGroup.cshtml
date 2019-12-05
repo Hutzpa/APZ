@@ -13,20 +13,24 @@
 else
 {
     <form asp-controller="Groups" asp-action="CreateOptimalGroup" method="post" enctype="multipart/form-data">
-                    
-                    <input asp-for="Cargo.Id_Cargo" value="@Model.Cargo.Id_Cargo" type="hidden" />
 
-        <ul>
-            @foreach (var car in Model.CarsThisGroup)
-            {
-                <li>
-                    <img src="@car.Photo" height="200" width="200" />
-                    <label>Модель - @car.CarModel |Тип машини - @car.CarType | Номер - @car.RegistrationNumber | </label>
-                </li>
-            }
+        <input asp-for="Cargo.Id_Cargo" value="@Model.Cargo.Id_Cargo" type="hidden" />
+      
+            <ul>
+                @foreach (var car in Model.CarsThisGroup)
+                {
+                    <li>
+                        <input name="items" value="@car.IdCar" type="hidden" />
+                        <img src="@car.Photo" height="200" width="200" />
+                        
+                        <label>Модель - @car.CarModel |Тип машини - @car.CarType | Номер - @car.RegistrationNumber | </label>
+                    </li>
+                }
+            </ul>
 
-        </ul>
-                    
-        <input type="submit" value="Створити групу та запропонувати перевезення" />
+                          
+      
+
+        <input type="submit" value="Створити групу та прийняти вантаж" />
     </form>
 }
