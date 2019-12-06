@@ -40,7 +40,8 @@ namespace CargoWorld
                 var adminUser = new ApplicationUser
                 {
                     UserName = "admin",
-                    Email = "ilia.azek@gmail.com"
+                    Email = "ilia.azek@gmail.com",
+                    UserRole = adminRole.Name
                 };
                 var result = userMgr.CreateAsync(adminUser,"Password1_").GetAwaiter().GetResult();
 

@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Identity;
 using CargoWorld.Data.Repositories;
 using CargoWorld.Models;
 using CargoWorld.Data.FileManager;
+using System.Globalization;
+using Microsoft.Extensions.Options;
 
 namespace CargoWorld
 {
@@ -32,11 +34,33 @@ namespace CargoWorld
             services.AddDbContext<AppDbContext>(opt =>
                  opt.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DbCargo;Trusted_Connection=true;MultipleActiveResultSets=true"));
 
+            services.AddLocalization(option => option.ResourcesPath = "Resources");
+            services.AddMvc()
+                .AddDataAnnotationsLocalization()
+                .AddViewLocalization();
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("uk")
+                };
+
+
+
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("ukr");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+                
+
+            });
+
+
 
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
-           
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -49,7 +73,7 @@ namespace CargoWorld
             services.AddTransient<IRepository<CargoInCar>, CargoInCarRepository>();
             services.AddTransient<IRepository<ApplicationUser>, UserRepository>();
             services.AddTransient<IRepository<Request>, RequestRepository>();
-            services.AddTransient<IFileManager,FIleManager>();
+            services.AddTransient<IFileManager, FIleManager>();
 
         }
 
@@ -65,10 +89,20 @@ namespace CargoWorld
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
+
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+
+
+
+            
 
 
             app.UseStatusCodePages();

@@ -11,10 +11,12 @@ using CargoWorld.Data;
 using CargoWorld.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using CargoWorld.ViewModels;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
 
 namespace CargoWorld.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
         private UserManager<ApplicationUser> _userManager;
@@ -65,6 +67,17 @@ namespace CargoWorld.Controllers
 
             return View(uvm);
         }
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTime.Now.AddYears(1) } );
+
+            return LocalRedirect(returnUrl);
+        }
+
 
     }
 }

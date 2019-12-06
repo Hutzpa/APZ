@@ -1,5 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="~/css/site.css" rel="stylesheet" />
 </head>
+
 
 <body>
     <header>
@@ -31,12 +34,12 @@
                             <li class="nav-item ">
                                 <div class="dropdown show">
                                     <a class="btn btn-secondary dropdown-toggle" style="background-color : transparent" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Машини
+                                        @Localizer["cars"]
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" asp-controller="Car" asp-action="CreateCar">Створити машину</a>
-                                        <a class="dropdown-item" asp-controller="Car" asp-action="ImDriving">Я керую</a>
-                                        <a class="dropdown-item" asp-controller="Car" asp-action="MyCars">Мої машини</a>
+                                        <a class="dropdown-item" asp-controller="Car" asp-action="CreateCar">@Localizer["createCar"]</a>
+                                        <a class="dropdown-item" asp-controller="Car" asp-action="ImDriving">@Localizer["imDriving"]</a>
+                                        <a class="dropdown-item" asp-controller="Car" asp-action="MyCars">@Localizer["myCars"]</a>
                                     </div>
                                 </div>
                             </li>
@@ -45,11 +48,17 @@
                             <li class="nav-item ml-1">
                                 <div class="dropdown show">
                                     <a class="btn btn-secondary dropdown-toggle" style="background-color : transparent" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Групи
+                                        @Localizer["groups"]
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" asp-controller="Groups" asp-action="CreateGroup">Створити групу</a>
-                                        <a class="dropdown-item" asp-controller="Groups" asp-action="GroupList">Мої групи</a>
+                                        <a class="dropdown-item" asp-controller="Groups" asp-action="CreateGroup">
+                                            @Localizer["createGroup"]
+
+                                        </a>
+                                        <a class="dropdown-item" asp-controller="Groups" asp-action="GroupList">
+                                            @Localizer["myGroups"]
+
+                                        </a>
                                     </div>
                                 </div>
                             </li>
@@ -58,50 +67,75 @@
                             <li class="nav-item ml-1">
                                 <div class="dropdown show">
                                     <a class="btn btn-secondary dropdown-toggle" style="background-color : transparent" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Вантажі
+                                        @Localizer["cargos"]
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" asp-controller="Cargo" asp-action="CreateCargo">Створити вантаж</a>
-                                        <a class="dropdown-item" asp-controller="Cargo" asp-action="CargoList">Список вантажів</a>
-                                        <a class="dropdown-item" asp-controller="Cargo" asp-action="IMTransporting">Вантажі що я перевожу</a>
+                                        <a class="dropdown-item" asp-controller="Cargo" asp-action="CreateCargo">
+                                            @Localizer["createCargo"]
+                                        </a>
+                                        <a class="dropdown-item" asp-controller="Cargo" asp-action="CargoList">
+                                            @Localizer["cargoList"]
+                                        </a>
+                                        <a class="dropdown-item" asp-controller="Cargo" asp-action="IMTransporting">
+                                            @Localizer["cargosIm"]
+                                        </a>
                                     </div>
                                 </div>
                             </li>
                             <li class="nav-item ml-1">
                                 <div class="dropdown show">
                                     <a class="btn btn-secondary dropdown-toggle" style="background-color : transparent" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Запити
+                                        @Localizer["requests"]
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" asp-controller="Request" asp-action="DrivingRequest"> На водіння</a>
-                                        <a class="dropdown-item" asp-controller="Request" asp-action="CompanyToUser"> Ваш вантаж пропонують перевезти</a>
-                                        <a class="dropdown-item" asp-controller="Request" asp-action="UserToCompany"> На перевезення вами </a>
+                                        <a class="dropdown-item" asp-controller="Request" asp-action="DrivingRequest">
+                                            @Localizer["drivingRequest"]
+                                        </a>
+                                        <a class="dropdown-item" asp-controller="Request" asp-action="CompanyToUser">
+                                            @Localizer["companyToUser"]
+                                        </a>
+                                        <a class="dropdown-item" asp-controller="Request" asp-action="UserToCompany">
+                                            @Localizer["userToCompany"]
+                                        </a>
                                     </div>
                                 </div>
                             </li>
 
-                            
+
 
                             <li class="nav-item ml-1">
                                 <form asp-controller="Home" asp-action="Search" method="get" enctype="multipart/form-data">
-                                    <input class="form-control mr-sm-2" type="text" name="search" placeholder="Введіть пошуковий запит" />
+                                    <input class="form-control mr-sm-2" type="text" name="search" placeholder=" @Localizer["searchReq"]" />
                                 </form>
                             </li>
 
                             <li class="nav-item ml-3 pt-2">
                                 <span class="glyphicon glyphicon-log-out"></span>
-                                <a asp-controller="Auth" asp-action="Logout"> Log out</a>
+                                <a asp-controller="Auth" asp-action="Logout">
+                                    @Localizer["logOut"]
+                                </a>
+                            </li>
+
+                            <li class="nav-item ml-3 pt-2">
+                                <div>
+                                    @await Html.PartialAsync("_SelectLanguagePartial.cshtml")
+                                </div>
                             </li>
 
                             @if (User.IsInRole("Admin"))
                             {
-                                //Админ панель со списком всякого
+                                <li class="nav-item ml-1">
+                                    <div>
+                                        <label>Admin</label>
+                                    </div>
+                                </li>
                             }
                         }
                         else
                         {
+
                             <li class="nav-item">
-                                <a asp-controller="Auth" asp-action="Login"> Log in</a>
+                                <a asp-controller="Auth" asp-action="Login">@Localizer["logIn"]</a>
                             </li>
                         }
 
@@ -120,8 +154,8 @@
     </div>
 
     <footer class="container fixed-bottom">
-        <p class="float-right">(c) 2019 Всі права захищені</p>
-        <p class="float-right"> Зроблено Безуглим Іллєю як проект з АПЗ</p>
+        <p class="float-right">@Localizer["ownrRights"]</p>
+        <p class="float-right">@Localizer["made"] </p>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

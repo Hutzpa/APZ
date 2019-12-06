@@ -228,7 +228,7 @@ namespace CargoWorld.Controllers
             _groupsRepository.UpdateMany(carsThisGroup); // ошбика отслеживания Пользователя?!
             await _groupsRepository.SaveChangesAsync();
 
-            return View();
+            return View("Home","Index");
         }
     } 
 }
