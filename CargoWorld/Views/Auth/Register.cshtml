@@ -1,5 +1,9 @@
 ﻿@model RegisterViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
 @{
 
 }
@@ -7,7 +11,7 @@
 <form asp-controller="Auth" asp-action="Register" method="post">
     <div>
         <label>
-            Email
+            @Localizer["email"]
         </label>
         <input asp-for="Email" />
         <span asp-validation-for="Email"></span>
@@ -15,7 +19,8 @@
     </div>
     <div>
         <label>
-            Password
+            @Localizer["password"]
+
         </label>
         <input asp-for="Password" />
         <span asp-validation-for="Password"></span>
@@ -23,7 +28,7 @@
     </div>
     <div>
         <label>
-            Confirm password
+            @Localizer["conf"]
         </label>
         <input asp-for="ConfirmPassword" />
         <span asp-validation-for="ConfirmPassword"></span>
@@ -31,7 +36,8 @@
     </div>
     <div>
         <label>
-            Name
+            @Localizer["name"]
+
         </label>
         <input asp-for="Name" />
         <span asp-validation-for="Name"></span>
@@ -39,7 +45,7 @@
     </div>
     <div>
         <label>
-            Surname
+            @Localizer["surname"]
         </label>
         <input asp-for="Surname" />
         <span asp-validation-for="Surname"></span>
@@ -47,13 +53,13 @@
     </div>
     <div>
         <label>
-            Age
+            @Localizer["age"]
         </label>
         <input asp-for="Age" />
         <span asp-validation-for="Age"></span>
 
     </div>
-      
-    <input type="submit" value="sign up" />
+
+    <input type="submit" value="@Localizer["sign"]" />
 
 </form>

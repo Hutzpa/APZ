@@ -1,5 +1,9 @@
 ﻿@model Car
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
 @{
     ViewBag.Title = Model.CarModel;
 }
@@ -12,18 +16,18 @@
     }
 </div>
 <div>
-    <p>Марка машини - @Model.CarModel</p>
+    <p>@Localizer["model"] - @Model.CarModel</p>
     <hr />
-    <p>Кольор - @Model.Color</p>
+    <p>@Localizer["color"] - @Model.Color</p>
     <hr />
-    <p>Тип машини - @Model.CarType </p>
+    <p>@Localizer["carType"] - @Model.CarType </p>
     <hr />
-    <p>Номер - @Model.RegistrationNumber</p>
+    <p>@Localizer["carNumber"] - @Model.RegistrationNumber</p>
     <hr />
-    <p>Тип транспортуємого вантажу - @Model.CargoType</p>
-    <hr />    
+    <p>@Localizer["cargoType"] - @Model.CargoType</p>
+    <hr />
     @*<p>Вантажопідйомність - @Model.CarryingCapacity</p>
-    <hr />*@    
-    <p>Ціна за перевезення кілометру вантажу - @Model.CostPerKm</p>
-    <hr />    
+        <hr />*@
+<p>@Localizer["price"] - @Model.CostPerKm</p>
+    <hr />
 </div>

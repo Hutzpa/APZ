@@ -1,23 +1,27 @@
 ﻿@model CarViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
 @{
     ViewBag.Title = "Нова машина";
 }
 
 <div>
     <form asp-controller="Car" asp-action="CreateCar" method="post" enctype="multipart/form-data">
-        <table  align="center">
+        <table align="center">
             <tr>
                 <td>
-
-                    <input  asp-for="IdCar" type="hidden" />
+                    <input asp-for="IdCar" type="hidden" />
                 </td>
             </tr>
 
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Модель машини - 
+                        @Localizer["carModel"]
+                        -
                     </label>
                 </td>
                 <td>
@@ -28,7 +32,8 @@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Номер кузову - 
+                        @Localizer["vin"]
+                        -
                     </label>
                 </td>
                 <td>
@@ -39,7 +44,8 @@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Реєстраційний номер - 
+                        @Localizer["number"]
+                        -
                     </label>
                 </td>
                 <td>
@@ -49,7 +55,8 @@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Колір - 
+                        @Localizer["color"]
+                        -
                     </label>
                 </td>
                 <td>
@@ -59,49 +66,41 @@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Тип машини - 
+                        @Localizer["carType"]
+                        -
                     </label>
                 </td>
                 <td>
                     <select asp-for="CarType">
-                        <option value="До 0.8тг">До 0.8т</option>
-                        <option value="До 1.5т">До 1.5т</option>
-                        <option value="До 3т">До 3т</option>
-                        <option value="До 5т">До 5т</option>
-                        <option value="До 10т">До 10т</option>
-                        <option value="До 20т">До 20т</option>
+                        <option value="До 0.8тг"> 0.8т</option>
+                        <option value="До 1.5т"> 1.5т</option>
+                        <option value="До 3т"> 3т</option>
+                        <option value="До 5т"> 5т</option>
+                        <option value="До 10т"> 10т</option>
+                        <option value="До 20т"> 20т</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Тип перевозимого вантажу - 
+                        @Localizer["cargoType"]
+                        -
                     </label>
                 </td>
                 <td>
-                    <select asp-for="CargoType">
-                        <option value="box">Коробки</option>
-                        <option value="solid">Твердий</option>
-                        <option value="liquid">Рідкий</option>
-                        <option value="loose">Сипучий</option>
+                    <select asp-for=" CargoType">
+                        <option value="box">@Localizer["box"]</option>
+                        <option value="solid">@Localizer["solid"]</option>
+                        <option value="liquid">@Localizer["liquid"]</option>
+                        <option value="loose">@Localizer["loose"]</option>
                     </select>
                 </td>
             </tr>
-            @*<tr>
-                <td>
-                    <label class="mb-2 mt-2">
-                        Вантажопідйомність - 
-                    </label>
-                </td>
-                <td>
-                    <input asp-for="CarryingCapacity" />
-                </td>
-            </tr>*@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Об'єм вантажного відділення(м2)
+                        @Localizer["bulk"] (м2)
                     </label>
                 </td>
                 <td>
@@ -111,7 +110,7 @@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Висота багажного відділення(м) -
+                        @Localizer["height"] (м) -
                     </label>
                 </td>
                 <td>
@@ -121,7 +120,7 @@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Ширина багажного відділення(м) - 
+                        @Localizer["width"] (м) -
                     </label>
                 </td>
                 <td>
@@ -131,7 +130,7 @@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Довжина багажного відділення(м) -
+                        @Localizer["length"] (м) -
                     </label>
                 </td>
                 <td>
@@ -141,7 +140,7 @@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Ціна в гривнях за км. їзди
+                        @Localizer["cost"]
                     </label>
                 </td>
                 <td>
@@ -151,7 +150,7 @@
             <tr>
                 <td>
                     <label class="mb-2 mt-2">
-                        Фотографія машини
+                        @Localizer["photo"]
                     </label>
                 </td>
                 <td>
@@ -161,7 +160,7 @@
 
             <tr>
                 <td>
-                    <input type="submit" value="Додати" />
+                    <input type="submit" value="@Localizer["add"]" />
                 </td>
             </tr>
 
