@@ -1,21 +1,24 @@
 ﻿@model GroupViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
-    ViewBag.Title = "Нова group";
+    ViewBag.Title = Localizer["new"];
 }
 
 <div>
     <form asp-controller="Groups" asp-action="CreateGroup" method="post">
         <div>
             <label>
-                Enter group name
+                @Localizer["groupName"]
             </label>
             <input asp-for="GroupName" />
 
             @if (Model.IdGroup != 0)
             {
 
-                <h3>Додайте до групи машини</h3>
+                <h3>@Localizer["addCars"]</h3>
 
                 <ul>
                     @foreach (var cr in Model.Cars)
@@ -28,6 +31,6 @@
             }
         </div>
 
-        <input type="submit" />
+        <input type="submit" value="@Localizer["create"]" />
     </form>
 </div>

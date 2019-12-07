@@ -4,11 +4,14 @@
     ViewBag.Title = "The car i'm driving";
 }
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @if (Model != null)
 {
     <div style="text-align:center;">
-        <h3>Машина якою я керую</h3>
+        
+        <h3>@Localizer["imDriving"]</h3>
 
     </div>
     <div class="mb-3 text-center">
@@ -19,23 +22,23 @@
         }
     </div>
     <div>
-        <p>Марка машини - @Model.CarModel</p>
+        <p>@Localizer["model"] - @Model.CarModel</p>
         <hr />
-        <p>Кольор - @Model.Color</p>
+        <p>@Localizer["color"] - @Model.Color</p>
         <hr />
-        <p>Тип машини - @Model.CarType </p>
+        <p>@Localizer["type"] - @Model.CarType </p>
         <hr />
-        <p>Номер - @Model.RegistrationNumber</p>
+        <p>@Localizer["registrationg"] - @Model.RegistrationNumber</p>
         <hr />
-        <p>Тип транспортуємого вантажу - @Model.CargoType</p>
+        <p>@Localizer["cargoType"] - @Model.CargoType</p>
         <hr />
         @*<p>Вантажопідйомність - @Model.CarryingCapacity</p>
             <hr />*@
-        <p>Ціна за перевезення кілометру вантажу - @Model.CostPerKm</p>
+    <p>@Localizer["price"] - @Model.CostPerKm</p>
         <hr />
     </div>
 
-    <a asp-controller="Car" asp-action="DrivingRefuse" asp-route-idCar="@Model.IdCar" >Відмовитись від управління</a>
+    <a asp-controller="Car" asp-action="DrivingRefuse" asp-route-idCar="@Model.IdCar">@Localizer["quit"]</a>
 
 
 }
@@ -43,7 +46,7 @@ else
 {
     <div style="text-align:center;">
 
-        <h3> <label>Ви ще не керуєте жодною машиною.</label></h3>
+        <h3> <label>@Localizer["none"]</label></h3>
     </div>
 }
 

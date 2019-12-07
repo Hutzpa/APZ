@@ -1,23 +1,23 @@
 ﻿@model IEnumerable<Request>
 
 
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 
 @if (Model.Count() > 0)
 {
 
-    <span>Компании которые предложили вам перевезти груз</span>
+    <span>@Localizer["ofer"]</span>
     <hr />
     <ul>
         @foreach (var rq in Model)
         {
             <li>
-                <span>Вам предложили перевезти <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@rq.IdCargo">этот</a> груз в 
-                                               <a asp-controller="Group" asp-action="AGroup" asp-route-idOfGroup="@rq.IdGroup.ToString()">этой</a> групе</span>
-                 |
-                <a asp-controller="Request" asp-action="AcceptCompanyToUser" asp-route-requestId="@rq.Id">Согласиться </a> |
-                <a asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="CompanyToUser" asp-route-requestId="@rq.Id">Отказаться </a> |
+                <span>@Localizer["you"] <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@rq.IdCargo">@Localizer["this"]</a> @Localizer["carg"] </span>
+                |
+                <a asp-controller="Request" asp-action="AcceptCompanyToUser" asp-route-requestId="@rq.Id">@Localizer["accept"] </a> |
+                <a asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="CompanyToUser" asp-route-requestId="@rq.Id">@Localizer["refuse"] </a> |
             </li>
         }
 
@@ -26,5 +26,5 @@
 }
 else
 {
-    <span>Нет входящих запросов</span>
+    <span>@Localizer["none"]</span>
 }

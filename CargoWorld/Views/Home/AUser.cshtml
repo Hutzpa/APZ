@@ -1,39 +1,39 @@
 ﻿@model UserViewModel
 
 
-
-
 <h3>@Model.ApplicationUser.Name</h3>
 
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 
 
-
-@if(Enumerable.Count(ViewBag.CarsWithoutDriver) != 0) { 
-    <form asp-controller="Request" asp-action="CreateDrivingRequest" method="post" enctype="multipart/form-data"> 
+@if (Enumerable.Count(ViewBag.CarsWithoutDriver) != 0)
+{
+    <form asp-controller="Request" asp-action="CreateDrivingRequest" method="post" enctype="multipart/form-data">
         <input asp-for="ApplicationUser.Id" type="hidden" />
         <select asp-for="IdCarWithoutDriver">
-            @foreach(var cr in ViewBag.CarsWithoutDriver)
+            @foreach (var cr in ViewBag.CarsWithoutDriver)
             {
                 <option value="@cr.IdCar">@cr.CarModel</option>
             }
         </select>
-        <input type="submit" value="Запропонувати керування машиною"/>
+        <input type="submit" value="@Localizer["oferDri"]" />
     </form>
 }
 
-@if(ViewBag.UserCargos != null && Enumerable.Count(ViewBag.UserCargos) > 0)
+@if (ViewBag.UserCargos != null && Enumerable.Count(ViewBag.UserCargos) > 0)
 {
     <form asp-controller="Request" asp-action="CreateUserToCompany" method="post" enctype="multipart/form-data">
         @*Id пользователя которому мы отправляем запрос*@
-        <input asp-for="ApplicationUser.Id" type="hidden"/>
+        <input asp-for="ApplicationUser.Id" type="hidden" />
         <select asp-for="IdCargo">
-            @foreach(var cr in ViewBag.UserCargos)
+            @foreach (var cr in ViewBag.UserCargos)
             {
                 <option value="@cr.Id_Cargo">@cr.CargoName</option>
             }
         </select>
-        <input type="submit" value="Запропонувати перевезення вантажу" />
+        <input type="submit" value="@Localizer["oferTrans"]" />
     </form>
 }

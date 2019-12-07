@@ -1,39 +1,41 @@
 ﻿@model UserToCompanyViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @if (Model.Requests.Count() > 0)
 {
 
-    <span>Компании которые предложили вам перевезти груз</span>
+    <span>@Localizer["ofer"]</span>
     <hr />
     <ul>
         @foreach (RequestViewModel rq in Model.Requests)
         {
-            <li>
-                <span>
-                    Вам предложили перевезти <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@rq.Request.IdCargo">цей</a> вантаж
-                </span>
-                |<a asp-controller="Cargo" asp-action="OptimalGroup" asp-route-idCargo="@rq.Request.IdCargo">Сформувати групу для цього вантажу</a>
-                |
-                Список групп с подходящими машинами
-                @if (rq.Groups != null && rq.Groups.Count() > 0)
-                {
-                    <form asp-controller="Request" asp-action="AcceptUserToCompany" method="post">
-                        <input asp-for="IdRequest" value="@rq.Request.Id"  type="hidden" />
-                        <input asp-for="@rq.Groups" value="@rq.Groups"  type="hidden" />
-                        <select asp-for="IdGroup">
-                            @foreach (Group gr in rq.Groups)
-                            {
-                                <option value="@gr.IdGroup">@gr.GroupName</option>
-                            }
-                        </select>
-                        <input type="submit" value="Обрати цю групу та погодитись" />
-                    </form>
+        <li>
+            <span>
+                @Localizer["youwas"] <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@rq.Request.IdCargo">@Localizer["this"]</a>
+            </span>
+            |<a asp-controller="Cargo" asp-action="OptimalGroup" asp-route-idCargo="@rq.Request.IdCargo">@Localizer["optimal"]</a>
+            |
+            @Localizer["groupList"]
+            @if (rq.Groups != null && rq.Groups.Count() > 0)
+            {
+                <form asp-controller="Request" asp-action="AcceptUserToCompany" method="post">
+                    <input asp-for="IdRequest" value="@rq.Request.Id" type="hidden" />
+                    <input asp-for="@rq.Groups" value="@rq.Groups" type="hidden" />
+                    <select asp-for="IdGroup">
+                        @foreach (Group gr in rq.Groups)
+                        {
+                            <option value="@gr.IdGroup">@gr.GroupName</option>
+                        }
+                    </select>
+                    <input type="submit" value="@Localizer["sel"]" />
+                </form>
 
-                }
+            }
 
-                | <a asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="UserToCompany" asp-route-id="@rq.Request.Id">Відмовитись </a> |
-            </li>
+            | <a asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="UserToCompany" asp-route-id="@rq.Request.Id">@Localizer["ref"] </a> |
+        </li>
         }
 
     </ul>
@@ -41,5 +43,5 @@
 }
 else
 {
-    <span>Нет входящих запросов</span>
+<span>@Localizer["none"]</span>
 }

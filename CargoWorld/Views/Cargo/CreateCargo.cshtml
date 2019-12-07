@@ -1,10 +1,11 @@
 ﻿@model CargoViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewBag.Title = "Create cargo";
+        ViewBag.Title = Localizer["title"];
 }
-
 
 
 
@@ -12,16 +13,14 @@
     <table align="center">
         <tr>
             <td>
-
                 <input asp-for="Id_Cargo" type="hidden" />
             </td>
 
         </tr>
-
         <tr>
             <td>
                 <label class="mb-2 mt-2">
-                    Назва вантажу - 
+                    @Localizer["name"] -
                 </label>
             </td>
             <td>
@@ -31,7 +30,7 @@
         <tr>
             <td>
                 <label class="mb-2 mt-2">
-                    Місце відправлення - 
+                    @Localizer["dep"] -
                 </label>
             </td>
             <td>
@@ -41,7 +40,7 @@
         <tr>
             <td>
                 <label class="mb-2 mt-2">
-                    Місце призначення - 
+                    @Localizer["dest"] -
                 </label>
             </td>
             <td>
@@ -51,7 +50,7 @@
         <tr>
             <td>
                 <label class="mb-2 mt-2">
-                    Вага(кг) - 
+                    @Localizer["weight"] (kg) -
                 </label>
             </td>
             <td>
@@ -61,57 +60,57 @@
         <tr>
             <td>
                 <label class="mb-2 mt-2">
-                    Тип вантажу - 
+                    @Localizer["cargoType"] -
                 </label>
             </td>
             <td>
                 <select asp-for="CargoType">
-                    <option value="box">Коробки</option>
-                    <option value="solid">Твердий</option>
-                    <option value="liquid">Рідкий</option>
-                    <option value="loose">Сипучий</option>
+                    <option value="box">@Localizer["box"]</option>
+                    <option value="solid">@Localizer["solid"]</option>
+                    <option value="liquid">@Localizer["liquid"]</option>
+                    <option value="loose">@Localizer["loose"]</option>
                 </select>
             </td>
         </tr>
         <tr>
             <td>
-                <label>Чи може бути розділений?</label> @Html.CheckBox("CanBeSepateted", Model.CanBeSepateted)
+                <label>@Localizer["canSep"]</label> @Html.CheckBox("CanBeSepateted", Model.CanBeSepateted)
             </td>
         </tr>
         <tr>
             <td>
                 <label class="mb-2 mt-2">
-                    Висота
+                    @Localizer["height"]
                 </label>
             </td>
             <td>
-                <input asp-for="Height" placeholder="Використовуюється для розрахунку об'єму вантажа. Якщо тип вантажу не передбачає чітких розміров(сипучий, рідкий) то залиште це поле порожнім" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label class="mb-2 mt-2"  >
-                    Ширина
-                </label>
-            </td>
-            <td>
-                <input asp-for="Width" placeholder="Використовуюється для розрахунку об'єму вантажа. Якщо тип вантажу не передбачає чітких розміров(сипучий, рідкий) то залиште це поле порожнім"  />
+                <input asp-for="Height" placeholder="@Localizer["notif"]" />
             </td>
         </tr>
         <tr>
             <td>
                 <label class="mb-2 mt-2">
-                    Довжина
+                    @Localizer["width"]
                 </label>
             </td>
             <td>
-                <input asp-for="Length" placeholder="Використовуюється для розрахунку об'єму вантажа. Якщо тип вантажу не передбачає чітких розміров(сипучий, рідкий) то залиште це поле порожнім" />
+                <input asp-for="Width" placeholder="@Localizer["notif"]" />
             </td>
         </tr>
         <tr>
             <td>
                 <label class="mb-2 mt-2">
-                    Об'єм - 
+                    @Localizer["length"]
+                </label>
+            </td>
+            <td>
+                <input asp-for="Length" placeholder="@Localizer["notif"]" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="mb-2 mt-2">
+                    @Localizer["bulk"] -
                 </label>
             </td>
             <td>
@@ -121,7 +120,7 @@
         <tr>
             <td>
                 <label class="mb-2 mt-2">
-                    Фотографія - 
+                    @Localizer["picture"] -
                 </label>
             </td>
             <td>
@@ -130,7 +129,7 @@
         </tr>
         <tr>
             <td>
-                <input type="submit" value="Додати вантаж" />
+                <input type="submit" value="@Localizer["add"]" />
             </td>
         </tr>
     </table>
