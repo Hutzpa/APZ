@@ -1,0 +1,18 @@
+﻿@model RegisterViewModel
+
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{ 
+    ViewBag.Title = Localizer["title"];
+}
+
+<form asp-controller="Auth" asp-action="Reset" method="post">
+    <input asp-for="Email" placeholder="@Localizer["placeholder"]" />
+
+    <input type="submit" value="@Localizer["reset"]"/>
+</form>
+
+
+

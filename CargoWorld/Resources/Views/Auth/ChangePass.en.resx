@@ -117,70 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cargoList" xml:space="preserve">
-    <value>Cagro list</value>
+  <data name="conf" xml:space="preserve">
+    <value>Confirm</value>
   </data>
-  <data name="cargos" xml:space="preserve">
-    <value>Cargos</value>
+  <data name="password" xml:space="preserve">
+    <value>Enter new password</value>
   </data>
-  <data name="cargosIm" xml:space="preserve">
-    <value>Cargos i'm tranaposting</value>
-  </data>
-  <data name="cars" xml:space="preserve">
-    <value>Cars </value>
-  </data>
-  <data name="change" xml:space="preserve">
+  <data name="sign" xml:space="preserve">
     <value>Change password</value>
-  </data>
-  <data name="companyToUser" xml:space="preserve">
-    <value>Your cargo offering to transport</value>
-  </data>
-  <data name="createCar" xml:space="preserve">
-    <value>Create car</value>
-  </data>
-  <data name="createCargo" xml:space="preserve">
-    <value>Create cargo</value>
-  </data>
-  <data name="createGroup" xml:space="preserve">
-    <value>Create group</value>
-  </data>
-  <data name="drivingRequest" xml:space="preserve">
-    <value>Driving requests</value>
-  </data>
-  <data name="groups" xml:space="preserve">
-    <value>Groups</value>
-  </data>
-  <data name="imDriving" xml:space="preserve">
-    <value>I'm driving</value>
-  </data>
-  <data name="logIn" xml:space="preserve">
-    <value>Log in</value>
-  </data>
-  <data name="logOut" xml:space="preserve">
-    <value>Log out</value>
-  </data>
-  <data name="made" xml:space="preserve">
-    <value>Made by Illia Bezugliy as APZ project</value>
-  </data>
-  <data name="myCars" xml:space="preserve">
-    <value>My cars</value>
-  </data>
-  <data name="myGroups" xml:space="preserve">
-    <value>My groups</value>
-  </data>
-  <data name="ownrRights" xml:space="preserve">
-    <value>(c) 2019 All rights reserved</value>
-  </data>
-  <data name="requests" xml:space="preserve">
-    <value>Requsets</value>
-  </data>
-  <data name="searchReq" xml:space="preserve">
-    <value>Enter search request</value>
-  </data>
-  <data name="settings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="userToCompany" xml:space="preserve">
-    <value>For you to transport</value>
   </data>
 </root>
