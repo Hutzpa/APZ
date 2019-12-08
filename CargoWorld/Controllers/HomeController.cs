@@ -79,5 +79,22 @@ namespace CargoWorld.Controllers
         }
 
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminPanel(int pageNumber)
+        {
+            if(pageNumber < 1)
+                return RedirectToAction("AdminPanel", new { pageNumber = 1 });
+
+            ViewBag.Cargos = _cargoRepository.GetAll(pageNumber);
+
+            ViewBag.Users = _userRepository.GetAll(pageNumber);
+
+            ViewBag.CanNext = ViewBag.Cargos.CanNext == false ? ViewBag.Users.CanNext : ViewBag.Cargos.CanNext;
+
+            ViewBag.PageNumber = pageNumber;
+
+            return View();
+        }
     }
 }

@@ -15,7 +15,7 @@
 
 <body>
     <header>
-        <div class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark navbar-light bg-dark border-bottom  mb-3">
+        <div class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom  mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     Cargo world
@@ -118,6 +118,10 @@
                                         <a class="dropdown-item" asp-controller="Auth" asp-action="ChangePass">
                                             @Localizer["change"]
                                         </a>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <a class="dropdown-item" asp-controller="Home" asp-action="AdminPanel" >Admin</a>
+                                        }
                                         <a class="dropdown-item" asp-controller="Auth" asp-action="Logout">
                                             @Localizer["logOut"]
                                         </a>
@@ -132,14 +136,7 @@
                                 </div>
                             </li>
 
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item ml-1">
-                                    <div>
-                                        <label>Admin</label>
-                                    </div>
-                                </li>
-                            }
+
                         }
                         else
                         {

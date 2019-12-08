@@ -37,6 +37,21 @@ namespace CargoWorld.Data.Repositories
             throw new NotImplementedException();
         }
 
+        public ListViewModel<ApplicationUser> GetAll(int pageNumber)
+        {
+            int pageSize = 5;
+            int skipAmount = pageSize * (pageNumber - 1);
+            int postsCount = _ctx.Users.Count();
+
+            return new ListViewModel<ApplicationUser>
+            {
+                PageNumber = pageNumber,
+                CanNext = postsCount > skipAmount + pageSize,
+                List = _ctx.Users
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+            };
+        }
 
         public SearchViewModel Search(string keyWord)
         {

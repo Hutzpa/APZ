@@ -1,0 +1,56 @@
+﻿
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@*@{
+
+ViewBag.Title = Localizer["title"];
+
+}*@
+
+
+<h1>DIIIIIICK</h1>
+
+
+@if (Enumerable.Count(ViewBag.Cargos.List) > 0)
+{
+    <ul>
+        @foreach (Cargo cargo in ViewBag.Cargos.List)
+        {
+            <li>
+                <label>Name - <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@cargo.Id_Cargo">@cargo.CargoName </a>   <a asp-controller="Cargo" asp-action="Remove" asp-route-id="@cargo.Id_Cargo">Dellete</a> </label>
+            </li>
+        }
+    </ul>
+}
+
+
+@if(Enumerable.Count(ViewBag.Users.List) > 0)
+{
+    <ul>
+        @foreach(ApplicationUser user in ViewBag.Users.List)
+        {
+            <li>
+                <label>Name - <a asp-controller="Home" asp-action="AUser" asp-route-id="@user.Id"> @user.Name</a>   @*<a asp-controller="" asp-action="" asp-route="">Dellete</a>*@ </label>
+            </li>
+        }
+    </ul>
+}
+
+
+
+
+<div>
+    @if (ViewBag.PageNumber > 1)
+    {
+        <a asp-controller="Home" asp-action="AdminPanel" asp-route-pageNumber="@(ViewBag.PageNumber-1)">@Localizer["prev"]</a>
+
+    }
+    @if (ViewBag.CanNext)
+    {
+        <a asp-controller="Home" asp-action="AdminPanel" asp-route-pageNumber="@(ViewBag.PageNumber+1)">@Localizer["next"]</a>
+
+    }
+</div>

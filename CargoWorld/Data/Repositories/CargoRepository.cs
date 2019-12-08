@@ -37,8 +37,6 @@ namespace CargoWorld.Data.Repositories
         /// <returns></returns>
         public ListViewModel<Cargo> GetAll(string id, int pageNumber)
         {
-            ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
-
             int pageSize = 5;
             int skipAmount = pageSize * (pageNumber - 1);
             int postsCount = _ctx.Cargos.Count();
@@ -47,7 +45,24 @@ namespace CargoWorld.Data.Repositories
             {
                 PageNumber = pageNumber,
                 CanNext = postsCount > skipAmount + pageSize,
-                List = _ctx.Cargos.Where(o => o.Id_Owner.Id == user.Id)
+                List = _ctx.Cargos.Include(o=>o.Id_Owner).Where(o => o.Id_Owner.Id == id)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+
+            };
+        }
+
+        public ListViewModel<Cargo> GetAll(int pageNumber)
+        {
+            int pageSize = 5;
+            int skipAmount = pageSize * (pageNumber - 1);
+            int postsCount = _ctx.Cargos.Count();
+
+            return new ListViewModel<Cargo>
+            {
+                PageNumber = pageNumber,
+                CanNext = postsCount > skipAmount + pageSize,
+                List = _ctx.Cargos.Include(o => o.Id_Owner)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
 
