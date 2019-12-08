@@ -95,6 +95,10 @@ namespace CargoWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCargo(CargoViewModel cvm)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(cvm);
+            }
             var user = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User));
             var cargo = new Cargo
             {

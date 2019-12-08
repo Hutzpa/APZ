@@ -68,7 +68,7 @@ namespace CargoWorld.Controllers
         [HttpGet]
         public IActionResult CreateGroup(int? id)
         {
-
+           
             if (id == null)
                 return View(new GroupViewModel
                 {
@@ -92,6 +92,10 @@ namespace CargoWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGroupAsync(GroupViewModel gvm)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(gvm);
+            }
             var group = new Group
             {
                 IdGroup = gvm.IdGroup,

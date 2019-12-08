@@ -14,6 +14,8 @@ namespace CargoWorld.Models
 
         public ApplicationUser IdOwner { get; set; }
 
+        [Required]
+        [MinLength(3)]
         public string GroupName { get; set; }
 
         public List<Car> Cars { get; set; }

@@ -64,6 +64,10 @@ namespace CargoWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCar(CarViewModel cvm)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(cvm);
+            }
             var car = new Car
             {
                 IdOwner = await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User)),

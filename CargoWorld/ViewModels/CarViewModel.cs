@@ -22,6 +22,7 @@ namespace CargoWorld.ViewModels
         public string CarModel { get; set; }
         [Required]
         [StringLength(17,MinimumLength =11,ErrorMessage ="VIN має бути довжиной від 11 до 17 символів")]
+
         public string CarcassNumber { get; set; }
 
         [Required]
@@ -30,6 +31,7 @@ namespace CargoWorld.ViewModels
 
         [Required(ErrorMessage = "Додайте фото автомобілю")]
         public string Photo { get; set; }
+        [Required]
         public string Color { get; set; }
         /// <summary>
         /// Тип, грузовая, малогруз(газелька), фура
@@ -42,30 +44,41 @@ namespace CargoWorld.ViewModels
         /// <summary>
         /// Грузоподъёмность в кг
         /// </summary>
+        [Required]
+        [Range(0d, 500d)]
         public int CarryingCapacity { get; set; }
         /// <summary>
         /// объём грузового отделения
         /// </summary>
+        [Required]
+        [Range(0d, 500d)]
         public double CarryingCapacitySqM { get; set; }
-
         /// <summary>
         /// Высота грузового отделения
         /// </summary>
+        [Required]
+        [Range(0d, 500d)]
         public double HeightCargoCompartment { get; set; }
         /// <summary>
         /// Ширина грузового отделения
         /// </summary>
+        [Required]
+        [Range(0d, 500d)]
         public double WidthCargoCompartment { get; set; }
         /// <summary>
         /// Длина грузового отделения
         /// </summary>
+        [Required(AllowEmptyStrings = false)]
+        [Range(0d, 500d)]
         public double LengthCargoCompartment { get; set; }
 
         /// <summary>
         /// Цена перевозки груза на км
         /// </summary>
+        [Required]
+        [Range(0d, 50000d)]
         public decimal CostPerKm { get; set; }
-
+        [Required(AllowEmptyStrings =false)]
         public IFormFile Image { get; set; } = null;
     }
 }
