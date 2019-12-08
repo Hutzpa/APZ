@@ -1,13 +1,16 @@
 ﻿@model OptimalCargoViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
+        
 <p>
-    <label>Назва групи - @Model.OurGroup.GroupName</label>
+    <label>@Localizer["groupName"]- @Model.OurGroup.GroupName</label>
 </p>
 
 @if (Model.Cargos.Count() == 0)
 {
-    <label>Нажаль, підходящих для цієї групи вантажів не знайдено, спробуйте пізніше</label>
+<label>@Localizer["none"]</label>
 }
 else
 {
@@ -22,10 +25,10 @@ else
 
 
                     <label>
-                        Назва - @cr.CargoName | Тип вантажу - @cr.CargoType | Точка призначення - @cr.DestinationPoint | Вага - @cr.Weight | Об'єм - @cr.Bulk |
+                        @Localizer["name"] - @cr.CargoName | @Localizer["cargoType"] - @cr.CargoType | @Localizer["dest"] - @cr.DestinationPoint | @Localizer["weight"] - @cr.Weight | @Localizer["bulk"] - @cr.Bulk |
                     </label>
 
-                    <input type="submit" value="Запропонувати перевезення" />
+                    <input type="submit" value="@Localizer["ofer"]" />
                 </form>
             </li>
         }

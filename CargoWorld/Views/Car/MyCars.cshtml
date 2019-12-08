@@ -4,21 +4,24 @@
     ViewBag.Title = "Ваiі машини";
 }
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 
 
 
 @if (Enumerable.Count(Model.List) == 0)
 {
-    <h3>У вас ще не мае машин</h3>
-    <a asp-controller="Car" asp-action="CreateCar">Додайте</a>
+    
+    <h3>@Localizer["none"]</h3>
+    <a asp-controller="Car" asp-action="CreateCar">@Localizer["add"]</a>
 }
 else
 {
     <table>
         <tr>
             @foreach (var cr in Model.List)
-             {
+            {
                 <td>
                     @if (!String.IsNullOrEmpty(cr.Photo))
                     {
@@ -32,14 +35,14 @@ else
                 </td>
 
                 <td>
-                    <a asp-controller="Car" asp-action="CreateCar" asp-route-id="@cr.IdCar"> Edit </a>
+                    <a asp-controller="Car" asp-action="CreateCar" asp-route-id="@cr.IdCar"> @Localizer["edit"] </a>
                 </td>
 
 
                 <td>
-                    <a asp-controller="Car" asp-action="Remove" asp-route-id="@cr.IdCar"> Remove </a>
+                    <a asp-controller="Car" asp-action="Remove" asp-route-id="@cr.IdCar"> @Localizer["rem"] </a>
                 </td>
-             }
+            }
 
         </tr>
 
@@ -48,11 +51,11 @@ else
     <div>
         @if (Model.PageNumber > 1)
         {
-            <a asp-controller="Car" asp-action="MyCars" asp-route-pageNumber="@(Model.PageNumber-1)">Previous page</a>
+        <a asp-controller="Car" asp-action="MyCars" asp-route-pageNumber="@(Model.PageNumber-1)">@Localizer["prev"]</a>
         }
         @if (Model.CanNext)
         {
-            <a asp-controller="Car" asp-action="MyCars" asp-route-pageNumber="@(Model.PageNumber+1)">Next page</a>
+    <a asp-controller="Car" asp-action="MyCars" asp-route-pageNumber="@(Model.PageNumber+1)">@Localizer["next"]</a>
         }
     </div>
 }

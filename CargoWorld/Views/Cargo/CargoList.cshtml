@@ -1,14 +1,17 @@
 ﻿@model ListViewModel<Cargo>
 
 @{
-    ViewBag.Title = "Ваші вантажі";
+    ViewBag.Title = Localizer["title"];
 }
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 
 @if (Enumerable.Count(Model.List) == 0)
 {
-    <h3>У вас ще не має вантажів</h3>
-    <a asp-controller="Cargo" asp-action="CreateCargo">Cтворіть новий</a>
+    <h3>@Localizer["empty"]</h3>
+    <a asp-controller="Cargo" asp-action="CreateCargo">@Localizer["create"]</a>
 }
 else
 {
@@ -19,21 +22,21 @@ else
                 <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@c.Id_Cargo">@c.CargoName</a>
             </li>
 
-            <a asp-controller="Cargo" asp-action="Remove" asp-route-id="@c.Id_Cargo"> Remove</a>
+            <a asp-controller="Cargo" asp-action="Remove" asp-route-id="@c.Id_Cargo"> @Localizer["remove"]</a>
 
-            <a asp-controller="Cargo" asp-action="CreateCargo" asp-route-id="@c.Id_Cargo"> Edit</a>
+            <a asp-controller="Cargo" asp-action="CreateCargo" asp-route-id="@c.Id_Cargo"> @Localizer["edit"]</a>
         }
     </ul>
 
     <div>
         @if (Model.PageNumber > 1)
         {
-        <a asp-controller="Cargo" asp-action="CargoList" asp-route-pageNumber="@(Model.PageNumber-1)">Previous page</a>
+        <a asp-controller="Cargo" asp-action="CargoList" asp-route-pageNumber="@(Model.PageNumber-1)">@Localizer["prev"]</a>
 
         }
         @if (Model.CanNext)
         {
-        <a asp-controller="Cargo" asp-action="CargoList" asp-route-pageNumber="@(Model.PageNumber+1)">Next page</a>
+    <a asp-controller="Cargo" asp-action="CargoList" asp-route-pageNumber="@(Model.PageNumber+1)">@Localizer["next"]</a>
 
         }
     </div>

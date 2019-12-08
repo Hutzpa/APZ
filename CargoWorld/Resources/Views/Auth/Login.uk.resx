@@ -126,6 +126,9 @@
   <data name="reg" xml:space="preserve">
     <value>Реєстрація</value>
   </data>
+  <data name="rest" xml:space="preserve">
+    <value>Відновити пароль</value>
+  </data>
   <data name="username" xml:space="preserve">
     <value>Ім'я користувача</value>
   </data>

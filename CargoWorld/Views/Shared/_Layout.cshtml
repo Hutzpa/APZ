@@ -109,11 +109,21 @@
                                 </form>
                             </li>
 
-                            <li class="nav-item ml-3 pt-2">
-                                <span class="glyphicon glyphicon-log-out"></span>
-                                <a asp-controller="Auth" asp-action="Logout">
-                                    @Localizer["logOut"]
-                                </a>
+                            <li class="nav-item ml-1">
+                                <div class="dropdown show">
+                                    <a class="btn btn-secondary dropdown-toggle" style="background-color : transparent" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @Localizer["settings"]
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" asp-controller="Auth" asp-action="ChangePass">
+                                            @Localizer["change"]
+                                        </a>
+                                        <a class="dropdown-item" asp-controller="Auth" asp-action="Logout">
+                                            @Localizer["logOut"]
+                                        </a>
+                                    </div>
+                                </div>
+
                             </li>
 
                             <li class="nav-item ml-3 pt-2">

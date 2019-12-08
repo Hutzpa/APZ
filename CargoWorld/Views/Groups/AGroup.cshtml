@@ -1,58 +1,56 @@
 ﻿@model GroupViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewBag.Title = Model.GroupName;
 }
 
 
-    <div>
-        <h3> Назва вашої групи - @Model.GroupName </h3>
+<div>
+
+    <h3> @Localizer["groupName"] - @Model.GroupName </h3>
+    <hr />
+
+
+
+    @if (ViewBag.FreeCarsCount > 0)
+    {
+        <span>@Localizer["ableCars"]:</span>
         <hr />
-
-
-
-        @if (ViewBag.FreeCarsCount > 0)
+        @foreach (var freecar in ViewBag.FreeCars)
         {
-            <span>Список машин доступних для додавання у цю групу:</span>
             <hr />
-            @foreach (var freecar in ViewBag.FreeCars)
-            {
-                <hr />
-                <label> @freecar.CarModel | @freecar.RegistrationNumber | <a asp-controller="Groups" asp-action="AddCarToGroup" asp-route-idCar="@freecar.IdCar" asp-route-idGroup="@Model.IdGroup">Додати до групи</a> </label>
-                <hr />
-            }
+            <label> @freecar.CarModel | @freecar.RegistrationNumber | <a asp-controller="Groups" asp-action="AddCarToGroup" asp-route-idCar="@freecar.IdCar" asp-route-idGroup="@Model.IdGroup">@Localizer["addToGroup"]</a> </label>
+            <hr />
         }
+    }
 
 
-        <p>
-            <a asp-controller="Groups" asp-action="GetOptimalCargoForGroup" asp-route-idGroup="@Model.IdGroup">Знайти оптимальні вантажі для цієї групи</a>
+    <p>
+        <a asp-controller="Groups" asp-action="GetOptimalCargoForGroup" asp-route-idGroup="@Model.IdGroup">@Localizer["optiCagros"]</a>
+    </p>
 
 
-        </p>
-        <span>Список машин у групі:</span>
+    @if (Model.Cars.Count() == 0)
+    {
+        <span>@Localizer["none"]</span>
+    }
+    else
+    {
+        <span>@Localizer["carList"]:</span>
         <hr />
-
-        @if (Model.Cars.Count() == 0)
+        <h4>@Localizer["carName"]  | @Localizer["cargoNumb"] | @Localizer["editGroup"]</h4>
+        @foreach (var cr in Model.Cars)
         {
-            <span>Ви ще не маєте машин у цій групі</span>
-        }
-        else
-        {
-            <h4>Назва машини  | Номер машини | Редагувати групу</h4>
-            @foreach (var cr in Model.Cars)
-            {
-                <hr />
-                <span> @cr.CarModel </span> <span> | </span>
-                <span> @cr.RegistrationNumber </span> <span> | </span>
-                <a asp-controller="Groups" asp-action="DeleteCarFromGroup" asp-route-idCar="@cr.IdCar"> Видалити машину з групи</a>
-                <hr />
-            }
-
+            <hr />
+            <span> @cr.CarModel </span> <span> | </span>
+            <span> @cr.RegistrationNumber </span> <span> | </span>
+            <a asp-controller="Groups" asp-action="DeleteCarFromGroup" asp-route-idCar="@cr.IdCar"> @Localizer["deleteCar"]</a>
+            <hr />
         }
 
-
-
-
-
-        <a asp-controller="Groups" asp-action="DeleteGroup" asp-route-id="@Model.IdGroup">Видалити групу</a>
-    </div>
+    }
+    <a asp-controller="Groups" asp-action="DeleteGroup" asp-route-id="@Model.IdGroup">@Localizer["deleteGroup"]</a>
+</div>

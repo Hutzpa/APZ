@@ -4,9 +4,9 @@
     ViewBag.Title = Model.CargoName;
 }
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
-
-<h3>@Model.CargoName </h3>
 
 @if (!String.IsNullOrEmpty(Model.Photo))
 {
@@ -14,11 +14,25 @@
     <img src="@imagePath" height="200" width="200" />
 }
 
+<h3>@Localizer["name"] @Model.CargoName </h3>
+
+<h3>@Localizer["cargoType"] @Model.CargoType </h3>
+
+<h3>@Localizer["dep"] @Model.DeparturePoint </h3>
+
+<h3>@Localizer["dest"] @Model.DestinationPoint </h3>
+
+<h3>@Localizer["bulk"] @Model.Bulk </h3>
+
+
+
+
+
 @*<hr />
-<p>
-    <a asp-controller="Cargo" asp-action="OptimalGroup" asp-route-idCargo="@Model.Id_Cargo">Створити оптимальну групу для цього вантажу</a>
-</p>
-<hr />*@
+    <p>
+        <a asp-controller="Cargo" asp-action="OptimalGroup" asp-route-idCargo="@Model.Id_Cargo">Створити оптимальну групу для цього вантажу</a>
+    </p>
+    <hr />*@
 
 @if (Enumerable.Count(ViewBag.GroupsToOffer) > 0)
 {

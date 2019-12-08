@@ -1,27 +1,27 @@
 ﻿@model SearchViewModel
 
-@{
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
-}
 <table align="center">
     <tr>
         <td>
-            <span>Користувачі</span>
+            <span>@Localizer["users"]</span>
 
         </td>
         <td>
-            <span>Вантажі</span>
+            <span>@Localizer["cargos"]</span>
         </td>
     </tr>
 
     <tr>
         <td>
-            @if(Enumerable.Count(Model.Users) > 0)
+            @if (Enumerable.Count(Model.Users) > 0)
             {
                 @foreach (var v in Model.Users)
                 {
 
-                    <span>| Имя пользователя - </span>
+                    <span>| @Localizer["userName"] - </span>
                     <a asp-controller="Home" asp-action="AUser" asp-route-id="@v.Id">@v.UserName    |</a>
                     <hr />
 
@@ -30,7 +30,7 @@
             }
             else
             {
-                <p>Користувачів з такими параметрами не знайдено</p>
+                <p>@Localizer["userNone"]</p>
             }
         </td>
 
@@ -40,7 +40,7 @@
                 @foreach (var v in Model.Cargos)
                 {
 
-                    <span>| Название груза - </span>
+                    <span>| @Localizer["cargoName"] - </span>
                     <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@v.Id_Cargo">@v.CargoName   |</a>
                     <hr />
 
@@ -48,16 +48,10 @@
             }
             else
             {
-                <p>Вантажів з такими параметрами не знайдено</p>
+                <p>@Localizer["cargoNone"]</p>
             }
         </td>
     </tr>
-
-
-
-
-
-
 
 
 </table>

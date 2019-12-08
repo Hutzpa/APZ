@@ -1,0 +1,26 @@
+﻿@model RegisterViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+    <form asp-controller="Auth" asp-action="ChangePass" method="post">
+        <div>
+            <label>
+                @Localizer["password"]
+
+            </label>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+
+        </div>
+        <div>
+            <label>
+                @Localizer["conf"]
+            </label>
+            <input asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword"></span>
+
+        </div>
+        <input type="submit" value="@Localizer["sign"]" />
+    </form>

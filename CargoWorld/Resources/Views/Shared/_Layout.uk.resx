@@ -129,6 +129,9 @@
   <data name="cars" xml:space="preserve">
     <value>Машини</value>
   </data>
+  <data name="change" xml:space="preserve">
+    <value>Змінити пароль</value>
+  </data>
   <data name="companyToUser" xml:space="preserve">
     <value>Ваш вантаж пропонують перевезти</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="searchReq" xml:space="preserve">
     <value>Введіть пошуковий запит</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Налаштування</value>
   </data>
   <data name="userToCompany" xml:space="preserve">
     <value>На перевезення вами</value>

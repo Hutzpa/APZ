@@ -1,21 +1,26 @@
 ﻿@model IEnumerable<CargoInCar>
 
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
 @if (Model == null || Model.Count() == 0)
 {
     <div class="text-center">
-        <label>Ви не перевозите жодного вантажу</label>
+        <label>@Localizer["empty"]</label>
     </div>
 }
 else
 {
     <div class="text-center">
         <ul>
-            @foreach(var cr in Model)
+            @foreach (var cr in Model)
             {
-                
-                <li><label>Назва вантажу - @cr.Cargo.CargoName | Куди прямує -  @cr.Cargo.DestinationPoint |Тип вантажу - @cr.Cargo.CargoType |Чи було доставлено - @cr.Cargo.IsDelivered</label> | 
-                    <a asp-controller="Cargo" asp-action="SetDelivered" asp-route-idCargo="@cr.Cargo.Id_Cargo">Відмітити про доставку</a>
+
+                <li>
+                    <label>@Localizer["name"] - @cr.Cargo.CargoName | @Localizer["dest"] -  @cr.Cargo.DestinationPoint |@Localizer["cargoType"] - @cr.Cargo.CargoType |@Localizer["wasDeliv"] - @cr.Cargo.IsDelivered</label> |
+                    <a asp-controller="Cargo" asp-action="SetDelivered" asp-route-idCargo="@cr.Cargo.Id_Cargo">@Localizer["set"]</a>
                 </li>
             }
         </ul>
