@@ -72,6 +72,7 @@ namespace CargoWorld.Controllers
             };
             var result = await _userManager.CreateAsync(User, vm.Password);
 
+
             if (result.Succeeded)
             {
                 Registration(User.Email, User.Name);
@@ -115,6 +116,20 @@ namespace CargoWorld.Controllers
             return RedirectToAction("Login");
         }
 
+        public async Task<IActionResult> DeleteAsync(string email, int pageNumber)
+        {
+            var user = await _userManager.FindByNameAsync(email);
+            if (user != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("AdminPanel", "Home",new { pageNumber});
+                }
+                return RedirectToAction("AdminPanel", "Home", new { pageNumber });
+            }
+            return RedirectToAction("Index", "Home");
+        }
 
         private void Registration(string email, string name)
         {
@@ -179,7 +194,7 @@ namespace CargoWorld.Controllers
                     smtp.Send(m);
 
                     var res = await _userManager.ResetPasswordAsync(user, code, newPass);
-                   
+
 
                 }
                 catch (Exception ex)
@@ -188,7 +203,7 @@ namespace CargoWorld.Controllers
                 }
             }
         }
-        private async Task ResetAsync(string email,string pass)
+        private async Task ResetAsync(string email, string pass)
         {
             var user = await _userManager.FindByNameAsync(email);
             if (user != null)
@@ -218,7 +233,7 @@ namespace CargoWorld.Controllers
                     smtp.Send(m);
 
                     var res = await _userManager.ResetPasswordAsync(user, code, pass);
-                  
+
 
                 }
                 catch (Exception ex)

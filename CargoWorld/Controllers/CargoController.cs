@@ -133,11 +133,14 @@ namespace CargoWorld.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> Remove(int id, int? pageNumber)
         {
             _cargoRepository.Remove(id);
             await _cargoRepository.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
+            if(pageNumber == null) 
+                return RedirectToAction("Index", "Home");
+            else
+                return RedirectToAction("AdminPanel", "Home", new { pageNumber });
         }
 
         public IActionResult CargoList(int pageNumber)

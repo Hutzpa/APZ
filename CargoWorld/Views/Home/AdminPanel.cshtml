@@ -20,7 +20,7 @@ ViewBag.Title = Localizer["title"];
         @foreach (Cargo cargo in ViewBag.Cargos.List)
         {
             <li>
-                <label>Name - <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@cargo.Id_Cargo">@cargo.CargoName </a>   <a asp-controller="Cargo" asp-action="Remove" asp-route-id="@cargo.Id_Cargo">Dellete</a> </label>
+                <label>Name - <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@cargo.Id_Cargo">@cargo.CargoName </a>   <a asp-controller="Cargo" asp-action="Remove" asp-route-id="@cargo.Id_Cargo" asp-route-pageNumber="ViewBag.PageNumber">Dellete</a> </label>
             </li>
         }
     </ul>
@@ -33,7 +33,7 @@ ViewBag.Title = Localizer["title"];
         @foreach(ApplicationUser user in ViewBag.Users.List)
         {
             <li>
-                <label>Name - <a asp-controller="Home" asp-action="AUser" asp-route-id="@user.Id"> @user.Name</a>   @*<a asp-controller="" asp-action="" asp-route="">Dellete</a>*@ </label>
+                <label>Name - <a asp-controller="Home" asp-action="AUser" asp-route-id="@user.Id"> @user.Name</a>   <a asp-controller="Auth" asp-action="DeleteAsync" asp-route-email="@user.Email" asp-route-pageNumber="ViewBag.PageNumber">Dellete</a> </label>
             </li>
         }
     </ul>

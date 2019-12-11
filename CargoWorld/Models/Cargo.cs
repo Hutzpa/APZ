@@ -13,7 +13,7 @@ namespace CargoWorld.Models
         public int Id_Cargo { get; set; }
         public ApplicationUser Id_Owner { get; set; }
         public ICollection<CargoInCar> Transfer { get; set; }
-        public bool IsDelivered { get; set; }
+        public bool IsDelivered { get; set; } = false;
 
         [Required]
         [MinLength(2)]

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CargoWorld.Data.Repositories.CargoRepository">
+    <Position X="4.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAEBIAAAABAAAAAABAEAAAwAAAAAAgAA=</HashCode>
+      <FileName>Data\Repositories\CargoRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_ctx" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CargoWorld.Data.Repositories.CarRepository">
+    <Position X="11.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEBAAAAABAAAAAABAEAAAgAQAACAAAA=</HashCode>
+      <FileName>Data\Repositories\CarRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_ctx" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CargoWorld.Data.Repositories.GroupRepository">
+    <Position X="6.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAEBCAAAABAAAAAABAEAAAgQAAAAAAAA=</HashCode>
+      <FileName>Data\Repositories\GroupRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_ctx" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CargoWorld.Data.Repositories.RequestRepository">
+    <Position X="8.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAAAAAIAAEBAAAAABAAAAAABAEAAAgAAAAAAgQA=</HashCode>
+      <FileName>Data\Repositories\RequestRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_ctx" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="CargoWorld.Data.Repositories.UserRepository">
+    <Position X="10" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAEBAAAAABAAAAAABAEAAAgAAAAAgAAA=</HashCode>
+      <FileName>Data\Repositories\UserRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_ctx" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CargoWorld.Data.AppDbContext" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAGACAAAAAAAAAAAAAAAAEAAAAAABAAAAABAAAAA=</HashCode>
+      <FileName>Data\AppDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CargoWorld.Controllers.CarController">
+    <Position X="11.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAQAEEAAAIAAAAABAAAAAAggBAAAAACAABAAAA=</HashCode>
+      <FileName>Controllers\CarController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_carRepository" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CargoWorld.Controllers.CargoController">
+    <Position X="4.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAIAAgAAAIAAAAABBAAAAAJABAAAAABEAAABAA=</HashCode>
+      <FileName>Controllers\CargoController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_cargoRepository" />
+      <Field Name="_groupRepository" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CargoWorld.Controllers.GroupsController">
+    <Position X="6.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAJAAgAACAAAAAACAAAAAAAAAkQAAIAAAAAAAAAVQ=</HashCode>
+      <FileName>Controllers\GroupsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_groupsRepository" />
+      <Field Name="_carManager" />
+      <Field Name="_cargoManager" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CargoWorld.Controllers.HomeController">
+    <Position X="9.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAgAAAAAAAAAAACACAAAAAAACAAAAEDAAAgAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_carRepository" />
+      <Field Name="_cargoRepository" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CargoWorld.Controllers.RequestController">
+    <Position X="2.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAABAAoAgAAAAAAEAAAAAAQAAAAAgAAIBALEEAAgAA=</HashCode>
+      <FileName>Controllers\RequestController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_cargoRepository" />
+      <Field Name="_carRepository" />
+      <Field Name="_groupRepository" />
+      <Field Name="_requestManager" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="CargoWorld.Data.IRepository&lt;T&gt;">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAEBAAAAABAAAAAAAAEAAAgAAAAAAAAA=</HashCode>
+      <FileName>Data\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9.22" />
+</ClassDiagram>
