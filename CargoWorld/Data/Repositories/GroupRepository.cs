@@ -42,7 +42,7 @@ namespace CargoWorld.Data.Repositories
         /// </summary>
         public ListViewModel<Group> GetAll(string id, int pageNumber)
         {
-            ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
+           
 
             int pageSize = 5;
             int skipAmount = pageSize * (pageNumber - 1);
@@ -52,7 +52,9 @@ namespace CargoWorld.Data.Repositories
             {
                 PageNumber = pageNumber,
                 CanNext = postsCount > skipAmount + pageSize,
-                List = _ctx.Groups.Where(o => o.IdOwner.Id == user.Id)
+                List = _ctx.Groups
+                .Include(c => c.Cars).Include(o =>o.IdOwner)
+                .Where(o => o.IdOwner.Id == o.IdOwner.Id)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
             };

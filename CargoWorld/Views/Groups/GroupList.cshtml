@@ -14,28 +14,45 @@
 }
 else
 {
-    <ul>
-        @foreach (var cr in Model.List)
-        {
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    @Localizer["one"]
+                </th>
+                <th class="text-center">
+                    Сars count
+                </th>
 
-            <li>
-                @Localizer["one"] -<a asp-controller="Groups" asp-action="AGroup" asp-route-idOfGroup="@cr.IdGroup">
-                    @cr.GroupName
-                </a>
-            </li>
-        }
-    </ul>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cr in Model.List)
+            {
+                <tr>
+                    <td class="text-center">
+                        <a asp-controller="Groups" asp-action="AGroup" asp-route-idOfGroup="@cr.IdGroup">
+                            @cr.GroupName
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        @cr.Cars?.Count()
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
     <div>
         @if (Model.PageNumber > 1)
         {
-            <a asp-controller="Groups" asp-action="GroupList" asp-route-pageNumber="@(Model.PageNumber-1)">@Localizer["prev"]</a>
+            <a class="btn btn-success" asp-controller="Groups" asp-action="GroupList" asp-route-pageNumber="@(Model.PageNumber-1)">@Localizer["prev"]</a>
 
         }
         @if (Model.CanNext)
         {
 
-            <a asp-controller="Groups" asp-action="GroupList" asp-route-pageNumber="@(Model.PageNumber + 1)">@Localizer["next"]</a>
+            <a class="btn btn-success" asp-controller="Groups" asp-action="GroupList" asp-route-pageNumber="@(Model.PageNumber + 1)">@Localizer["next"]</a>
         }
     </div>
 }

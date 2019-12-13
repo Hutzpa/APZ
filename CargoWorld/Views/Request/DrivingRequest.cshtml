@@ -8,18 +8,35 @@
 
     <span>@Localizer["requests"]</span>
     <hr />
-    <ul>
-        @foreach (var rq in Model)
-        {
-            <li>
-                <span>@Localizer["youwas"] </span>
-                <a asp-controller="Car" asp-action="ACar" asp-route-id="@rq.IdCar">@Localizer["car"]</a> |
-                <a asp-controller="Request" asp-action="AcceptDriving" asp-route-requestId="@rq.Id">@Localizer["accept"] </a> |
-                <a asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="DrivingRequest" asp-route-id="@rq.Id">@Localizer["refuse"] </a> |
-            </li>
-        }
 
-    </ul>
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    Car
+                </th>
+                <th class="text-center">
+                    Choice
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rq in Model)
+            {
+                <tr>
+
+                    <td class="text-center">
+                        <a asp-controller="Car" asp-action="ACar" asp-route-id="@rq.IdCar">@Localizer["car"]</a>
+                    </td>
+
+                    <td class="text-center">
+                        <a class="btn btn-success" asp-controller="Request" asp-action="AcceptDriving" asp-route-requestId="@rq.Id">@Localizer["accept"] </a> |
+                        <a class="btn btn-success" asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="DrivingRequest" asp-route-id="@rq.Id">@Localizer["refuse"] </a> |
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
 }
 else

@@ -15,28 +15,53 @@
 }
 else
 {
-    <ul>
-        @foreach (var c in Model.List)
-        {
-            <li>
-                <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@c.Id_Cargo">@c.CargoName</a>
-            </li>
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">Photo</th>
+                <th class="text-center">Cargo name</th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.List)
+            {
+                <tr>
+                    <td class="text-center">
+                        @if (!String.IsNullOrEmpty(c.Photo))
+                        {
+                            var imagePath = $"/content/webs/{c.Photo}";
+                            <img src="@imagePath" height="50" width="50" />
+                        }
+                    </td>
+                    <td class="text-center">
+                    <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@c.Id_Cargo">@c.CargoName</a>
 
-            <a asp-controller="Cargo" asp-action="Remove" asp-route-id="@c.Id_Cargo"> @Localizer["remove"]</a>
+                    </td>
 
-            <a asp-controller="Cargo" asp-action="CreateCargo" asp-route-id="@c.Id_Cargo"> @Localizer["edit"]</a>
-        }
-    </ul>
+                    <td class="text-center">
+                        <a  class="btn btn-success" asp-controller="Cargo" asp-action="Remove" asp-route-id="@c.Id_Cargo"> @Localizer["remove"]</a>
+
+                        <a  class="btn btn-success" asp-controller="Cargo" asp-action="CreateCargo" asp-route-id="@c.Id_Cargo"> @Localizer["edit"]</a>
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
 
     <div>
         @if (Model.PageNumber > 1)
         {
-        <a asp-controller="Cargo" asp-action="CargoList" asp-route-pageNumber="@(Model.PageNumber-1)">@Localizer["prev"]</a>
+            <a asp-controller="Cargo" asp-action="CargoList" asp-route-pageNumber="@(Model.PageNumber-1)">@Localizer["prev"]</a>
 
         }
         @if (Model.CanNext)
         {
-    <a asp-controller="Cargo" asp-action="CargoList" asp-route-pageNumber="@(Model.PageNumber+1)">@Localizer["next"]</a>
+            <a asp-controller="Cargo" asp-action="CargoList" asp-route-pageNumber="@(Model.PageNumber+1)">@Localizer["next"]</a>
 
         }
     </div>
