@@ -3,41 +3,71 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-
-@*@{
-
-ViewBag.Title = Localizer["title"];
-
-}*@
+    <div class="list-inline">
 
 
-<h1>DIIIIIICK</h1>
 
+        <table class="table table-hover table-responsive list-inline-item">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        Cargo
+                    </th>
+                    <th class="text-center">
 
-@if (Enumerable.Count(ViewBag.Cargos.List) > 0)
-{
-    <ul>
-        @foreach (Cargo cargo in ViewBag.Cargos.List)
-        {
-            <li>
-                <label>Name - <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@cargo.Id_Cargo">@cargo.CargoName </a>   <a asp-controller="Cargo" asp-action="Remove" asp-route-id="@cargo.Id_Cargo" asp-route-pageNumber="ViewBag.PageNumber">Dellete</a> </label>
-            </li>
-        }
-    </ul>
-}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Enumerable.Count(ViewBag.Cargos.List) > 0)
+                {
+                    @foreach (Cargo cargo in ViewBag.Cargos.List)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@cargo.Id_Cargo">@cargo.CargoName </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-success" asp-controller="Cargo" asp-action="Remove" asp-route-id="@cargo.Id_Cargo" asp-route-pageNumber="ViewBag.PageNumber">Dellete</a>
+                            </td>
+                        </tr>
 
+                    }
+                }
+            </tbody>
+        </table>
 
-@if(Enumerable.Count(ViewBag.Users.List) > 0)
-{
-    <ul>
-        @foreach(ApplicationUser user in ViewBag.Users.List)
-        {
-            <li>
-                <label>Name - <a asp-controller="Home" asp-action="AUser" asp-route-id="@user.Id"> @user.Name</a>   <a asp-controller="Auth" asp-action="DeleteAsync" asp-route-email="@user.Email" asp-route-pageNumber="ViewBag.PageNumber">Dellete</a> </label>
-            </li>
-        }
-    </ul>
-}
+        <table class="table table-hover table-responsive list-inline-item">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        User
+                    </th>
+                    <th class="text-center">
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Enumerable.Count(ViewBag.Users.List) > 0)
+                {
+                    @foreach (ApplicationUser user in ViewBag.Users.List)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <a asp-controller="Home" asp-action="AUser" asp-route-id="@user.Id"> @user.Name</a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-success" asp-controller="Auth" asp-action="DeleteAsync" asp-route-email="@user.Email" asp-route-pageNumber="ViewBag.PageNumber">Dellete</a>
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
 
 
 
@@ -45,12 +75,12 @@ ViewBag.Title = Localizer["title"];
 <div>
     @if (ViewBag.PageNumber > 1)
     {
-        <a asp-controller="Home" asp-action="AdminPanel" asp-route-pageNumber="@(ViewBag.PageNumber-1)">@Localizer["prev"]</a>
+        <a class="btn btn-success" asp-controller="Home" asp-action="AdminPanel" asp-route-pageNumber="@(ViewBag.PageNumber-1)">@Localizer["prev"]</a>
 
     }
     @if (ViewBag.CanNext)
     {
-        <a asp-controller="Home" asp-action="AdminPanel" asp-route-pageNumber="@(ViewBag.PageNumber+1)">@Localizer["next"]</a>
-
+        <a class="btn btn-success" asp-controller="Home" asp-action="AdminPanel" asp-route-pageNumber="@(ViewBag.PageNumber+1)">@Localizer["next"]</a>
+         
     }
 </div>

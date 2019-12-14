@@ -14,10 +14,10 @@
 else
 {
     <div class="text-center">
-        <table >
+        <table>
             <thead>
                 <tr>
-                    <th >Photo</th>
+                    <th>Photo</th>
                     <th class="text-center">@Localizer["name"]</th>
                     <th class="text-center">Departure point</th>
                     <th class="text-center">@Localizer["dest"]</th>
@@ -42,12 +42,12 @@ else
                             <label>
                                 @cr.Cargo.CargoName
                             </label>
-                        </td> 
+                        </td>
                         <td class="text-center">
                             <label>
                                 @cr.Cargo.DeparturePoint
                             </label>
-                        </td> 
+                        </td>
                         <td class="text-center">
                             <label>
                                 @cr.Cargo.DestinationPoint
@@ -59,27 +59,25 @@ else
                             </label>
                         </td>
                         <td class="text-center">
-                                @{ 
-                                    if (cr.Cargo.IsDelivered)
-                                    {
-                                        <label> Delivered</label>
-                                    }
-                                    else
-                                    {
-                                        <label> On the way</label>
-                                    }
-
-
+                            @{
+                                if (cr.Cargo.IsDelivered)
+                                {
+                                    <label> Delivered</label>
                                 }
-                            
+                                else
+                                {
+                                    <label> On the way</label>
+                                }
+                            }
                         </td>
                         <td class="text-center">
                             <a class="btn btn-success" asp-controller="Cargo" asp-action="SetDelivered" asp-route-idCargo="@cr.Cargo.Id_Cargo">@Localizer["set"]</a>
+                            @if (cr.Cargo.IsDelivered)
+                            {
+                                <a class="btn btn-success" asp-controller="Cargo" asp-action="DeleteTransported" asp-route-id="@cr.Id_Delivery">Delete from transporting</a>
+                            }
                         </td>
-
-
                     </tr>
-
                 }
 
             </tbody>

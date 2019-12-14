@@ -27,13 +27,6 @@
 
 
 
-
-@*<hr />
-    <p>
-        <a asp-controller="Cargo" asp-action="OptimalGroup" asp-route-idCargo="@Model.Id_Cargo">Створити оптимальну групу для цього вантажу</a>
-    </p>
-    <hr />*@
-
 @if (Enumerable.Count(ViewBag.GroupsToOffer) > 0)
 {
     <form asp-controller="Request" asp-action="CreateCompanyToUser" method="post" enctype="multipart/form-data">
@@ -45,7 +38,7 @@
                 <option value="@cr.IdGroup">@cr.GroupName</option>
             }
         </select>
-        <input type="submit" value="SendRequest" />
+        <input class="btn btn-success" type="submit" value="SendRequest" />
     </form>
 
 }

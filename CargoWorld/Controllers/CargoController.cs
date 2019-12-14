@@ -143,6 +143,8 @@ namespace CargoWorld.Controllers
                 return RedirectToAction("AdminPanel", "Home", new { pageNumber });
         }
 
+       
+
         public IActionResult CargoList(int pageNumber)
         {
             if (pageNumber < 1)
@@ -167,7 +169,16 @@ namespace CargoWorld.Controllers
             return View(cargos);
         }
 
-        [Obsolete("Не сделано")]
+        public async Task<IActionResult> DeleteTransportedAsync(int id)
+        {
+            var cic = await _cargoRepository.DeleteTransportingAsync(id);
+            cic.Transporter = null;
+            await _cargoRepository.UpdateAsync(cic);
+            return RedirectToAction("IMTransporting");
+        }
+
+
+       [Obsolete("Не сделано")]
         public async Task<IActionResult> SetDeliveredAsync(int idCargo)
         {
             Cargo cr = _cargoRepository.Get(idCargo);

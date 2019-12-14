@@ -29,7 +29,7 @@
 
 
     <p>
-        <a asp-controller="Groups" asp-action="GetOptimalCargoForGroup" asp-route-idGroup="@Model.IdGroup">@Localizer["optiCagros"]</a>
+        <a class="btn btn-success" asp-controller="Groups" asp-action="GetOptimalCargoForGroup" asp-route-idGroup="@Model.IdGroup">@Localizer["optiCagros"]</a>
     </p>
 
 
@@ -47,10 +47,10 @@
             <hr />
             <span> @cr.CarModel </span> <span> | </span>
             <span> @cr.RegistrationNumber </span> <span> | </span>
-            <a asp-controller="Groups" asp-action="DeleteCarFromGroup" asp-route-idCar="@cr.IdCar"> @Localizer["deleteCar"]</a>
+            <a class="btn btn-danger" asp-controller="Groups" asp-action="DeleteCarFromGroup" asp-route-idCar="@cr.IdCar"> @Localizer["deleteCar"]</a>
             <hr />
         }
 
     }
-    <a asp-controller="Groups" asp-action="DeleteGroup" asp-route-id="@Model.IdGroup">@Localizer["deleteGroup"]</a>
+    <a class="btn btn-danger" asp-controller="Groups" asp-action="DeleteGroup" asp-route-id="@Model.IdGroup">@Localizer["deleteGroup"]</a>
 </div>

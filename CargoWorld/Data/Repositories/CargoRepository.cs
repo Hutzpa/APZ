@@ -178,6 +178,7 @@ namespace CargoWorld.Data.Repositories
             return cargosForThisGroup;
         }
       
+        #endregion
 
 
         public IEnumerable<CargoInCar> CargosImTransporting(string idUser)
@@ -191,10 +192,20 @@ namespace CargoWorld.Data.Repositories
             return cargoInCars;
         }
 
+        public async Task<CargoInCar> DeleteTransportingAsync(int idCargoInCar)
+        {
+            var cic = await _ctx.CargoInCars.Include(o=>o.Transporter).FirstOrDefaultAsync(o => o.Id_Delivery == idCargoInCar);
+            return cic;
+        } 
+
+        public async Task UpdateAsync(CargoInCar cic)
+        {
+            _ctx.Update(cic);
+            await _ctx.SaveChangesAsync();
+        }
         public IEnumerable<Cargo> CargosOfSpecUser(string idUser)
         {
             return _ctx.Cargos.Include(o => o.Id_Owner).Where(o => o.Id_Owner.Id == idUser);
         }
-        #endregion
     }
 }
