@@ -123,6 +123,12 @@
   <data name="carg" xml:space="preserve">
     <value>cargo</value>
   </data>
+  <data name="cargo" xml:space="preserve">
+    <value>Cargo</value>
+  </data>
+  <data name="decision" xml:space="preserve">
+    <value>Decision</value>
+  </data>
   <data name="none" xml:space="preserve">
     <value>Nothing here yet</value>
   </data>

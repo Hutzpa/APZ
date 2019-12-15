@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="groupList" xml:space="preserve">
-    <value>Список підходящих груп</value>
+    <value>Підходящі групи</value>
   </data>
   <data name="none" xml:space="preserve">
     <value>Ви не маєте вхідних запитів</value>
   </data>
   <data name="ofer" xml:space="preserve">
     <value>Вантажі які вам запропонували перевезти</value>
+  </data>
+  <data name="opti" xml:space="preserve">
+    <value>Оптимальна група</value>
   </data>
   <data name="optimal" xml:space="preserve">
     <value>Сформувати оптимальну групу для цього вантажу</value>

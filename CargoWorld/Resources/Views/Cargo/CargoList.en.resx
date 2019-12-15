@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="cargoName" xml:space="preserve">
+    <value>Cargo name</value>
+  </data>
   <data name="create" xml:space="preserve">
     <value>Create new</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="next" xml:space="preserve">
     <value>Next page</value>
+  </data>
+  <data name="photo" xml:space="preserve">
+    <value>Photo</value>
   </data>
   <data name="prev" xml:space="preserve">
     <value>Previous page</value>

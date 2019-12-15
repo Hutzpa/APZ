@@ -120,6 +120,15 @@
   <data name="cargoType" xml:space="preserve">
     <value>Тип вантажу</value>
   </data>
+  <data name="deleteFromTransp" xml:space="preserve">
+    <value>Видалити з транспортуємих</value>
+  </data>
+  <data name="deliv" xml:space="preserve">
+    <value>Доставлено</value>
+  </data>
+  <data name="depPoint" xml:space="preserve">
+    <value>Точка відправлення</value>
+  </data>
   <data name="dest" xml:space="preserve">
     <value>Точка доставки</value>
   </data>
@@ -128,6 +137,12 @@
   </data>
   <data name="name" xml:space="preserve">
     <value>Назва вантажу</value>
+  </data>
+  <data name="notDeliv" xml:space="preserve">
+    <value>У дорозі</value>
+  </data>
+  <data name="photo" xml:space="preserve">
+    <value>Фото</value>
   </data>
   <data name="set" xml:space="preserve">
     <value>Зробити доставленим</value>

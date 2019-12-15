@@ -27,18 +27,20 @@
 
 
 
-@if (Enumerable.Count(ViewBag.GroupsToOffer) > 0)
+@if (Model.Id_Owner.Id != ViewBag.CurUserId)
 {
-    <form asp-controller="Request" asp-action="CreateCompanyToUser" method="post" enctype="multipart/form-data">
-        <input asp-for="Id_Cargo" type="hidden" />
-        <input asp-for="Id_Owner.Id" type="hidden" />
-        <select asp-for="idGroup">
-            @foreach (var cr in ViewBag.GroupsToOffer)
-            {
-                <option value="@cr.IdGroup">@cr.GroupName</option>
-            }
-        </select>
-        <input class="btn btn-success" type="submit" value="SendRequest" />
-    </form>
-
+    @if (Enumerable.Count(ViewBag.GroupsToOffer) > 0)
+    {
+        <form asp-controller="Request" asp-action="CreateCompanyToUser" method="post" enctype="multipart/form-data">
+            <input asp-for="Id_Cargo" type="hidden" />
+            <input asp-for="Id_Owner.Id" type="hidden" />
+            <select asp-for="idGroup">
+                @foreach (var cr in ViewBag.GroupsToOffer)
+                {
+                    <option value="@cr.IdGroup">@cr.GroupName</option>
+                }
+            </select>
+            <input class="btn btn-success" type="submit" value="@Localizer["sendReq"]" />
+        </form>
+    }
 }

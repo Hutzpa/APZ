@@ -44,7 +44,7 @@ namespace CargoWorld.Controllers
 
         public IActionResult Search(string search)
         {
-            SearchViewModel svm = _userRepository.Search(search);
+            SearchViewModel svm = _userRepository.Search(search, _userManager.GetUserId(HttpContext.User));
             return View(svm);
         }
 
@@ -60,6 +60,8 @@ namespace CargoWorld.Controllers
             ViewBag.CarsWithoutDriver = _carRepository.GetAll(_userManager.GetUserId(HttpContext.User)).ToList();
 
             ViewBag.UserCargos = _cargoRepository.CargosOfSpecUser(_userManager.GetUserId(HttpContext.User));
+
+            ViewBag.CurUserId = _userManager.GetUserId(HttpContext.User);
             UserViewModel uvm = new UserViewModel
             {
                 ApplicationUser = user

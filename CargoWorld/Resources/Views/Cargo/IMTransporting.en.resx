@@ -120,6 +120,15 @@
   <data name="cargoType" xml:space="preserve">
     <value>Cargo type</value>
   </data>
+  <data name="deleteFromTransp" xml:space="preserve">
+    <value>Delete from transporting</value>
+  </data>
+  <data name="deliv" xml:space="preserve">
+    <value>Delivered</value>
+  </data>
+  <data name="depPoint" xml:space="preserve">
+    <value>Departure point</value>
+  </data>
   <data name="dest" xml:space="preserve">
     <value>Destination point</value>
   </data>
@@ -128,6 +137,12 @@
   </data>
   <data name="name" xml:space="preserve">
     <value>Cargo name</value>
+  </data>
+  <data name="notDeliv" xml:space="preserve">
+    <value>On the way</value>
+  </data>
+  <data name="photo" xml:space="preserve">
+    <value>Photo </value>
   </data>
   <data name="set" xml:space="preserve">
     <value>Set delivered</value>

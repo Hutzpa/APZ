@@ -9,6 +9,9 @@
 
 
 
+
+@if(Model.ApplicationUser.Id != ViewBag.CurUserId)
+
 @if (Enumerable.Count(ViewBag.CarsWithoutDriver) != 0)
 {
     <form asp-controller="Request" asp-action="CreateDrivingRequest" method="post" enctype="multipart/form-data">

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Request>
+﻿    @model IEnumerable<Request>
 
 
 @using Microsoft.AspNetCore.Mvc.Localization
@@ -14,7 +14,7 @@
         <thead>
             <tr>
                 <th class="text-center"> @Localizer["carg"]  </th>
-                <th class="text-center"> Decision </th>
+                <th class="text-center"> @Localizer["carg"] </th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
             {
                 <tr>
                     <td class="text-center">
-                        <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@rq.IdCargo">Cargo</a>
+                        <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@rq.IdCargo">@Localizer["cargo"]</a>
                     </td>
                     <td class="text-center">
                         <a class="btn btn-success" asp-controller="Request" asp-action="AcceptCompanyToUser" asp-route-requestId="@rq.Id">@Localizer["accept"] </a> 

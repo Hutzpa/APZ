@@ -4,35 +4,64 @@
 @inject IViewLocalizer Localizer
 
 
-    <p>@Localizer["offeredGroup"] -  <h4>@Model.Cargo.CargoName</h4> </p>
+<p>@Localizer["offeredGroup"] - <h4>@Model.Cargo.CargoName</h4> </p>
 
 
 
 @if (Model.CarsThisGroup.Count() == 0)
 {
-<label>@Localizer["none"]</label>
+    <label>@Localizer["none"]</label>
 }
 else
 {
-    <form asp-controller="Groups" asp-action="CreateOptimalGroup" method="post" enctype="multipart/form-data">
-
-        <input asp-for="Cargo.Id_Cargo" value="@Model.Cargo.Id_Cargo" type="hidden" />
-
-        <ul>
+    <table  class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <td class="text-center">
+                    Photo
+                </td>
+                <td class="text-center">
+                    @Localizer["model"]
+                </td>
+                <td class="text-center">
+                    @Localizer["carType"]
+                </td>
+                <td class="text-center">
+                    @Localizer["numb"]
+                </td>
+                <td>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var car in Model.CarsThisGroup)
             {
-                <li>
-                    <input name="items" value="@car.IdCar" type="hidden" />
-                    <img src="@car.Photo" height="200" width="200" />
-
-                    <label>@Localizer["model"] - @car.CarModel |@Localizer["carType"] - @car.CarType | @Localizer["numb"] - @car.RegistrationNumber | </label>
-                </li>
+                <tr>
+                    <td class="text-center">
+                        @if (!String.IsNullOrEmpty(car.Photo))
+                        {
+                            var imagePath = $"/content/webs/{car.Photo}";
+                            <img src="@imagePath" height="200" width="200" />
+                        }
+                    </td>
+                    <td class="text-center">
+                        @car.CarModel
+                    </td>
+                    <td class="text-center">
+                        @car.CarType
+                    </td>
+                    <td class="text-center">
+                        @car.RegistrationNumber
+                    </td>
+                    <td class="text-center">
+                        <form asp-controller="Groups" asp-action="CreateOptimalGroup" method="post" enctype="multipart/form-data">
+                            <input asp-for="Cargo.Id_Cargo" value="@Model.Cargo.Id_Cargo" type="hidden" />
+                            <input class="btn btn-success" type="submit" value="@Localizer["create"]" />
+                        </form>
+                    </td>
+                </tr>
             }
-        </ul>
-
-
-
-
-        <input class="btn btn-success" type="submit" value="@Localizer["create"]" />
-    </form>
+        </tbody>
+    </table>
+    
 }

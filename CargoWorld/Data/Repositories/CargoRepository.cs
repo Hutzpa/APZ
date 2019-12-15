@@ -21,14 +21,9 @@ namespace CargoWorld.Data.Repositories
 
         public Cargo Get(int id)
         {
-            //var ownerId = _ctx.Cargos.FirstOrDefault(o => o.Id_Cargo == id).Id_Owner;
             var ownerId = _ctx.Cargos.Include(o => o.Id_Owner).ToList().FirstOrDefault(o => o.Id_Cargo == id);
             return ownerId;
         }
-
-
-
-
 
         /// <summary>
         /// Выводит все грузы конкретного пользователя
@@ -39,13 +34,16 @@ namespace CargoWorld.Data.Repositories
         {
             int pageSize = 5;
             int skipAmount = pageSize * (pageNumber - 1);
-            int postsCount = _ctx.Cargos.Count();
+            int postsCount = _ctx.Cargos.Include(o=>o.Id_Owner)
+                .Where(o=>o.Id_Owner.Id == id).Count();
 
             return new ListViewModel<Cargo>
             {
                 PageNumber = pageNumber,
                 CanNext = postsCount > skipAmount + pageSize,
-                List = _ctx.Cargos.Include(o=>o.Id_Owner).Where(o => o.Id_Owner.Id == id)
+                List = _ctx.Cargos
+                .Include(o=>o.Id_Owner)
+                .Where(o => o.Id_Owner.Id == id)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
 
@@ -78,14 +76,11 @@ namespace CargoWorld.Data.Repositories
         #region Найти оптимальный груз для группы
         public IEnumerable<Cargo> SearchOptimalCargoForGroup(int groupId)
         {
-
             //Искомая група и машины в ней и грузы в этих машинах
             var group = _ctx.Groups.Include(o => o.Cars).Include(o=>o.IdOwner).FirstOrDefault(g => g.IdGroup == groupId);
 
             //Грузы, рекомендуемые для этой групы
             List<Cargo> cargosForThisGroup = new List<Cargo>();
-
-
 
             //все грузы
             foreach (var c in _ctx.Cargos.AsNoTracking())

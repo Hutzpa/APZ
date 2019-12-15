@@ -120,6 +120,9 @@
   <data name="add" xml:space="preserve">
     <value>Додайте машину</value>
   </data>
+  <data name="car" xml:space="preserve">
+    <value>Машина</value>
+  </data>
   <data name="edit" xml:space="preserve">
     <value>Редагувати</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="none" xml:space="preserve">
     <value>Ви поки що не володієте жодною машиною</value>
+  </data>
+  <data name="photo" xml:space="preserve">
+    <value>Фото</value>
   </data>
   <data name="prev" xml:space="preserve">
     <value>Наступна сторінка</value>

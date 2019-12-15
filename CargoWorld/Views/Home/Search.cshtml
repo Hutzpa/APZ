@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-<table align="center">
+<table align="center" class="table table-hover table-responsive">
     <tr>
         <td>
             <span>@Localizer["users"]</span>
@@ -20,9 +20,7 @@
             {
                 @foreach (var v in Model.Users)
                 {
-
-                    <span>| @Localizer["userName"] - </span>
-                    <a asp-controller="Home" asp-action="AUser" asp-route-id="@v.Id">@v.UserName    |</a>
+                    <a asp-controller="Home" asp-action="AUser" asp-route-id="@v.Id">@v.UserName </a>
                     <hr />
                 }
             }
@@ -37,11 +35,8 @@
             {
                 @foreach (var v in Model.Cargos)
                 {
-
-                    <span>| @Localizer["cargoName"] - </span>
-                    <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@v.Id_Cargo">@v.CargoName   |</a>
+                    <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@v.Id_Cargo">@v.CargoName </a>
                     <hr />
-
                 }
             }
             else

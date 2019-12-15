@@ -11,7 +11,7 @@
             <thead>
                 <tr>
                     <th class="text-center">
-                        Cargo
+                        @Localizer["cargo"] Cargo
                     </th>
                     <th class="text-center">
 
@@ -28,7 +28,7 @@
                                 <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@cargo.Id_Cargo">@cargo.CargoName </a>
                             </td>
                             <td class="text-center">
-                                <a class="btn btn-success" asp-controller="Cargo" asp-action="Remove" asp-route-id="@cargo.Id_Cargo" asp-route-pageNumber="ViewBag.PageNumber">Dellete</a>
+                                <a class="btn btn-success" asp-controller="Cargo" asp-action="Remove" asp-route-id="@cargo.Id_Cargo" asp-route-pageNumber="ViewBag.PageNumber">@Localizer["del"]</a>
                             </td>
                         </tr>
 
@@ -41,7 +41,7 @@
             <thead>
                 <tr>
                     <th class="text-center">
-                        User
+                        @Localizer["user"]
                     </th>
                     <th class="text-center">
 
@@ -58,7 +58,7 @@
                                 <a asp-controller="Home" asp-action="AUser" asp-route-id="@user.Id"> @user.Name</a>
                             </td>
                             <td class="text-center">
-                                <a class="btn btn-success" asp-controller="Auth" asp-action="DeleteAsync" asp-route-email="@user.Email" asp-route-pageNumber="ViewBag.PageNumber">Dellete</a>
+                                <a class="btn btn-success" asp-controller="Auth" asp-action="DeleteAsync" asp-route-email="@user.Email" asp-route-pageNumber="ViewBag.PageNumber">@Localizer["del"]</a>
                             </td>
                         </tr>
 

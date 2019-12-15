@@ -135,4 +135,7 @@
   <data name="youwas" xml:space="preserve">
     <value>You were asked to drive</value>
   </data>
+  <data name="_car" xml:space="preserve">
+    <value>Car</value>
+  </data>
 </root>

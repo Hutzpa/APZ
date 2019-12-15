@@ -131,62 +131,23 @@ namespace CargoWorld.Controllers
         {
             var cvm = _carManager.Get(idCar);
             var group = _groupsRepository.Get(idGroup);
-            Car carWithGroup = new Car
-            {
-                IdOwner = cvm.IdOwner,
-                IdCar = cvm.IdCar,
-                IdDriver = cvm.IdDriver,
-                IdGroup = group,
-                CarModel = cvm.CarModel,
-                CarcassNumber = cvm.CarcassNumber,
-                RegistrationNumber = cvm.RegistrationNumber,
-                Photo = cvm.Photo,
-                Color = cvm.Color,
-                CargoType = cvm.CargoType,
-                CarType = cvm.CarType,
-                CarryingCapacity = cvm.CarryingCapacity,
-                CarryingCapacitySqM = cvm.CarryingCapacitySqM,
-                HeightCargoCompartment = cvm.HeightCargoCompartment,
-                WidthCargoCompartment = cvm.WidthCargoCompartment,
-                LengthCargoCompartment = cvm.LengthCargoCompartment,
-                CostPerKm = cvm.CostPerKm
-            };
-
-            _carManager.Update(carWithGroup);
+            cvm.IdGroup = group;
+           
+            _carManager.Update(cvm);
             await _carManager.SaveChangesAsync();
-            var idG = idGroup.ToString();
 
-            //Не передаёт idGroup
-            return RedirectToAction("AGroup", new { idOfGroup = idCar });
+            return RedirectToAction("AGroup", new { idOfGroup = idGroup });
         }
 
-        public async Task<IActionResult> DeleteCarFromGroupAsync(int idCar)
+        public async Task<IActionResult> DeleteCarFromGroupAsync(int idCar, int idGroup)
         {
-            var cvm = _carManager.Get(idCar);
-            Car carWithGroup = new Car
-            {
-                IdOwner = cvm.IdOwner,
-                IdCar = cvm.IdCar,
-                IdDriver = cvm.IdDriver,
-                IdGroup = null,
-                CarModel = cvm.CarModel,
-                CarcassNumber = cvm.CarcassNumber,
-                RegistrationNumber = cvm.RegistrationNumber,
-                Photo = cvm.Photo,
-                Color = cvm.Color,
-                CargoType = cvm.CargoType,
-                CarType = cvm.CarType,
-                CarryingCapacity = cvm.CarryingCapacity,
-                CarryingCapacitySqM = cvm.CarryingCapacitySqM,
-                HeightCargoCompartment = cvm.HeightCargoCompartment,
-                WidthCargoCompartment = cvm.WidthCargoCompartment,
-                LengthCargoCompartment = cvm.LengthCargoCompartment,
-                CostPerKm = cvm.CostPerKm
-            };
+            var cvm = _carManager.GetTracking(idCar);
+            cvm.IdGroup = null;
+            
 
-            _carManager.Update(carWithGroup);
+            _carManager.Update(cvm);
             await _carManager.SaveChangesAsync();
-            return RedirectToAction("AGroup", new { idOfGroup = idCar });
+            return RedirectToAction("AGroup", new { idOfGroup = idGroup });
         }
 
 
@@ -232,7 +193,7 @@ namespace CargoWorld.Controllers
             _groupsRepository.UpdateMany(carsThisGroup); // ошбика отслеживания Пользователя?!
             await _groupsRepository.SaveChangesAsync();
 
-            return View("Index","Home");
+            return RedirectToAction("Index","Home");
         }
     } 
 }

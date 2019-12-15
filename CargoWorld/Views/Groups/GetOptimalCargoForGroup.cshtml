@@ -3,35 +3,74 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-        
+
 <p>
-    <label>@Localizer["groupName"]- @Model.OurGroup.GroupName</label>
+    <label>@Localizer["groupName"] - @Model.OurGroup.GroupName</label>
 </p>
 
 @if (Model.Cargos.Count() == 0)
 {
-<label>@Localizer["none"]</label>
+    <label>@Localizer["none"]</label>
 }
 else
 {
-    <ul>
-        @foreach (Cargo cr in Model.Cargos)
-        {
-            <li>
-                <form asp-controller="Request" asp-action="CreateCompanyToUser" method="post" enctype="multipart/form-data">
-                    <input asp-for="@cr.Id_Cargo" type="hidden" />
-                    <input asp-for="@Model.OurGroup.IdOwner" type="hidden" />
-                    <input asp-for="@Model.OurGroup.IdGroup" type="hidden" />
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    @Localizer["name"]
+                </th>
+                <th class="text-center">
+                    @Localizer["cargoType"]
+                </th>
+                <th class="text-center">
+                    Departure
+                </th>
+                <th class="text-center">
+                    @Localizer["dest"]
+                </th>
+                <th class="text-center">
+                    @Localizer["weight"]
+                </th>
+                <th class="text-center">
+                    @Localizer["bulk"]
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Cargo cr in Model.Cargos)
+            {
+                <tr>
+                    <td class="text-center">
+                        @cr.CargoName
+                    </td>
+                    <td class="text-center">
+                        @cr.CargoType
+                    </td>
+                    <td class="text-center">
+                        @cr.DeparturePoint
+                    </td>
+                    <td class="text-center">
+                        @cr.DestinationPoint
+                    </td>
+                    <td class="text-center">
+                        @cr.Weight
+                    </td>
+                    <td class="text-center">
+                        @cr.Bulk
+                    </td>
+                    <td class="text-center">
+                        <form asp-controller="Request" asp-action="CreateCompanyToUser" method="post" enctype="multipart/form-data">
+                            <input asp-for="@cr.Id_Cargo" type="hidden" />
+                            <input asp-for="@Model.OurGroup.IdOwner" type="hidden" />
+                            <input asp-for="@Model.OurGroup.IdGroup" type="hidden" />
 
-
-                    <label>
-                        @Localizer["name"] - @cr.CargoName | @Localizer["cargoType"] - @cr.CargoType | @Localizer["dest"] - @cr.DestinationPoint | @Localizer["weight"] - @cr.Weight | @Localizer["bulk"] - @cr.Bulk |
-                    </label>
-
-                    <input class="btn btn-success" type="submit" value="@Localizer["ofer"]" />
-                </form>
-            </li>
-        }
-    </ul>
+                            <input class="btn btn-success" type="submit" value="@Localizer["ofer"]" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
 }

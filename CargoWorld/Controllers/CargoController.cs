@@ -55,11 +55,11 @@ namespace CargoWorld.Controllers
                 CanBeSepateted = cargo.CanBeSepateted,
                 Bulk = cargo.Bulk
 
-
             };
             var grps = _groupRepository.GetAll(_userManager.GetUserId(HttpContext.User))
                 .Where(o=>o.Cars.FirstOrDefault(o=>o.CargoType == cvm.CargoType) != null);
             ViewBag.GroupsToOffer = grps;
+            ViewBag.CurUserId = _userManager.GetUserId(HttpContext.User);
             return View(cvm);
         }
 

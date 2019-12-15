@@ -85,6 +85,7 @@
                         <option value="До 10т"> 10т</option>
                         <option value="До 20т"> 20т</option>
                     </select>
+                    <span asp-validation-for="CarType"></span>
                 </td>
             </tr>
             <tr>
@@ -95,12 +96,13 @@
                     </label>
                 </td>
                 <td>
-                    <select asp-for=" CargoType">
+                    <select asp-for="CargoType">
                         <option value="box">@Localizer["box"]</option>
                         <option value="solid">@Localizer["solid"]</option>
                         <option value="liquid">@Localizer["liquid"]</option>
                         <option value="loose">@Localizer["loose"]</option>
                     </select>
+                    <span asp-validation-for="CargoType"></span>
                 </td>
             </tr>
             <tr>
@@ -166,13 +168,13 @@
                 </td>
                 <td>
                     <input asp-for="Image" />
-                    <span asp-validation-for="Image"></span>
+                    
                 </td>
             </tr>
 
             <tr>
                 <td>
-                    <input type="submit" value="@Localizer["add"]" />
+                    <input class="btn btn-success" type="submit" value="@Localizer["add"]" />
                 </td>
             </tr>
 

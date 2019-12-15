@@ -18,8 +18,8 @@ else
     <table>
         <thead>
             <tr>
-                <th class="text-center">Photo</th>
-                <th class="text-center">Cargo name</th>
+                <th class="text-center">@Localizer["photo"]</th>
+                <th class="text-center">@Localizer["cargoName"]</th>
                 <th class="text-center"></th>
                 <th class="text-center"></th>
             </tr>
@@ -36,14 +36,13 @@ else
                         }
                     </td>
                     <td class="text-center">
-                    <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@c.Id_Cargo">@c.CargoName</a>
-
+                        <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@c.Id_Cargo">@c.CargoName</a>
                     </td>
 
                     <td class="text-center">
-                        <a  class="btn btn-success" asp-controller="Cargo" asp-action="Remove" asp-route-id="@c.Id_Cargo"> @Localizer["remove"]</a>
+                        <a class="btn btn-success" asp-controller="Cargo" asp-action="Remove" asp-route-id="@c.Id_Cargo"> @Localizer["remove"]</a>
 
-                        <a  class="btn btn-success" asp-controller="Cargo" asp-action="CreateCargo" asp-route-id="@c.Id_Cargo"> @Localizer["edit"]</a>
+                        <a class="btn btn-success" asp-controller="Cargo" asp-action="CreateCargo" asp-route-id="@c.Id_Cargo"> @Localizer["edit"]</a>
                     </td>
 
                 </tr>

@@ -53,10 +53,10 @@ namespace CargoWorld.Data.Repositories
             };
         }
 
-        public SearchViewModel Search(string keyWord)
+        public SearchViewModel Search(string keyWord,string idUser)
         {
-            var cargo = _ctx.Cargos.AsNoTracking();
-            var users = _ctx.Users.AsNoTracking();
+            var cargo = _ctx.Cargos.Include(o => o.Id_Owner).AsNoTracking().Where(o => o.Id_Owner.Id != idUser);
+            var users = _ctx.Users.AsNoTracking().Where(o => o.Id != idUser);
 
             if (!String.IsNullOrEmpty(keyWord))
             {

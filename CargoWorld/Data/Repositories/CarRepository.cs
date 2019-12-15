@@ -21,7 +21,8 @@ namespace CargoWorld.Data.Repositories
         public void Create(Car data) => _ctx.Cars.Add(data);
 
 
-        public Car Get(int id) => _ctx.Cars.AsNoTracking().FirstOrDefault(o => o.IdCar == id);
+        public Car Get(int id) => _ctx.Cars.AsNoTracking().Include(o=>o.IdGroup).FirstOrDefault(o => o.IdCar == id);
+          public Car GetTracking(int id) => _ctx.Cars.Include(o=>o.IdGroup).FirstOrDefault(o => o.IdCar == id);
 
         /// <summary>
         /// Все машины конкретного пользователя
@@ -30,17 +31,22 @@ namespace CargoWorld.Data.Repositories
         /// <returns></returns>
         public ListViewModel<Car> GetAll(string id, int pageNumber)
         {
-            ApplicationUser user = _ctx.Users.FirstOrDefault(o => o.Id == id);
+           
 
             int pageSize = 5;
             int skipAmount = pageSize * (pageNumber - 1);
-            int postsCount = _ctx.Cars.Count();
+            int postsCount = _ctx.Cars
+                .Include(o=>o.IdOwner)
+                .Where(o=>o.IdOwner.Id == id)
+                .Count();
 
             return new ListViewModel<Car>
             {
                 PageNumber = pageNumber,
                 CanNext = postsCount > skipAmount + pageSize,
-                List = _ctx.Cars.Where(o => o.IdOwner.Id == user.Id)
+                List = _ctx.Cars
+                .Include(o=>o.IdOwner)
+                .Where(o => o.IdOwner.Id == id)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
             };
@@ -79,7 +85,8 @@ namespace CargoWorld.Data.Repositories
         /// </summary>
         /// <param name="idRep"></param>
         /// <returns></returns>
-        public IEnumerable<Car> CarsInRep(int idGrp) => _ctx.Cars.Where(o => o.IdGroup.IdGroup == idGrp);
+        public IEnumerable<Car> CarsInRep(int idGrp) => _ctx.Cars.Include(o=>o.IdGroup)
+            .Where(o => o.IdGroup.IdGroup == idGrp);
 
     }
 }

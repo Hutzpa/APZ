@@ -19,13 +19,13 @@ namespace CargoWorld.Data.Repositories
         }
         public void Create(Group data) => _ctx.Groups.Add(data);
 
-        public Group Get(int id) => _ctx.Groups.Include(o=>o.IdOwner).FirstOrDefault(o => o.IdGroup == id);
-      
+        public Group Get(int id) => _ctx.Groups.Include(o => o.IdOwner).FirstOrDefault(o => o.IdGroup == id);
 
-        
+
+
         public void Remove(int id)
         {
-        
+
             _ctx.Groups.Remove(Get(id));
         }
 
@@ -42,29 +42,32 @@ namespace CargoWorld.Data.Repositories
         /// </summary>
         public ListViewModel<Group> GetAll(string id, int pageNumber)
         {
-           
 
             int pageSize = 5;
             int skipAmount = pageSize * (pageNumber - 1);
-            int postsCount = _ctx.Groups.Count();
+            int postsCount = _ctx.Groups
+                .Include(o=>o.IdOwner)
+                .Where(o=>o.IdOwner.Id == id)
+                .Count();
 
             return new ListViewModel<Group>
             {
                 PageNumber = pageNumber,
                 CanNext = postsCount > skipAmount + pageSize,
                 List = _ctx.Groups
-                .Include(c => c.Cars).Include(o =>o.IdOwner)
-                .Where(o => o.IdOwner.Id == o.IdOwner.Id)
+                .Include(o => o.IdOwner)
+                .Include(o=>o.Cars)
+                .Where(o => o.IdOwner.Id == id)
                 .Skip(pageSize * (pageNumber - 1))
-                .Take(pageSize)
-            };
+               .Take(pageSize)
+        };
 
 
         }
 
         public void UpdateMany(IEnumerable<Car> cars)
         {
-        
+
             _ctx.Cars.UpdateRange(cars);
         }
 
@@ -102,12 +105,12 @@ namespace CargoWorld.Data.Repositories
                 {
                     for (int i = freeCars.Count(); i != 0; i--)
                     {
-                       
+
 
                         //Начинаем с самого маленького, и идём вверх пока не влезет
-                        if (cargoBulk <= freeCars[i-1].CarryingCapacitySqM)
+                        if (cargoBulk <= freeCars[i - 1].CarryingCapacitySqM)
                         {
-                            carsInThisGroup.Add(freeCars[i-1]);
+                            carsInThisGroup.Add(freeCars[i - 1]);
                             break;
                         }
 

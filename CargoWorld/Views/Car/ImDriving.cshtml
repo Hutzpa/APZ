@@ -10,7 +10,7 @@
 @if (Model != null)
 {
     <div style="text-align:center;">
-        
+
         <h3>@Localizer["imDriving"]</h3>
 
     </div>
@@ -32,13 +32,12 @@
         <hr />
         <p>@Localizer["cargoType"] - @Model.CargoType</p>
         <hr />
-        @*<p>Вантажопідйомність - @Model.CarryingCapacity</p>
-            <hr />*@
-    <p>@Localizer["price"] - @Model.CostPerKm</p>
+
+        <p>@Localizer["price"] - @Model.CostPerKm</p>
         <hr />
     </div>
 
-    <a asp-controller="Car" asp-action="DrivingRefuse" asp-route-idCar="@Model.IdCar">@Localizer["quit"]</a>
+    <a class="btn btn-danger" asp-controller="Car" asp-action="DrivingRefuse" asp-route-idCar="@Model.IdCar">@Localizer["quit"]</a>
 
 
 }

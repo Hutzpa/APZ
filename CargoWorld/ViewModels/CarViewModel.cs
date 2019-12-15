@@ -29,7 +29,6 @@ namespace CargoWorld.ViewModels
         [StringLength(13,MinimumLength = 4,ErrorMessage = "Введіть номер автомобілю")]
         public string RegistrationNumber { get; set; }
 
-        [Required(ErrorMessage = "Додайте фото автомобілю")]
         public string Photo { get; set; }
         [Required]
         public string Color { get; set; }

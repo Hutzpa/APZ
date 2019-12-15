@@ -13,20 +13,45 @@
     <h3> @Localizer["groupName"] - @Model.GroupName </h3>
     <hr />
 
-
-
     @if (ViewBag.FreeCarsCount > 0)
     {
         <span>@Localizer["ableCars"]:</span>
-        <hr />
-        @foreach (var freecar in ViewBag.FreeCars)
-        {
-            <hr />
-            <label> @freecar.CarModel | @freecar.RegistrationNumber | <a asp-controller="Groups" asp-action="AddCarToGroup" asp-route-idCar="@freecar.IdCar" asp-route-idGroup="@Model.IdGroup">@Localizer["addToGroup"]</a> </label>
-            <hr />
-        }
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th class="text-center">@Localizer["car"]</th>
+                    <th class="text-center">@Localizer["regNumber"]</th>
+                    <th class="text-center"> </th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @foreach (var freecar in ViewBag.FreeCars)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @freecar.CarModel
+                        </td>
+                        <td>
+                            @freecar.RegistrationNumber
+                        </td>
+                        <td>
+                            <a class="btn btn-success" asp-controller="Groups" asp-action="AddCarToGroup" asp-route-idCar="@freecar.IdCar" asp-route-idGroup="@Model.IdGroup">@Localizer["addToGroup"]</a>
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <label>@Localizer["anyFreeCars"]</label>
     }
 
+    <hr />
 
     <p>
         <a class="btn btn-success" asp-controller="Groups" asp-action="GetOptimalCargoForGroup" asp-route-idGroup="@Model.IdGroup">@Localizer["optiCagros"]</a>
@@ -35,22 +60,43 @@
 
     @if (Model.Cars.Count() == 0)
     {
-        <span>@Localizer["none"]</span>
+        <label>@Localizer["none"]</label>
     }
     else
     {
         <span>@Localizer["carList"]:</span>
-        <hr />
-        <h4>@Localizer["carName"]  | @Localizer["cargoNumb"] | @Localizer["editGroup"]</h4>
-        @foreach (var cr in Model.Cars)
-        {
-            <hr />
-            <span> @cr.CarModel </span> <span> | </span>
-            <span> @cr.RegistrationNumber </span> <span> | </span>
-            <a class="btn btn-danger" asp-controller="Groups" asp-action="DeleteCarFromGroup" asp-route-idCar="@cr.IdCar"> @Localizer["deleteCar"]</a>
-            <hr />
-        }
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        @Localizer["carName"]
+                    </th>
+                    <th class="text-center">
+                        @Localizer["cargoNumb"]
+                    </th>
+                    <th class="text-center">
+                        @Localizer["editGroup"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cr in Model.Cars)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @cr.CarModel
+                        </td>
+                        <td class="text-center">
+                            @cr.RegistrationNumber
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-danger" asp-controller="Groups" asp-action="DeleteCarFromGroup" asp-route-idCar="@cr.IdCar" asp-route-idGroup="@cr.IdGroup.IdGroup"> @Localizer["deleteCar"]</a>
+                        </td>
+                    </tr>
+                }
 
+            </tbody>
+        </table>
     }
     <a class="btn btn-danger" asp-controller="Groups" asp-action="DeleteGroup" asp-route-id="@Model.IdGroup">@Localizer["deleteGroup"]</a>
 </div>

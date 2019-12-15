@@ -132,4 +132,7 @@
   <data name="name" xml:space="preserve">
     <value>Cargo name</value>
   </data>
+  <data name="sendReq" xml:space="preserve">
+    <value>Send Request</value>
+  </data>
 </root>

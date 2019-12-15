@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="groupList" xml:space="preserve">
-    <value>List of suitable groups</value>
+    <value>Suitable groups</value>
   </data>
   <data name="none" xml:space="preserve">
     <value>You don't have any requests</value>
   </data>
   <data name="ofer" xml:space="preserve">
     <value>Cargos that you were asked to transport</value>
+  </data>
+  <data name="opti" xml:space="preserve">
+    <value>Optimal group</value>
   </data>
   <data name="optimal" xml:space="preserve">
     <value>Form an optimal group for this cargo</value>

@@ -123,6 +123,12 @@
   <data name="addToGroup" xml:space="preserve">
     <value>Add car to group</value>
   </data>
+  <data name="anyFreeCars" xml:space="preserve">
+    <value>Your free cars</value>
+  </data>
+  <data name="car" xml:space="preserve">
+    <value>Car</value>
+  </data>
   <data name="cargoNumb" xml:space="preserve">
     <value>Registration number</value>
   </data>
@@ -149,5 +155,8 @@
   </data>
   <data name="optiCagros" xml:space="preserve">
     <value>Find optimal cargos for this group</value>
+  </data>
+  <data name="regNumber" xml:space="preserve">
+    <value>Registration number</value>
   </data>
 </root>

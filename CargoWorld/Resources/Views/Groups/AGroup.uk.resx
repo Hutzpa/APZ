@@ -123,6 +123,12 @@
   <data name="addToGroup" xml:space="preserve">
     <value>Додати машину до групу</value>
   </data>
+  <data name="anyFreeCars" xml:space="preserve">
+    <value>Ваші вільні машини</value>
+  </data>
+  <data name="car" xml:space="preserve">
+    <value>Машина</value>
+  </data>
   <data name="cargoNumb" xml:space="preserve">
     <value>Реєстраційний номер</value>
   </data>
@@ -149,5 +155,8 @@
   </data>
   <data name="optiCagros" xml:space="preserve">
     <value>Знайти підходящі вантажі для цієї групи</value>
+  </data>
+  <data name="regNumber" xml:space="preserve">
+    <value>Реєстраційний номер</value>
   </data>
 </root>
