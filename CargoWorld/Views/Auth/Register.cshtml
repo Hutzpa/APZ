@@ -8,58 +8,93 @@
 
 }
 
-<form asp-controller="Auth" asp-action="Register" method="post">
-    <div>
-        <label>
-            @Localizer["email"]
-        </label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+<div class="text-center">
 
-    </div>
-    <div>
-        <label>
-            @Localizer["password"]
+    <form asp-controller="Auth" asp-action="Register" method="post">
+        <table align="center">
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        @Localizer["email"]
+                    </label>
 
-        </label>
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
+                </td>
+                <td>
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email"></span>
 
-    </div>
-    <div>
-        <label>
-            @Localizer["conf"]
-        </label>
-        <input asp-for="ConfirmPassword" />
-        <span asp-validation-for="ConfirmPassword"></span>
+                </td>
 
-    </div>
-    <div>
-        <label>
-            @Localizer["name"]
+            </tr>
+            <tr >
+                <td >
+                    <label class="mb-2 mt-2">
+                        @Localizer["password"]
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Password" />
+                    <span asp-validation-for="Password"></span>
+                </td>
 
-        </label>
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
 
-    </div>
-    <div>
-        <label>
-            @Localizer["surname"]
-        </label>
-        <input asp-for="Surname" />
-        <span asp-validation-for="Surname"></span>
 
-    </div>
-    <div>
-        <label>
-            @Localizer["age"]
-        </label>
-        <input asp-for="Age" />
-        <span asp-validation-for="Age"></span>
+            </tr>
+            <tr >
+                <td>
+                    <label class="mb-2 mt-2">
+                        @Localizer["conf"]
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        @Localizer["name"]
 
-    </div>
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </td>
 
-    <input class="btn btn-success" type="submit" value="@Localizer["sign"]" />
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        @Localizer["surname"]
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Surname" />
+                    <span asp-validation-for="Surname"></span>
+                </td>
 
-</form>
+            </tr>
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        @Localizer["age"]
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Age" />
+                    <span asp-validation-for="Age"></span>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <input class="btn btn-success mb-2 mt-2" type="submit" value="@Localizer["sign"]" />
+                </td>
+
+            </tr>
+        </table>
+    </form>
+
+</div>

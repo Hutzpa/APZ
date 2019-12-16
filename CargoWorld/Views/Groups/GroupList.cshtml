@@ -9,12 +9,12 @@
 
 @if (Enumerable.Count(Model.List) == 0)
 {
-    <h3>@Localizer["none"]</h3>
+    <h3 class="text-center">@Localizer["none"]</h3>
     <a asp-controller="Groups" asp-action="CreateGroup">@Localizer["create"]</a>
 }
 else
 {
-    <table class="table table-hover table-responsive">
+    <table class="table table-hover table-responsive ml-5">
         <thead>
             <tr>
                 <th class="text-center">
@@ -26,7 +26,7 @@ else
 
             </tr>
         </thead>
-        <tbody>
+        <tbody >
             @foreach (var cr in Model.List)
             {
                 <tr>

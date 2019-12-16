@@ -18,41 +18,41 @@
 }
 else
 {
-    <table class="table table-hover table-responsive">
-        <thead>
-            <tr>
-                <th class="text-center">@Localizer["photo"]</th>
-                <th class="text-center">@Localizer["car"]</th>
-                <th class="text-center"></th>
-                <th class="text-center"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var cr in Model.List)
-            {
+
+
+        <table class="table table-hover table-responsive ml-5">
+            <thead>
                 <tr>
-                    <td class="text-center">
-                        @if (!String.IsNullOrEmpty(cr.Photo))
-                        {
-                            var imagePath = $"/content/webs/{cr.Photo}";
-                            <img src="@imagePath" height="50" width="50" />
-                        }
-                    </td>
-
-                    <td class="text-center">
-                        <a asp-controller="Car" asp-action="ACar" asp-route-id="@cr.IdCar"> @cr.CarModel </a>
-                    </td>
-
-                    <td class="text-center">
-                        <a class="btn btn-success" asp-controller="Car" asp-action="CreateCar" asp-route-id="@cr.IdCar"> @Localizer["edit"] </a>
-                        <a class="btn btn-success" asp-controller="Car" asp-action="Remove" asp-route-id="@cr.IdCar"> @Localizer["rem"] </a>
-                    </td>
+                    <th class="text-center">@Localizer["photo"]</th>
+                    <th class="text-center">@Localizer["car"]</th>
+                    <th class="text-center"></th>
                 </tr>
-            }
-        </tbody>
+            </thead>
+            <tbody >
+                @foreach (var cr in Model.List)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @if (!String.IsNullOrEmpty(cr.Photo))
+                            {
+                                var imagePath = $"/content/webs/{cr.Photo}";
+                                <img src="@imagePath" height="50" width="50" />
+                            }
+                        </td>
 
-    </table>
+                        <td class="text-center">
+                            <a asp-controller="Car" asp-action="ACar" asp-route-id="@cr.IdCar"> @cr.CarModel </a>
+                        </td>
 
+                        <td class="text-center">
+                            <a class="btn btn-success" asp-controller="Car" asp-action="CreateCar" asp-route-id="@cr.IdCar"> @Localizer["edit"] </a>
+                            <a class="btn btn-success" asp-controller="Car" asp-action="Remove" asp-route-id="@cr.IdCar"> @Localizer["rem"] </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+ 
     <div>
         @if (Model.PageNumber > 1)
         {

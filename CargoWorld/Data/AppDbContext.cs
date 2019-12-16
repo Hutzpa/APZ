@@ -38,6 +38,31 @@ namespace CargoWorld.Data
                 .WithMany(o => o.Cars)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            builder.Entity<Cargo>()
+                .HasOne(o => o.Id_Owner)
+                .WithMany(o => o.Cargos)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Cargo>()
+                .HasMany(o => o.Transfer)
+                .WithOne(o => o.Cargo)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(o => o.Cargos)
+                .WithOne(o => o.Id_Owner)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ApplicationUser>()
+                .HasMany(o => o.Cars)
+                .WithOne(o => o.IdOwner)
+                .OnDelete(DeleteBehavior.SetNull);
+            builder.Entity<ApplicationUser>()
+                .HasMany(o => o.Groups)
+                .WithOne(o => o.IdOwner)
+                .OnDelete(DeleteBehavior.SetNull);
+            builder.Entity<ApplicationUser>()
+                .HasMany(o => o.RequestsToMe)
+                .WithOne(o => o.Recip)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

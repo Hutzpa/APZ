@@ -3,12 +3,12 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-@if (Model.Requests.Count() > 0)
+@if (Model?.Requests.Count() > 0)
 {
 
-    <span>@Localizer["ofer"]</span>
+    <label class="text-center">@Localizer["ofer"]</label>
     <hr />
-    <table class="table table-hover table-responsive">
+    <table class="table table-hover table-responsive ml-5">
         <thead>
             <tr>
                 <th class="text-center">
@@ -62,5 +62,5 @@
 }
 else
 {
-    <span>@Localizer["none"]</span>
+    <label class="text-center">@Localizer["none"]</label>
 }

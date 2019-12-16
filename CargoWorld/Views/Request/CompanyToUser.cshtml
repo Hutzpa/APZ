@@ -5,16 +5,16 @@
 @inject IViewLocalizer Localizer
 
 
-@if (Model.Count() > 0)
+@if (Model?.Count() > 0)
 {
 
-    <span>@Localizer["ofer"]</span>
+    <label class="text-center">@Localizer["ofer"]</label>
     <hr />
     <table class="table table-hover table-responsive">
         <thead>
             <tr>
                 <th class="text-center"> @Localizer["carg"]  </th>
-                <th class="text-center"> @Localizer["carg"] </th>
+                <th class="text-center"> </th>
             </tr>
         </thead>
         <tbody>
@@ -37,5 +37,5 @@
 }
 else
 {
-    <span>@Localizer["none"]</span>
+    <label class="text-center">@Localizer["none"]</label>
 }

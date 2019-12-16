@@ -135,4 +135,7 @@
   <data name="offeredGroup" xml:space="preserve">
     <value>Запропонована група для цього вантажу</value>
   </data>
+  <data name="photo" xml:space="preserve">
+    <value>Фото</value>
+  </data>
 </root>

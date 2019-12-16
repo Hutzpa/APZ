@@ -123,6 +123,9 @@
   <data name="cargoType" xml:space="preserve">
     <value>Тип вантажу</value>
   </data>
+  <data name="dep" xml:space="preserve">
+    <value>Місце відправлення</value>
+  </data>
   <data name="dest" xml:space="preserve">
     <value>Точка призначення</value>
   </data>

@@ -137,7 +137,7 @@ namespace CargoWorld.Controllers
         {
             _cargoRepository.Remove(id);
             await _cargoRepository.SaveChangesAsync();
-            if(pageNumber == null) 
+            if((int)pageNumber == 0) 
                 return RedirectToAction("Index", "Home");
             else
                 return RedirectToAction("AdminPanel", "Home", new { pageNumber });

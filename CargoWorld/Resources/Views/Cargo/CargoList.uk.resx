@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="cargoName" xml:space="preserve">
-    <value>Cargo name</value>
+    <value>Назва вантажу</value>
   </data>
   <data name="create" xml:space="preserve">
     <value>Створити нову</value>
@@ -131,6 +131,9 @@
   </data>
   <data name="next" xml:space="preserve">
     <value>Наступна сторінка</value>
+  </data>
+  <data name="photo" xml:space="preserve">
+    <value>Фото</value>
   </data>
   <data name="prev" xml:space="preserve">
     <value>Попередня сторінка</value>

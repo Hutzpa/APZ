@@ -3,15 +3,17 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-    <div class="list-inline">
+
+
+    <div class="d-flex flex-row mb-3">
 
 
 
-        <table class="table table-hover table-responsive list-inline-item">
+        <table class="table table-hover table-responsive p-2 bd-highlight">
             <thead>
                 <tr>
                     <th class="text-center">
-                        @Localizer["cargo"] Cargo
+                        @Localizer["cargo"] 
                     </th>
                     <th class="text-center">
 
@@ -28,7 +30,7 @@
                                 <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@cargo.Id_Cargo">@cargo.CargoName </a>
                             </td>
                             <td class="text-center">
-                                <a class="btn btn-success" asp-controller="Cargo" asp-action="Remove" asp-route-id="@cargo.Id_Cargo" asp-route-pageNumber="ViewBag.PageNumber">@Localizer["del"]</a>
+                                <a class="btn btn-success" asp-controller="Cargo" asp-action="Remove" asp-route-id="@cargo.Id_Cargo" asp-route-pageNumber="@ViewBag.PageNumber">@Localizer["del"]</a>
                             </td>
                         </tr>
 
@@ -37,7 +39,7 @@
             </tbody>
         </table>
 
-        <table class="table table-hover table-responsive list-inline-item">
+        <table class="table table-hover table-responsive p-2 bd-highlight">
             <thead>
                 <tr>
                     <th class="text-center">
@@ -58,7 +60,7 @@
                                 <a asp-controller="Home" asp-action="AUser" asp-route-id="@user.Id"> @user.Name</a>
                             </td>
                             <td class="text-center">
-                                <a class="btn btn-success" asp-controller="Auth" asp-action="DeleteAsync" asp-route-email="@user.Email" asp-route-pageNumber="ViewBag.PageNumber">@Localizer["del"]</a>
+                                <a class="btn btn-success" asp-controller="Auth" asp-action="Delete" asp-route-id="@user.Id" asp-route-pageNumber="ViewBag.PageNumber">@Localizer["del"]</a>
                             </td>
                         </tr>
 
@@ -67,9 +69,9 @@
             </tbody>
         </table>
 
+
+
     </div>
-
-
 
 
 <div>
@@ -81,6 +83,6 @@
     @if (ViewBag.CanNext)
     {
         <a class="btn btn-success" asp-controller="Home" asp-action="AdminPanel" asp-route-pageNumber="@(ViewBag.PageNumber+1)">@Localizer["next"]</a>
-         
+
     }
 </div>

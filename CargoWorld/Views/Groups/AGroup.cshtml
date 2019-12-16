@@ -19,6 +19,8 @@
         <table class="table table-hover table-responsive">
             <thead>
                 <tr>
+
+                    <th class="text-center">@Localizer["photo"]</th>
                     <th class="text-center">@Localizer["car"]</th>
                     <th class="text-center">@Localizer["regNumber"]</th>
                     <th class="text-center"> </th>
@@ -30,6 +32,13 @@
                 @foreach (var freecar in ViewBag.FreeCars)
                 {
                     <tr>
+                        <td class="text-center">
+                            @if (!String.IsNullOrEmpty(@freecar.Photo))
+                            {
+                                var imagePath = $"/content/webs/{@freecar.Photo}";
+                                <img src="@imagePath" height="50" width="50" />
+                            }
+                        </td>
                         <td class="text-center">
                             @freecar.CarModel
                         </td>
@@ -53,9 +62,12 @@
 
     <hr />
 
-    <p>
-        <a class="btn btn-success" asp-controller="Groups" asp-action="GetOptimalCargoForGroup" asp-route-idGroup="@Model.IdGroup">@Localizer["optiCagros"]</a>
-    </p>
+    @if (Model?.Cars.Count() > 0)
+    {
+        <p>
+            <a class="btn btn-success" asp-controller="Groups" asp-action="GetOptimalCargoForGroup" asp-route-idGroup="@Model.IdGroup">@Localizer["optiCagros"]</a>
+        </p>
+    }
 
 
     @if (Model.Cars.Count() == 0)
@@ -65,9 +77,12 @@
     else
     {
         <span>@Localizer["carList"]:</span>
-        <table>
+        <table class="table table-hover table-responsive">
             <thead>
                 <tr>
+                    <th class="text-center">
+                        Photo
+                    </th>
                     <th class="text-center">
                         @Localizer["carName"]
                     </th>
@@ -84,7 +99,14 @@
                 {
                     <tr>
                         <td class="text-center">
-                            @cr.CarModel
+                            @if (!String.IsNullOrEmpty(cr.Photo))
+                            {
+                                var imagePath = $"/content/webs/{cr.Photo}";
+                                <img src="@imagePath" height="50" width="50" />
+                            }
+                        </td>
+                        <td class="text-center">
+                            <a asp-controller="Car" asp-action="ACar" asp-route-id="@cr.IdCar">  @cr.CarModel </a>
                         </td>
                         <td class="text-center">
                             @cr.RegistrationNumber

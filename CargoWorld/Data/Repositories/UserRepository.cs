@@ -22,7 +22,11 @@ namespace CargoWorld.Data.Repositories
 
         public ApplicationUser Get(int id) => throw new NotImplementedException();
 
-        public ApplicationUser Get(string id) => _ctx.Users.FirstOrDefault(o => o.Id == id);
+        public ApplicationUser Get(string id) => _ctx.Users
+            .Include(o=>o.Cargos)
+            .Include(o=>o.Cars)
+            .Include(o=>o.Groups)
+            .FirstOrDefault(o => o.Id == id);
 
 
 
@@ -50,6 +54,7 @@ namespace CargoWorld.Data.Repositories
                 List = _ctx.Users
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
+                .Where(o=>o.UserName != "admin")
             };
         }
 
@@ -70,8 +75,14 @@ namespace CargoWorld.Data.Repositories
                 EF.Functions.Like(u.Name, $"%{keyWord}%") ||
                 EF.Functions.Like(u.Surname, $"%{keyWord}%")||
                 EF.Functions.Like(u.Email, $"%{keyWord}%"));
-
-
+            }
+            else
+            {
+                return new SearchViewModel
+                {
+                    Cargos = new List<Cargo>(),
+                    Users = new List<ApplicationUser>()
+                };
             }
                 return new SearchViewModel
                 {

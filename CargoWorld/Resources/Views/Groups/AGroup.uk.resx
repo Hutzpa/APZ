@@ -148,13 +148,16 @@
     <value>Редагувати групу</value>
   </data>
   <data name="groupName" xml:space="preserve">
-    <value>Назва групи</value>
+    <value>Група</value>
   </data>
   <data name="none" xml:space="preserve">
     <value>Ви не маєте жодної машини у цій групі</value>
   </data>
   <data name="optiCagros" xml:space="preserve">
     <value>Знайти підходящі вантажі для цієї групи</value>
+  </data>
+  <data name="photo" xml:space="preserve">
+    <value>Фото</value>
   </data>
   <data name="regNumber" xml:space="preserve">
     <value>Реєстраційний номер</value>

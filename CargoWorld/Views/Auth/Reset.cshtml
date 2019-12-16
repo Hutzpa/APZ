@@ -4,15 +4,18 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-@{ 
+@{
     ViewBag.Title = Localizer["title"];
 }
 
-<form asp-controller="Auth" asp-action="Reset" method="post">
-    <input asp-for="Email" placeholder="@Localizer["placeholder"]" />
+<div class="text-center">
+    <form asp-controller="Auth" asp-action="Reset" method="post">
+        <input asp-for="Email" placeholder="@Localizer["placeholder"]" />
 
-    <input class="btn btn-success" type="submit" value="@Localizer["reset"]"/>
-</form>
+        <input class="btn btn-success" type="submit" value="@Localizer["reset"]" />
+    </form>
+
+</div>
 
 
 

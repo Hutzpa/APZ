@@ -13,74 +13,77 @@
 }
 else
 {
-    <div class="text-center">
-        <table>
-            <thead>
+
+    <table class="table table-hover table-responsive table-striped ml-5">
+        <thead>
+            <tr>
+                <th>@Localizer["photo"]</th>
+                <th class="text-center">@Localizer["name"]</th>
+                <th class="text-center">@Localizer["depPoint"]</th>
+                <th class="text-center">@Localizer["dest"]</th>
+                <th class="text-center">@Localizer["cargoType"]</th>
+                <th class="text-center">@Localizer["wasDeliv"]</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cr in Model)
+            {
                 <tr>
-                    <th>@Localizer["photo"]</th>
-                    <th class="text-center">@Localizer["name"]</th>
-                    <th class="text-center">@Localizer["depPoint"]</th>
-                    <th class="text-center">@Localizer["dest"]</th>
-                    <th class="text-center">@Localizer["cargoType"]</th>
-                    <th class="text-center">@Localizer["wasDeliv"]</th>
-                    <th class="text-center"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var cr in Model)
-                {
-                    <tr>
-                        <td class="text-center">
-                            @if (!String.IsNullOrEmpty(cr.Cargo.Photo))
-                            {
-                                var imagePath = $"/content/webs/{cr.Cargo.Photo}";
-                                <img src="@imagePath" height="50" width="50" />
-                            }
-                        </td>
+                    <td class="text-center">
+                        @if (!String.IsNullOrEmpty(cr.Cargo.Photo))
+                        {
+                            var imagePath = $"/content/webs/{cr.Cargo.Photo}";
+                            <img src="@imagePath" height="50" width="50" />
+                        }
+                    </td>
 
-                        <td class="text-center">
-                            <label>
-                                @cr.Cargo.CargoName
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label>
-                                @cr.Cargo.DeparturePoint
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label>
-                                @cr.Cargo.DestinationPoint
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            <label>
-                                @cr.Cargo.CargoType
-                            </label>
-                        </td>
-                        <td class="text-center">
-                            @{
-                                if (cr.Cargo.IsDelivered)
-                                {
-                                    <label> @Localizer["deliv"]</label>
-                                }
-                                else
-                                {
-                                    <label>@Localizer["notDeliv"]</label>
-                                }
+                    <td class="text-center">
+
+                        <a asp-controller="Cargo" asp-action="ACargo" asp-route-id="@cr.Cargo.Id_Cargo"> @cr.Cargo.CargoName</a> 
+
+                    </td>
+                    <td class="text-center">
+
+                        @cr.Cargo.DeparturePoint
+
+                    </td>
+                    <td class="text-center">
+
+                        @cr.Cargo.DestinationPoint
+
+                    </td>
+                    <td class="text-center">
+
+                        @cr.Cargo.CargoType
+
+                    </td>
+                    <td class="text-center">
+                        @{
+                            if (cr.Cargo.IsDelivered)
+                            {
+                                @Localizer["deliv"]
                             }
-                        </td>
-                        <td class="text-center">
+                            else
+                            {
+                                @Localizer["notDeliv"]
+                            }
+                        }
+                    </td>
+                    <td class="text-center">
+                        @if (!cr.Cargo.IsDelivered)
+                        {
                             <a class="btn btn-success" asp-controller="Cargo" asp-action="SetDelivered" asp-route-idCargo="@cr.Cargo.Id_Cargo">@Localizer["set"]</a>
-                            @if (cr.Cargo.IsDelivered)
-                            {
-                                <a class="btn btn-success" asp-controller="Cargo" asp-action="DeleteTransported" asp-route-id="@cr.Id_Delivery">@Localizer["deleteFromTransp"]</a>
-                            }
-                        </td>
-                    </tr>
-                }
+                        }
+                        @if (cr.Cargo.IsDelivered)
+                        {
+                            <a class="btn btn-success" asp-controller="Cargo" asp-action="DeleteTransported" asp-route-id="@cr.Id_Delivery">@Localizer["deleteFromTransp"]</a>
+                        }
+                    </td>
+                </tr>
+            }
 
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+
 }

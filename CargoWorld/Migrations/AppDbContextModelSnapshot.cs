@@ -451,21 +451,24 @@ namespace CargoWorld.Migrations
 
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")
                         .WithMany("Cars")
-                        .HasForeignKey("IdOwnerId");
+                        .HasForeignKey("IdOwnerId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("CargoWorld.Models.Cargo", b =>
                 {
                     b.HasOne("CargoWorld.Models.ApplicationUser", "Id_Owner")
                         .WithMany("Cargos")
-                        .HasForeignKey("Id_OwnerId");
+                        .HasForeignKey("Id_OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CargoWorld.Models.CargoInCar", b =>
                 {
                     b.HasOne("CargoWorld.Models.Cargo", "Cargo")
                         .WithMany("Transfer")
-                        .HasForeignKey("CargoId_Cargo");
+                        .HasForeignKey("CargoId_Cargo")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CargoWorld.Models.Car", "Transporter")
                         .WithMany("CargoInThisCar")
@@ -476,14 +479,16 @@ namespace CargoWorld.Migrations
                 {
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")
                         .WithMany("Groups")
-                        .HasForeignKey("IdOwnerId");
+                        .HasForeignKey("IdOwnerId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("CargoWorld.Models.Request", b =>
                 {
                     b.HasOne("CargoWorld.Models.ApplicationUser", "Recip")
                         .WithMany("RequestsToMe")
-                        .HasForeignKey("RecipId");
+                        .HasForeignKey("RecipId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

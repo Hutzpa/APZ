@@ -1,10 +1,35 @@
 ﻿
 
 
-@{
-    if (User.Identity.IsAuthenticated)
-    {
-        <h3>Добридень - @User.Identity.Name</h3>
-    }
-}
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+<div class="d-flex bd-highlight mb-3" style="background-color :lightgray;">
+    <div class="p-2 bd-highlight justify-content-between mr-5">
+        @{
+            if (User.Identity.IsAuthenticated)
+            {
+                <h3>@Localizer["greeting"] - @User.Identity.Name</h3>
+
+                <label> <a asp-action="AUser" asp-controller="Home" asp-route-id="@ViewBag.UserId">@Localizer["yourProf"]</a></label>
+            }
+        }
+    </div>
+
+    <div class="p-2 bd-highlight justify-content-between ml-5">
+        <div>
+            <a class="dropdown-item" asp-controller="Cargo" asp-action="CargoList">@Localizer["yoruCarg"]</a>
+            <hr />
+        </div>
+        <div>
+            <a class="dropdown-item" asp-controller="Car" asp-action="MyCars">@Localizer["yourCars"]</a>
+            <hr />
+        </div>
+        <div>
+            <a class="dropdown-item" asp-controller="Groups" asp-action="GroupList">@Localizer["yourGroups"]</a>
+            <hr />
+        </div>
+    </div>
+</div>
 

@@ -1,4 +1,6 @@
-﻿using CargoWorld.Models;
+﻿using CargoWorld.Data;
+using CargoWorld.Data.Repositories;
+using CargoWorld.Models;
 using CargoWorld.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +18,15 @@ namespace CargoWorld.Controllers
     {
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
+        private UserRepository _userRepository;
 
         public AuthController(SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IRepository<ApplicationUser> userRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userRepository = (UserRepository)userRepository;
         }
         [HttpGet]
         public IActionResult Login()
@@ -116,9 +121,9 @@ namespace CargoWorld.Controllers
             return RedirectToAction("Login");
         }
 
-        public async Task<IActionResult> DeleteAsync(string email, int pageNumber)
+        public async Task<IActionResult> DeleteAsync(string id, int pageNumber)
         {
-            var user = await _userManager.FindByNameAsync(email);
+            var user =  _userRepository.Get(id);
             if (user != null)
             {
                 IdentityResult result = await _userManager.DeleteAsync(user);

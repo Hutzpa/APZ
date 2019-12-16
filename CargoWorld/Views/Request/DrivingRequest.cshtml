@@ -3,20 +3,19 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-@if (Model.Count() > 0)
+@if (Model?.Count() > 0)
 {
 
-    <span>@Localizer["requests"]</span>
+    <label class="text-center">@Localizer["requests"]</label>
     <hr />
 
-    <table class="table table-hover table-responsive">
+    <table class="table table-hover table-responsive ml-5">
         <thead>
             <tr>
                 <th class="text-center">
                     @Localizer["_car"]
                 </th>
                 <th class="text-center">
-                    
                 </th>
             </tr>
         </thead>
@@ -30,8 +29,8 @@
                     </td>
 
                     <td class="text-center">
-                        <a class="btn btn-success" asp-controller="Request" asp-action="AcceptDriving" asp-route-requestId="@rq.Id">@Localizer["accept"] </a> |
-                        <a class="btn btn-success" asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="DrivingRequest" asp-route-id="@rq.Id">@Localizer["refuse"] </a> |
+                        <a class="btn btn-success" asp-controller="Request" asp-action="AcceptDriving" asp-route-requestId="@rq.Id">@Localizer["accept"] </a> 
+                        <a class="btn btn-success" asp-controller="Request" asp-action="DeclineRequest" asp-route-sender="DrivingRequest" asp-route-id="@rq.Id">@Localizer["refuse"] </a> 
                     </td>
                 </tr>
             }
@@ -41,5 +40,5 @@
 }
 else
 {
-    <span>@Localizer["none"]</span>
+    <label class="text-center">@Localizer["none"]</label>
 }

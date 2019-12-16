@@ -45,13 +45,13 @@ namespace CargoWorld.ViewModels
         public string CargoType { get; set; }
 
         [Required]
-        [Range(0d, 500d)]
+        [Range(0.1d, 500d, ErrorMessage = "> 0.1")]
         public double Height { get; set; }
         [Required]
-        [Range(0d, 50000d)]
+        [Range(0.1d, 500d, ErrorMessage = "> 0.1")]
         public double Width { get; set; }
         [Required]
-        [Range(0d, 50000d)]
+        [Range(0.1d, 500d,ErrorMessage = "> 0.1")]
         public double Length { get; set; }
         /// <summary>
         /// Может ли груз быть разделён на несколько частей?
@@ -61,6 +61,8 @@ namespace CargoWorld.ViewModels
         /// Объём
         /// </summary>
 
+
+        [Range(0.1d, 500000d, ErrorMessage = "> 0.1")]
         public double Bulk { get; set; }
 
 

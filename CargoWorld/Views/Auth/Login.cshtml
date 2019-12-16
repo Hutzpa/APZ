@@ -1,32 +1,52 @@
-﻿@model LoginViewModel 
+﻿@model LoginViewModel
 
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-@{ 
 
-}
 
-<form asp-controller="Auth" asp-action="Login" method="post">
-    <div>
-        <label>
-            @Localizer["username"]
-        </label>
-        <input asp-for="UserName" />
+<div class="text-center">
 
-    </div>
-    <div>
-        <label>
-            @Localizer["password"]
+    <form asp-controller="Auth" asp-action="Login" method="post">
+        <table align="center">
+            <tr>
+                <td>
+                    <label class="mb-2 mt-2">
+                        @Localizer["username"]
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="UserName" />
+                </td>
 
-        </label>
-        <input asp-for="Password" />
+            </tr>
+            <tr>
+                <td class="mb-2 mt-2">
+                    <label>
+                        @Localizer["password"]
 
-    </div>
-    <div>
-    <input class="btn btn-success" type="submit" value="@Localizer["but"]"/>
-    <a class="btn btn-success" asp-controller="Auth" asp-action="Register">@Localizer["reg"]</a>
-    <a class="btn btn-success" asp-controller="Auth" asp-action="Reset">@Localizer["rest"]</a>
-    </div>
-    
-</form>
+                    </label>
+                </td>
+                <td>
+                    <input asp-for="Password" />
+                </td>
+
+            </tr>
+            <tr>
+                <td class="mb-2 mt-2">
+                    <input class="btn btn-success" type="submit" value="@Localizer["but"]" />
+
+                </td>
+
+                <td >
+
+                    <a class="btn btn-success mb-2 mt-2" asp-controller="Auth" asp-action="Register">@Localizer["reg"]</a>
+                    <a class="btn btn-success mb-2 mt-2" asp-controller="Auth" asp-action="Reset">@Localizer["rest"]</a>
+                </td>
+
+            </tr>
+        </table>
+
+
+    </form>
+</div>

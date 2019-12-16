@@ -28,6 +28,7 @@ namespace CargoWorld
             context.Database.EnsureCreated();
 
             var adminRole = new IdentityRole("Admin");
+            
             if (!context.Roles.Any())
             {
                 roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();

@@ -52,6 +52,7 @@ namespace CargoWorld
                 options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("ukr");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
+               
                 
 
             });
@@ -70,7 +71,6 @@ namespace CargoWorld
             services.AddTransient<IRepository<Car>, CarRepository>();
             services.AddTransient<IRepository<Cargo>, CargoRepository>();
             services.AddTransient<IRepository<Group>, GroupRepository>();
-            //services.AddTransient<IRepository<CargoInCar>, CargoInCarRepository>();
             services.AddTransient<IRepository<ApplicationUser>, UserRepository>();
             services.AddTransient<IRepository<Request>, RequestRepository>();
             services.AddTransient<IFileManager, FIleManager>();
