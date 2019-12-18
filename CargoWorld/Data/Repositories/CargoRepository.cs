@@ -83,19 +83,19 @@ namespace CargoWorld.Data.Repositories
             List<Cargo> cargosForThisGroup = new List<Cargo>();
 
             //все грузы
-            foreach (var c in _ctx.Cargos.AsNoTracking())
+            foreach (Cargo c in _ctx.Cargos.Include(o=>o.Id_Owner).AsNoTracking())
             {
                 //Получаем свободное пространство во всех грузовиках этой группы для подходящего типа груза
                 double groupFreeSpace = 0.0;
                 foreach (Car car in group.Cars.Where(car => car.CargoType == c.CargoType))
                 {
-                    var cagroInCar = _ctx.CargoInCars.Include(o => o.Transporter).Where(cg => cg.Transporter == car);
+                    var cagroInCar = _ctx.CargoInCars.Include(o=>o.Cargo).Include(o => o.Transporter).Where(cg => cg.Transporter == car);
                     //Весь объём грузового отделения машины
                     double totalBulk = (car.HeightCargoCompartment * car.WidthCargoCompartment * car.LengthCargoCompartment) == 0 ? car.CarryingCapacitySqM : (car.HeightCargoCompartment * car.WidthCargoCompartment * car.LengthCargoCompartment);
                     //Занятый объём грузового отделения
                     double bussyBulk = 0.0;
                     //Если в машине есть груз, считаем занятый объём
-                    if (cagroInCar.Count() != 0)
+                    if (cagroInCar.Count() > 0)
                     {
                         foreach (CargoInCar cargo in cagroInCar)
                             //Прибавляем занятый каждым грузом объём, если он не указан как параметр, указываем

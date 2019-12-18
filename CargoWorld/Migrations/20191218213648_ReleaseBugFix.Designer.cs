@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CargoWorld.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191215204706_refConflictFixing1")]
-    partial class refConflictFixing1
+    [Migration("20191218213648_ReleaseBugFix")]
+    partial class ReleaseBugFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -454,7 +454,7 @@ namespace CargoWorld.Migrations
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")
                         .WithMany("Cars")
                         .HasForeignKey("IdOwnerId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CargoWorld.Models.Cargo", b =>
@@ -462,7 +462,7 @@ namespace CargoWorld.Migrations
                     b.HasOne("CargoWorld.Models.ApplicationUser", "Id_Owner")
                         .WithMany("Cargos")
                         .HasForeignKey("Id_OwnerId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CargoWorld.Models.CargoInCar", b =>
@@ -474,7 +474,8 @@ namespace CargoWorld.Migrations
 
                     b.HasOne("CargoWorld.Models.Car", "Transporter")
                         .WithMany("CargoInThisCar")
-                        .HasForeignKey("TransporterIdCar");
+                        .HasForeignKey("TransporterIdCar")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CargoWorld.Models.Group", b =>
@@ -482,7 +483,7 @@ namespace CargoWorld.Migrations
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")
                         .WithMany("Groups")
                         .HasForeignKey("IdOwnerId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CargoWorld.Models.Request", b =>

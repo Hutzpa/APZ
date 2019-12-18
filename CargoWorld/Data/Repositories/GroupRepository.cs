@@ -99,26 +99,21 @@ namespace CargoWorld.Data.Repositories
             double cargoBulk = cargo.Bulk == 0 ? cargo.Height * cargo.Width * cargo.Length : cargo.Bulk;
             if (freeCars != null && freeCars.Count() > 0)
             {
-
                 //Если объём груза меньше максимума, то находим наилучшую для него машину
                 if (cargoBulk <= freeCars?.First()?.CarryingCapacitySqM)  //работает как надо
                 {
                     for (int i = freeCars.Count(); i != 0; i--)
                     {
-
-
                         //Начинаем с самого маленького, и идём вверх пока не влезет
                         if (cargoBulk <= freeCars[i - 1].CarryingCapacitySqM)
                         {
                             carsInThisGroup.Add(freeCars[i - 1]);
                             break;
                         }
-
                     }
                 }
                 else
                 {
-
                     //% груза распиханый по машинам
                     int cargoAmount = 0;
                     //Если груз может быть разделён

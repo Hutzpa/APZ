@@ -18,6 +18,9 @@ else
         <thead>
             <tr>
                 <th class="text-center">
+                    
+                </th>
+                <th class="text-center">
                     @Localizer["name"]
                 </th>
                 <th class="text-center">
@@ -42,6 +45,13 @@ else
             {
                 <tr>
                     <td class="text-center">
+                        @if (!String.IsNullOrEmpty(cr.Photo))
+                        {
+                            var imagePath = $"/content/webs/{cr.Photo}";
+                            <img src="@imagePath" height="100" width="100" />
+                        }
+                    </td>
+                    <td class="text-center">
                         @cr.CargoName
                     </td>
                     <td class="text-center">
@@ -58,12 +68,18 @@ else
                     </td>
                     <td class="text-center">
                         @cr.Bulk
+                        <br />
+                        ____
+                        <h1>
+                            @cr.Id_Owner.Id
+                        </h1>
+                        ____
                     </td>
                     <td class="text-center">
                         <form asp-controller="Request" asp-action="CreateCompanyToUser" method="post" enctype="multipart/form-data">
-                            <input asp-for="@cr.Id_Cargo" type="hidden" />
-                            <input asp-for="@Model.OurGroup.IdOwner" type="hidden" />
-                            <input asp-for="@Model.OurGroup.IdGroup" type="hidden" />
+                            <input asp-for="cvm.Id_Cargo" value="@cr.Id_Cargo" type="hidden" />
+                            <input asp-for="cvm.Id_Owner.Id" value="@cr.Id_Owner.Id" type="hidden" />
+                            <input asp-for="cvm.idGroup" value="@Model.OurGroup.IdGroup" type="hidden" />
 
                             <input class="btn btn-success" type="submit" value="@Localizer["ofer"]" />
                         </form>

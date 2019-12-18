@@ -14,12 +14,9 @@ namespace CargoWorld.Data
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
-            
-                //Database.EnsureCreated();
-
-            
+            Database.EnsureCreated();
         }
-       
+
         public DbSet<Car> Cars { get; set; }
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<CargoInCar> CargoInCars { get; set; }
@@ -31,12 +28,22 @@ namespace CargoWorld.Data
         {
             base.OnModelCreating(builder);
 
-            
+
 
             builder.Entity<Car>()
                 .HasOne(o => o.IdGroup)
                 .WithMany(o => o.Cars)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Car>()
+                .HasMany(o => o.CargoInThisCar)
+                .WithOne(o => o.Transporter)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<CargoInCar>()
+                .HasOne(o => o.Transporter)
+                .WithMany(o => o.CargoInThisCar)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Cargo>()
                 .HasOne(o => o.Id_Owner)
@@ -54,11 +61,11 @@ namespace CargoWorld.Data
             builder.Entity<ApplicationUser>()
                 .HasMany(o => o.Cars)
                 .WithOne(o => o.IdOwner)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationUser>()
                 .HasMany(o => o.Groups)
                 .WithOne(o => o.IdOwner)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationUser>()
                 .HasMany(o => o.RequestsToMe)
                 .WithOne(o => o.Recip)

@@ -61,7 +61,7 @@ namespace CargoWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCompanyToUserAsync(CargoViewModel cvm)
         {
-            string f = cvm.Id_Owner.Id;
+            
             Models.Request request = new Request()
             {
                 Recip = _userRepository.Get(cvm.Id_Owner.Id),
@@ -73,7 +73,7 @@ namespace CargoWorld.Controllers
             };
             _requestManager.Create(request);
             await _requestManager.SaveChangesAsync();
-            return RedirectToAction("DrivingRequest");
+            return RedirectToAction("Index","Home");
         }
 
         #endregion

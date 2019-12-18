@@ -452,7 +452,7 @@ namespace CargoWorld.Migrations
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")
                         .WithMany("Cars")
                         .HasForeignKey("IdOwnerId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CargoWorld.Models.Cargo", b =>
@@ -472,7 +472,8 @@ namespace CargoWorld.Migrations
 
                     b.HasOne("CargoWorld.Models.Car", "Transporter")
                         .WithMany("CargoInThisCar")
-                        .HasForeignKey("TransporterIdCar");
+                        .HasForeignKey("TransporterIdCar")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CargoWorld.Models.Group", b =>
@@ -480,7 +481,7 @@ namespace CargoWorld.Migrations
                     b.HasOne("CargoWorld.Models.ApplicationUser", "IdOwner")
                         .WithMany("Groups")
                         .HasForeignKey("IdOwnerId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CargoWorld.Models.Request", b =>

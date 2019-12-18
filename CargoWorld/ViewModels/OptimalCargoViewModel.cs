@@ -11,6 +11,8 @@ namespace CargoWorld.ViewModels
     {
         public IEnumerable<Cargo> Cargos { get; set; }
 
+
+        public CargoViewModel cvm { get; set; }
         public Group OurGroup { get; set; }
     }
 }
