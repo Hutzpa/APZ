@@ -20,9 +20,7 @@ namespace CargoWorld.Models
 
         public string Patronymic { get; set; }
         public int Age { get; set; }
-        /// <summary>
-        /// Женщина\мужчина
-        /// </summary>
+
         public string Geoposition { get; set; }
 
         public List<Group> Groups { get; set; }

@@ -57,5 +57,7 @@ namespace CargoWorld.Models
         /// Цена перевозки груза на км
         /// </summary>
         public decimal CostPerKm { get; set; }
+
+        public string Coordinates { get; set; }
     }
 }
